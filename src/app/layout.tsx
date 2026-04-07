@@ -24,11 +24,11 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://o-sanchez-seguros.vercel.app"),
   title: {
     default:
-      "O Sanchez Seguros | Especialista en Seguros desde 1997 | Hermosillo, Sonora",
+      "O Sanchez Seguros | Especialista en Seguros desde 2009 | Hermosillo, Sonora",
     template: "%s | O Sanchez Seguros",
   },
   description:
-    "Protege lo que más importa con más de 27 años de experiencia. Gastos Médicos Mayores, Seguros Fronterizos, Vida, Auto y Empresariales en Hermosillo, Sonora. Cotiza ahora.",
+    "Protege lo que más importa con más de 16 años de experiencia. Gastos Médicos Mayores, Seguros Fronterizos, Vida, Auto y Empresariales en Hermosillo, Sonora. Cotiza ahora.",
   keywords: [
     "seguros hermosillo",
     "gastos médicos mayores hermosillo",
@@ -48,9 +48,9 @@ export const metadata: Metadata = {
     locale: "es_MX",
     url: "https://o-sanchez-seguros.vercel.app",
     siteName: "O Sanchez Seguros",
-    title: "O Sanchez Seguros | Especialista en Seguros desde 1997",
+    title: "O Sanchez Seguros | Especialista en Seguros desde 2009",
     description:
-      "Más de 27 años protegiendo familias y empresas en Hermosillo, Sonora. Gastos Médicos Mayores, Seguros Fronterizos, Vida, Auto y Empresariales.",
+      "Más de 16 años protegiendo familias y empresas en Hermosillo, Sonora. Gastos Médicos Mayores, Seguros Fronterizos, Vida, Auto y Empresariales.",
     images: [
       {
         url: "/images/og-image.png",
@@ -64,7 +64,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "O Sanchez Seguros | Seguros en Hermosillo",
     description:
-      "Especialista en seguros desde 1997. Cotiza Gastos Médicos Mayores, Seguros Fronterizos y más.",
+      "Especialista en seguros desde 2009. Cotiza Gastos Médicos Mayores, Seguros Fronterizos y más.",
     images: ["/images/og-image.png"],
   },
   robots: {

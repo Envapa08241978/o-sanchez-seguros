@@ -26,7 +26,7 @@ export default function HomePage() {
                     clipRule="evenodd"
                   />
                 </svg>
-                Especialista en seguros desde 1997
+                Especialista en seguros desde 2009
               </span>
             </div>
 

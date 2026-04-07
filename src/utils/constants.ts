@@ -1,17 +1,17 @@
 export const SITE_CONFIG = {
   name: "O Sanchez Seguros",
   fullName: "Oscar Sánchez Aguirre",
-  tagline: "Especialista en Seguros desde 1997",
+  tagline: "Especialista en Seguros desde 2009",
   description:
-    "Protege lo que más importa con la experiencia de más de 27 años en seguros. Gastos Médicos Mayores, Seguros Fronterizos, Vida, Auto y Empresariales en Hermosillo, Sonora.",
+    "Protege lo que más importa con la experiencia de más de 16 años en seguros. Gastos Médicos Mayores, Seguros Fronterizos, Vida, Auto y Empresariales en Hermosillo, Sonora.",
   phone: "+52 662 182 2481",
   phoneDisplay: "662 182 2481",
   whatsapp: "5216621822481",
   whatsappUrl: "https://wa.me/5216621822481",
   email: "admon@osanchezseguros.com",
   address: "Hermosillo, Sonora, México",
-  yearFounded: 1997,
-  yearsOfExperience: 29,
+  yearFounded: 2009,
+  yearsOfExperience: 16,
   socialMedia: {
     tiktok: "https://www.tiktok.com/@oscarsanchez4600",
     instagram: "https://www.instagram.com/oscar.sanchezag",

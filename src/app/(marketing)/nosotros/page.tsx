@@ -4,14 +4,14 @@ import { SITE_CONFIG } from "@/utils/constants";
 
 export const metadata: Metadata = {
   title: "Nosotros",
-  description: `Conoce a Oscar Sánchez Aguirre — Especialista en seguros desde 1997 en Hermosillo, Sonora. Más de ${SITE_CONFIG.yearsOfExperience} años protegiendo familias y empresas.`,
+  description: `Conoce a Oscar Sánchez Aguirre — Especialista en seguros desde 2009 en Hermosillo, Sonora. Más de ${SITE_CONFIG.yearsOfExperience} años protegiendo familias y empresas.`,
 };
 
 const TIMELINE = [
-  { year: "1997", title: "Inicio de trayectoria", description: "Oscar Sánchez Aguirre comienza su carrera como agente de seguros en Hermosillo, Sonora." },
-  { year: "2005", title: "Consolidación regional", description: "Se establece como referente en Gastos Médicos Mayores y seguros fronterizos en la región." },
-  { year: "2015", title: "Alianzas premium", description: "Convenios consolidados con Hospital CIMA, San José y las principales aseguradoras del país." },
-  { year: "2024", title: "Transformación digital", description: "Lanzamiento de la plataforma digital con atención 24/7 y asesoría potenciada por inteligencia artificial." },
+  { year: "2009", title: "Inicios en el Sector Asegurador", description: "Comienza su trayectoria en diciembre de 2009 como funcionario comercial en AXA Seguros." },
+  { year: "2015", title: "Consolidación Experta", description: "Adquisición de amplio conocimiento interno de aseguradoras, convenios hospitalarios y gestoría de siniestros automotrices." },
+  { year: "2024", title: "Asesor Profesional Independiente", description: "A partir del 30 de junio de 2024 se independiza para brindar asesoría profesional e imparcial a sus clientes." },
+  { year: "Presente", title: "Transformación digital", description: "Lanzamiento de la plataforma digital web con atención 24/7 y herramientas de inteligencia artificial." },
 ];
 
 const VALUES = [
@@ -38,8 +38,8 @@ export default function NosotrosPage() {
               importa
             </h1>
             <p className="text-lg text-white/70 max-w-2xl mx-auto">
-              Desde 1997, Oscar Sánchez Aguirre ha dedicado su carrera a brindar
-              la mejor asesoría en seguros a familias y empresas de Hermosillo,
+              Desde diciembre de 2009, Oscar Sánchez Aguirre ha dedicado su carrera profesional al sector asegurador para brindar
+              la mejor asesoría a familias y empresas de Hermosillo,
               Sonora.
             </p>
           </ScrollReveal>

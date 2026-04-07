@@ -38,7 +38,7 @@ export default function Footer() {
                     clipRule="evenodd"
                   />
                 </svg>
-                Desde 1997
+                Desde 2009
               </span>
             </div>
             {/* Social Media */}
