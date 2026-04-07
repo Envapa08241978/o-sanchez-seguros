@@ -84,10 +84,15 @@ const HOSPITALS = [
 export default function RedHospitalariaPage() {
   const [searchTerm, setSearchTerm] = useState("");
 
-  const filteredHospitals = HOSPITALS.filter((hospital) =>
-    hospital.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    hospital.specialty.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredHospitals = HOSPITALS.filter((hospital) => {
+    const term = searchTerm.toLowerCase();
+    return (
+      hospital.name.toLowerCase().includes(term) ||
+      hospital.specialty.toLowerCase().includes(term) ||
+      hospital.description.toLowerCase().includes(term) ||
+      hospital.specialtiesList.some((spec) => spec.toLowerCase().includes(term))
+    );
+  });
 
   return (
     <main className="min-h-screen bg-surface">
