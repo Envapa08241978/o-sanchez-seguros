@@ -6,7 +6,19 @@ const HOSPITALS = [
   {
     id: 1,
     name: "Hospital CIMA Hermosillo",
-    specialty: "Especialidades Médicas y Cirugía",
+    specialty: "Clínicas Integrales y Especialidad",
+    description: "Este hospital destaca por contar con clínicas integrales de alta especialidad (como el Hermosillo Heart Team, la Unidad de Reproducción Asistida y la Clínica de Cirugía Bariátrica).",
+    specialtiesList: [
+      "Cardiología y Cirugía Cardiovascular: Incluyendo cardiología pediátrica, hemodinamia y cirugía del tórax.",
+      "Cirugía: General, oncológica, pediátrica, bariátrica y metabólica, plástica/estética y reconstructiva.",
+      "Ginecología y Obstetricia",
+      "Pediatría y Neonatología",
+      "Medicina Interna",
+      "Traumatología y Ortopedia",
+      "Neurología y Psiquiatría",
+      "Gastroenterología y Endoscopia",
+      "Dermatología, Urología, Neumología, Medicina del Deporte, Medicina Crítica, Angiología."
+    ],
     address: "Paseo Río Sonora 76, Proyecto Rio Sonora, 83280 Hermosillo, Son.",
     phone: "(662) 259 0900",
     embedMapUrl: "https://maps.google.com/maps?q=Hospital+CIMA+Hermosillo&t=&z=15&ie=UTF8&iwloc=&output=embed",
@@ -14,7 +26,18 @@ const HOSPITALS = [
   {
     id: 2,
     name: "Hospital San José",
-    specialty: "Maternidad, Urgencias y Especialidades",
+    specialty: "Especialidades y Diagnóstico",
+    description: "Es un hospital con un directorio médico extenso, fuertemente enfocado en intervenciones quirúrgicas, medicina preventiva y de diagnóstico.",
+    specialtiesList: [
+      "Cardiología y Angiología",
+      "Cirugía: General, pediátrica, y plástica.",
+      "Ginecología y Obstetricia",
+      "Neurología y Neurocirugía",
+      "Pediatría y Neonatología",
+      "Medicina Interna y Medicina Crítica (Terapia Intensiva)",
+      "Gastroenterología y Coloproctología",
+      "Nefrología, Neumología, Geriatría, Bariatría, Reumatología, Oftalmología, Ortopedia, Psicología."
+    ],
     address: "Blvd. José Ma. Morelos 340, Bachoco, 83148 Hermosillo, Son.",
     phone: "(662) 109 0500",
     embedMapUrl: "https://maps.google.com/maps?q=Hospital+San+Jose+Hermosillo&t=&z=15&ie=UTF8&iwloc=&output=embed",
@@ -22,7 +45,17 @@ const HOSPITALS = [
   {
     id: 3,
     name: "Clínica del Noroeste",
-    specialty: "Medicina General y Especialidades",
+    specialty: "Tradición y Subespecialidades",
+    description: "Es uno de los centros médicos con mayor tradición en el centro de la ciudad, abarcando una amplia gama de subespecialidades clínicas y quirúrgicas:",
+    specialtiesList: [
+      "Cardiología: Incluyendo Cardiología Pediátrica.",
+      "Cirugía: General, pediátrica, y plástica, estética y reconstructiva.",
+      "Ginecología y Obstetricia",
+      "Neurología Clínica y Neurocirugía",
+      "Medicina Interna",
+      "Especialidades Sistémicas e Inmunológicas (Alergología, Endocrinología).",
+      "Dermatología, Endoscopia, Neumología, Oftalmología, Ortopedia, Otorrinolaringología, Psiquiatría."
+    ],
     address: "Luis Donaldo Colosio O 14, Centro, 83000 Hermosillo, Son.",
     phone: "(662) 259 4000",
     embedMapUrl: "https://maps.google.com/maps?q=Clinica+del+Noroeste+Hermosillo&t=&z=16&ie=UTF8&iwloc=&output=embed",
@@ -30,7 +63,18 @@ const HOSPITALS = [
   {
     id: 4,
     name: "Hospital Licona",
-    specialty: "Cirugía Ambulatoria y Especialidades",
+    specialty: "Enfoque Selecto y Cirugía",
+    description: "Este hospital mantiene un enfoque más selecto, destacando principalmente en áreas quirúrgicas, estéticas y de consulta externa especializada.",
+    specialtiesList: [
+      "Cirugía General",
+      "Cirugía Plástica, Estética y Reconstructiva",
+      "Ginecología y Obstetricia",
+      "Medicina Interna",
+      "Pediatría",
+      "Nefrología",
+      "Urología y Ortopedia",
+      "Dermatología clínica y cosmética, Quirófano de corta estancia y Psicología."
+    ],
     address: "Río San Miguel 64, Proyecto Rio Sonora, 83280 Hermosillo, Son.",
     phone: "(662) 217 2740",
     embedMapUrl: "https://maps.google.com/maps?q=Hospital+Licona+Hermosillo&t=&z=16&ie=UTF8&iwloc=&output=embed",
@@ -108,6 +152,31 @@ export default function RedHospitalariaPage() {
                   </div>
                   
                   <div className="space-y-3 mt-6">
+                    <p className="text-sm text-neutral-600 leading-relaxed mb-4">
+                      {hospital.description}
+                    </p>
+                    
+                    {/* Lista Expandible de Especialidades */}
+                    <div className="mb-4">
+                      <details className="group/details">
+                        <summary className="text-sm font-semibold text-brand cursor-pointer select-none hover:text-accent transition-colors flex items-center justify-between p-2 -mx-2 rounded-lg hover:bg-brand/5">
+                          Ver Especialidades Principales
+                          <svg className="w-4 h-4 transform group-open/details:rotate-180 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                          </svg>
+                        </summary>
+                        <ul className="mt-3 space-y-2 text-sm text-neutral-600 list-inside list-disc">
+                          {hospital.specialtiesList.map((spec, i) => (
+                            <li key={i} className="pl-2 leading-tight">
+                              {spec}
+                            </li>
+                          ))}
+                        </ul>
+                      </details>
+                    </div>
+
+                    <div className="pt-4 border-t border-border"></div>
+
                     <div className="flex items-start gap-3 text-muted">
                       <svg className="w-5 h-5 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
