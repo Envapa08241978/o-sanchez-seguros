@@ -16,6 +16,7 @@ export const SITE_CONFIG = {
     tiktok: "https://www.tiktok.com/@oscarsanchez4600",
     instagram: "https://www.instagram.com/oscar.sanchezag",
     facebook: "https://www.facebook.com/share/1DnREkRfRw/",
+    linkedin: "https://www.linkedin.com/in/oscar-e-sanchez-aguirre-946bb3129",
   },
   officeHours: "Lunes a Viernes: 9:00 AM - 6:00 PM",
 } as const;
