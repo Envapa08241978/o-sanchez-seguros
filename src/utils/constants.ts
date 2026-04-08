@@ -23,6 +23,22 @@ export const SITE_CONFIG = {
 
 export const INSURANCE_PRODUCTS = [
   {
+    id: "vida",
+    title: "Seguros de Vida",
+    shortTitle: "Vida",
+    description:
+      "Garantiza el bienestar financiero de tu familia. Planes flexibles para protección integral.",
+    icon: "❤️",
+    href: "/seguros/vida",
+    color: "#DC2626",
+    highlights: [
+      "Protección familiar integral",
+      "Cobertura por invalidez",
+      "Garantía de futuro",
+      "Beneficios fiscales",
+    ],
+  },
+  {
     id: "gmm",
     title: "Gastos Médicos Mayores",
     shortTitle: "GMM",
@@ -36,38 +52,6 @@ export const INSURANCE_PRODUCTS = [
       "Cobertura nacional e internacional",
       "Atención en Hospital CIMA y San José",
       "Maternidad y padecimientos mayores",
-    ],
-  },
-  {
-    id: "fronterizo",
-    title: "Seguros Fronterizos",
-    shortTitle: "Fronterizos/USA",
-    description:
-      "Cobertura especial para quienes cruzan la frontera. Protección médica y vehicular en Estados Unidos.",
-    icon: "🌎",
-    href: "/seguros/fronterizos",
-    color: "#059669",
-    highlights: [
-      "Cobertura médica en USA",
-      "Seguro vehicular transfronterizo",
-      "Asistencia en carretera binacional",
-      "Trámites simplificados",
-    ],
-  },
-  {
-    id: "vida",
-    title: "Seguros de Vida",
-    shortTitle: "Vida",
-    description:
-      "Garantiza el bienestar financiero de tu familia. Planes flexibles con ahorro e inversión.",
-    icon: "❤️",
-    href: "/seguros/vida",
-    color: "#DC2626",
-    highlights: [
-      "Protección familiar integral",
-      "Ahorro e inversión",
-      "Cobertura por invalidez",
-      "Beneficios fiscales",
     ],
   },
   {
@@ -87,6 +71,22 @@ export const INSURANCE_PRODUCTS = [
     ],
   },
   {
+    id: "vida-ahorro",
+    title: "Seguros de Vida con Ahorro",
+    shortTitle: "Vida con Ahorro",
+    description:
+      "Construye tu futuro mientras te proteges. Planes garantizados para el retiro o la educación de tus hijos.",
+    icon: "📈",
+    href: "/seguros/vida-con-ahorro",
+    color: "#1E3A8A",
+    highlights: [
+      "Planes de retiro garantizados",
+      "Fideicomiso educativo",
+      "Rendimientos competitivos",
+      "Seguro de vida integrado",
+    ],
+  },
+  {
     id: "empresarial",
     title: "Seguros Empresariales",
     shortTitle: "Empresarial",
@@ -100,6 +100,22 @@ export const INSURANCE_PRODUCTS = [
       "Responsabilidad civil empresarial",
       "Protección de activos",
       "Fianzas y garantías",
+    ],
+  },
+  {
+    id: "fronterizo",
+    title: "Seguros Fronterizos",
+    shortTitle: "Fronterizos/USA",
+    description:
+      "Cobertura especial para quienes cruzan la frontera. Protección médica y vehicular en Estados Unidos.",
+    icon: "🌎",
+    href: "/seguros/fronterizos",
+    color: "#059669",
+    highlights: [
+      "Cobertura médica en USA",
+      "Seguro vehicular transfronterizo",
+      "Asistencia en carretera binacional",
+      "Trámites simplificados",
     ],
   },
 ] as const;
@@ -136,12 +152,14 @@ export const NAVIGATION: { main: NavItem[]; legal: NavItem[] } = {
 export const INSURERS = [
   { name: "AXA Seguros", logo: "/images/insurers/axa.svg" },
   { name: "CHUBB", logo: "/images/insurers/chubb.svg" },
-  { name: "Qualitas", logo: "/images/insurers/qualitas.svg" },
   { name: "Allianz", logo: "/images/insurers/allianz.svg" },
+  { name: "Qualitas", logo: "/images/insurers/qualitas.svg" },
+  { name: "BX+", logo: "" },
   { name: "GNP Seguros", logo: "/images/insurers/gnp.svg" },
+  { name: "Plan Seguro", logo: "" },
+  { name: "Zurich", logo: "/images/insurers/zurich.svg" },
   { name: "MetLife", logo: "/images/insurers/metlife.svg" },
   { name: "Seguros Monterrey", logo: "/images/insurers/monterrey.svg" },
-  { name: "Zurich", logo: "/images/insurers/zurich.svg" },
   { name: "BUPA", logo: "/images/insurers/bupa.svg" },
   { name: "Mapfre", logo: "/images/insurers/mapfre.svg" },
   { name: "Inbursa", logo: "/images/insurers/inbursa.svg" },
