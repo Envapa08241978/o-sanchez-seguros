@@ -4,9 +4,9 @@ import { createGoogleGenerativeAI } from "@ai-sdk/google";
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
 
-// Inicialización directa con tu llave para evitar el problema de .env.local
+// Inicialización segura mediante variables de entorno
 const googleAuth = createGoogleGenerativeAI({
-  apiKey: "AIzaSyDYK0KbaY9UCXjWiauOHF-TuQ4Snja3KlU", 
+  apiKey: process.env.GEMINI_API_KEY || "", 
 });
 
 export async function POST(req: Request) {
