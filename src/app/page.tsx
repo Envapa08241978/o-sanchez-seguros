@@ -42,8 +42,9 @@ export default function HomePage() {
               <strong className="text-white">
                 {SITE_CONFIG.yearsOfExperience} años
               </strong>{" "}
-              asesorando a familias y empresas en Hermosillo, Sonora. Gastos
-              Médicos Mayores, Seguros Fronterizos, Vida, Auto y más.
+              asesorando a familias y empresas en Hermosillo, Sonora y en toda la 
+              República Mexicana, Expertos en Planes de Ahorro, Retiro, Educación, 
+              Gastos Médicos Mayores, Menores, Autos, Empresarial y mucho mas...
             </p>
 
             {/* CTAs */}
@@ -247,19 +248,30 @@ export default function HomePage() {
             </p>
           </ScrollReveal>
           <ScrollReveal delay={100}>
-            <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-6">
+            <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-10">
               {INSURERS.map((insurer, i) => (
-                <span
-                  key={insurer.name}
-                  className={`text-sm font-semibold transition-colors duration-300 select-none ${
-                    i < 4
-                      ? "text-brand/50 hover:text-accent"
-                      : "text-brand/25 hover:text-brand/60"
-                  }`}
-                  title={insurer.name}
-                >
-                  {insurer.name}
-                </span>
+                insurer.logo ? (
+                  <div 
+                    key={insurer.name} 
+                    className="relative h-16 sm:h-20 w-32 sm:w-40 flex items-center justify-center bg-white p-2 rounded-xl border border-border shadow-sm hover:shadow-md transition-all duration-300 grayscale hover:grayscale-0 opacity-75 hover:opacity-100"
+                    title={insurer.name}
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img 
+                      src={insurer.logo} 
+                      alt={`Logotipo de ${insurer.name}`} 
+                      className="max-h-full max-w-full object-contain mix-blend-multiply"
+                    />
+                  </div>
+                ) : (
+                  <div
+                    key={insurer.name}
+                    className="h-16 sm:h-20 w-32 sm:w-40 flex items-center justify-center bg-white p-2 text-center rounded-xl border border-border shadow-sm hover:shadow-md transition-all duration-300 text-sm font-bold text-brand"
+                    title={insurer.name}
+                  >
+                    {insurer.name}
+                  </div>
+                )
               ))}
             </div>
           </ScrollReveal>

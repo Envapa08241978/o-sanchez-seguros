@@ -7,31 +7,34 @@
    ============================================ */
 
 :root {
-  /* Brand — Azul Navy */
-  --color-primary: #0D2B5E;
-  --color-primary-light: #1A4A8A;
-  --color-primary-lighter: #2D6BC4;
+  /* Brand — Azul Marino */
+  --color-primary: #202F71;
+  --color-primary-light: #2b3e94;
+  --color-primary-lighter: #3c54c4;
 
-  /* Accent — Rojo Vivo */
-  --color-accent: #E63946;
-  --color-accent-light: #FF4D5A;
-  --color-accent-dark: #C62D38;
+  /* Accent — Rojo */
+  --color-accent: #D32020;
+  --color-accent-light: #ef3838;
+  --color-accent-dark: #b31b1b;
+
+  /* Secondary — Verde Azulado */
+  --color-secondary: #2B818C;
 
   /* Semantic */
   --color-success: #16A34A;
   --color-warning: #D97706;
-  --color-danger: #DC2626;
-  --color-info: #2563EB;
+  --color-danger: #D32020;
+  --color-info: #2B818C;
 
-  /* Surface — Blanco puro con azules sutiles */
-  --background: #FFFFFF;
-  --foreground: #0D2B5E;
+  /* Surface — Beige/Hueso con Grises Oscuros */
+  --background: #FFFAF3;
+  --foreground: #202F71;
   --surface: #FFFFFF;
-  --surface-elevated: #F4F7FB;
-  --surface-muted: #E8EDF5;
-  --border-color: #D6DEE9;
-  --text-muted: #5A6B85;
-  --text-subtle: #8A99B0;
+  --surface-elevated: #FFFDF9;
+  --surface-muted: #F2EBE1;
+  --border-color: #E2D9CC;
+  --text-muted: #6E6965;
+  --text-subtle: #8A8581;
 
   /* Shadows */
   --shadow-sm: 0 1px 2px 0 rgba(13, 43, 94, 0.04);
@@ -58,12 +61,13 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-brand: #0D2B5E;
-  --color-brand-light: #1A4A8A;
-  --color-brand-lighter: #2D6BC4;
-  --color-accent: #E63946;
-  --color-accent-light: #FF4D5A;
-  --color-accent-dark: #C62D38;
+  --color-brand: #202F71;
+  --color-brand-light: #2b3e94;
+  --color-brand-lighter: #3c54c4;
+  --color-accent: #D32020;
+  --color-accent-light: #ef3838;
+  --color-accent-dark: #b31b1b;
+  --color-secondary: var(--color-secondary);
   --color-surface: var(--surface);
   --color-surface-elevated: var(--surface-elevated);
   --color-surface-muted: var(--surface-muted);
