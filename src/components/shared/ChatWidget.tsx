@@ -12,7 +12,11 @@ export default function ChatWidget() {
 
   const [isOpen, setIsOpen] = useState(false);
   const [localInput, setLocalInput] = useState("");
-  const { messages, append, isLoading } = useChat();
+  const { messages, append, isLoading, error } = useChat({
+    onError: (err) => {
+      alert("Error de conexión: " + err.message);
+    }
+  });
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // Auto-scroll al recibir mensajes
