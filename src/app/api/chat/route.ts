@@ -4,13 +4,14 @@ import { createGoogleGenerativeAI } from "@ai-sdk/google";
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
 
-// Inicialización segura mediante variables de entorno
-const googleAuth = createGoogleGenerativeAI({
-  apiKey: process.env.GEMINI_API_KEY || "", 
-});
-
 export async function POST(req: Request) {
   try {
+    // Inicialización dentro del runtime para que tome el valor de la variable de entorno
+    // actualizado, resolviendo problemas de variables en caché de Vercel.
+    const googleAuth = createGoogleGenerativeAI({
+      apiKey: process.env.GEMINI_API_KEY || process.env.GOOGLE_GENERATIVE_AI_API_KEY || "", 
+    });
+
     const { messages } = await req.json();
 
     const systemPrompt = `
