@@ -154,7 +154,7 @@ export const INSURERS = [
   { name: "CHUBB", logo: "/images/chubb.jpeg" },
   { name: "Allianz", logo: "/images/ALLIANZ.jpeg" },
   { name: "Qualitas", logo: "/images/quALITAS.jpeg" },
-  { name: "BX+", logo: "/images/SEGUROS BX+.jpeg" },
+  { name: "BX+", logo: "/images/SEGUROS_BX.jpeg" },
   { name: "GNP Seguros", logo: "/images/GNP.jpeg" },
   { name: "Plan Seguro", logo: "/images/PLAN SEGURO.jpeg" },
   { name: "Zurich", logo: "" },
