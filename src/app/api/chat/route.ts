@@ -34,7 +34,7 @@ export async function POST(req: Request) {
       system: systemPrompt,
     });
 
-    return result.toDataStreamResponse();
+    return result.toTextStreamResponse();
   } catch (error) {
     console.error("Gemini API Error:", error);
     return new Response(JSON.stringify({ error: (error as Error).message }), {
