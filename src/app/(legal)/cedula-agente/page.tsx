@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function CedulaAgentePage() {
   return (
     <div className="section-padding bg-background min-h-screen">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
         <ScrollReveal>
           <div className="text-center mb-16">
             <span className="text-5xl mb-6 block">📜</span>
@@ -23,7 +23,7 @@ export default function CedulaAgentePage() {
           </div>
         </ScrollReveal>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* Tarjeta Cédula */}
           <ScrollReveal delay={100}>
             <div className="bg-surface rounded-3xl p-8 border border-border shadow-md hover:shadow-xl hover-lift transition-all h-full flex flex-col items-center text-center">
@@ -85,7 +85,40 @@ export default function CedulaAgentePage() {
               </a>
             </div>
           </ScrollReveal>
+
+          {/* Tarjeta AXA */}
+          <ScrollReveal delay={300}>
+            <div className="bg-surface rounded-3xl p-8 border border-border shadow-md hover:shadow-xl hover-lift transition-all h-full flex flex-col items-center text-center">
+              <div className="w-20 h-20 bg-secondary/10 text-secondary rounded-2xl flex items-center justify-center mb-6">
+                <svg className="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-1.006 3.504 3.504 0 014.438 0 3.42 3.42 0 001.946 1.006 3.504 3.504 0 012.913 2.913 3.42 3.42 0 001.006 1.946 3.504 3.504 0 010 4.438 3.42 3.42 0 00-1.006 1.946 3.504 3.504 0 01-2.913 2.913 3.42 3.42 0 00-1.946 1.006 3.504 3.504 0 01-4.438 0 3.42 3.42 0 00-1.946-1.006 3.504 3.504 0 01-2.913-2.913 3.42 3.42 0 00-1.006-1.946 3.504 3.504 0 010-4.438 3.42 3.42 0 001.006-1.946 3.504 3.504 0 012.913-2.913z" />
+                </svg>
+              </div>
+              <h3 className="font-display text-2xl font-bold text-brand mb-3">
+                Reconocimiento AXA 2025
+              </h3>
+              <p className="text-muted text-sm mb-8 flex-grow">
+                Distinción otorgada por AXA Seguros en reconocimiento a la excelencia, calidad en el servicio y solidez profesional durante el año 2025.
+                <br /><br />
+                <span className="font-medium text-brand">Socio Estratégico AXA</span>
+              </p>
+              
+              <a
+                href="/images/RECONOCIMIENTO AXA 2025.png"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-brand text-white font-medium rounded-xl hover:bg-brand-light transition-colors"
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+                Ver Reconocimiento
+              </a>
+            </div>
+          </ScrollReveal>
         </div>
+
 
         <ScrollReveal delay={300}>
           <div className="text-center mt-12">
