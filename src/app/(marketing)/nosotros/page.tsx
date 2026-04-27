@@ -38,9 +38,7 @@ export default function NosotrosPage() {
               importa
             </h1>
             <p className="text-lg text-white/70 max-w-2xl mx-auto">
-              Desde diciembre de 2009, Oscar Sánchez Aguirre ha dedicado su carrera profesional al sector asegurador para brindar
-              la mejor asesoría a familias y empresas de Hermosillo,
-              Sonora.
+              Desde 2009, Oscar Eduardo Sanchez Aguirre, ha dedicado su carrera profesional al sector asegurador para brindar la mejor asesoria a familias y empresas en Hermosillo, Sonora y en toda la República Mexicana.
             </p>
           </ScrollReveal>
         </div>

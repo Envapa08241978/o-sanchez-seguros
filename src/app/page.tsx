@@ -42,9 +42,9 @@ export default function HomePage() {
               <strong className="text-white">
                 {SITE_CONFIG.yearsOfExperience} años
               </strong>{" "}
-              asesorando a familias y empresas en Hermosillo, Sonora y en toda la 
-              República Mexicana, Expertos en Planes de Ahorro, Retiro, Educación, 
-              Gastos Médicos Mayores, Menores, Autos, Empresarial y mucho mas...
+              asesorando familias y empresas en toda la 
+              República Mexicana, Expertos en Planes de Ahorro - Retiro - Educación 
+              - Gastos Médicos Mayores y Menores - Autos - Riesgos Empresariales y mucho mas...
             </p>
 
             {/* CTAs */}

@@ -1,7 +1,7 @@
 import nodemailer from "nodemailer";
 
 export async function sendEmailNotification(subject: string, htmlContent: string) {
-  const user = process.env.SMTP_USER || "enriquevale.ev@gmail.com";
+  const user = process.env.SMTP_USER || "oscareduardosanchezaguirre@gmail.com";
   const pass = process.env.SMTP_PASSWORD;
 
   if (!pass) {
@@ -19,7 +19,7 @@ export async function sendEmailNotification(subject: string, htmlContent: string
 
   const mailOptions = {
     from: `"O Sanchez Seguros Bot" <${user}>`,
-    to: "enriquevale.ev@gmail.com",
+    to: "oscareduardosanchezaguirre@gmail.com",
     subject: subject,
     html: htmlContent,
   };

@@ -7,7 +7,7 @@ import type { LeadFormData } from "@/lib/schemas/lead.schema";
 
 const INSURANCE_OPTIONS = [
   { value: "gmm", label: "Gastos Médicos Mayores" },
-  { value: "fronterizo", label: "Seguros Fronterizos / USA" },
+  { value: "fronterizo", label: "Planes de Ahorro e Inversión" },
   { value: "vida", label: "Seguros de Vida" },
   { value: "auto", label: "Seguros de Auto" },
   { value: "empresarial", label: "Seguros Empresariales" },
@@ -106,7 +106,7 @@ export default function LeadForm({
       // Generar enlace dinámico y abrir WhatsApp (Client Handoff)
       const seguroLabel = INSURANCE_OPTIONS.find(opt => opt.value === formData.insuranceType)?.label || formData.insuranceType;
       const mensaje = `Hola Oscar, acabo de solicitar mi cotización web de ${seguroLabel}. Soy ${formData.fullName}.`;
-      const waUrl = `https://wa.me/526421600559?text=${encodeURIComponent(mensaje)}`;
+      const waUrl = `https://wa.me/526621822481?text=${encodeURIComponent(mensaje)}`;
       
       setTimeout(() => {
         window.open(waUrl, "_blank");

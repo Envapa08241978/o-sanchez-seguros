@@ -62,7 +62,7 @@ export default function ContactoPage() {
       // WhatsApp Handoff
       const seguroLabel = INSURANCE_OPTIONS.find(opt => opt.value === data.insuranceType)?.label || data.insuranceType;
       const mensaje = `Hola Oscar, acabo de contactarte desde la página web buscando información de ${seguroLabel || 'seguros'}. Soy ${data.fullName}.`;
-      const waUrl = `https://wa.me/526421600559?text=${encodeURIComponent(mensaje)}`;
+      const waUrl = `https://wa.me/526621822481?text=${encodeURIComponent(mensaje)}`;
       
       setTimeout(() => {
         window.open(waUrl, "_blank");
