@@ -424,10 +424,16 @@ AXA, CHUBB, Allianz, Qualitas, BX+, GNP, Plan Seguro, Zurich, Mapfre, Inbursa, B
 
 > A partir de aquí, puedes agregar resúmenes de conversaciones con el agente de IA para mantener el contexto a futuro.
 
-### Chat 1 — [Fecha: ____]
-**Tema:**  
+### Chat 1 — [Fecha: 27 de abril de 2026]
+**Tema:** Actualización de campos de contacto y textos de cobertura.
 **Cambios realizados:**  
+- Se añadieron los campos `Fecha de nacimiento`, `Sexo` y `Código Postal` al formulario de contacto, a las validaciones de Zod (`lead.schema.ts`) y a la plantilla de correo de notificación (`route.ts`).
+- Se actualizaron las opciones del menú desplegable "Tipo de seguro de interés" en la página de contacto para que coincidan con la página de inicio, e incluimos "Seguros de Vida con Ahorro" en los tipos estáticos (`InsuranceType`).
+- Se modificó el título y descripción de la página "Red Hospitalaria" a "Red Hospitalaria en Sonora y Nacional".
+- Se corrigió un error de tipado estricto en Zod (`z.enum`) que impedía el despliegue automático en Vercel.
 **Decisiones clave:**  
+- Los nuevos campos en el formulario de contacto se definieron como obligatorios.
+- Se mantuvo el orden exacto de los seguros solicitado por el usuario para mayor consistencia visual y de datos.
 
 ---
 
