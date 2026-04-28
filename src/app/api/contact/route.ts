@@ -25,6 +25,9 @@ export async function POST(request: NextRequest) {
       <p><strong>Nombre:</strong> ${result.data.fullName}</p>
       <p><strong>Teléfono:</strong> ${result.data.phone}</p>
       <p><strong>Correo:</strong> ${result.data.email}</p>
+      <p><strong>Fecha de Nacimiento:</strong> ${result.data.birthDate}</p>
+      <p><strong>Sexo:</strong> ${result.data.gender}</p>
+      <p><strong>Código Postal:</strong> ${result.data.zipCode}</p>
       <p><strong>Interés:</strong> ${result.data.insuranceType || "General"}</p>
       <br />
       <p><strong>Mensaje del cliente:</strong></p>

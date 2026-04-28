@@ -2,6 +2,7 @@ export type InsuranceType =
   | "gmm"
   | "fronterizo"
   | "vida"
+  | "vida-ahorro"
   | "auto"
   | "empresarial"
   | "otro";

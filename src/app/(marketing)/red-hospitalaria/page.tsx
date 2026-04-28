@@ -107,10 +107,10 @@ export default function RedHospitalariaPage() {
             NUESTRA COBERTURA
           </span>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 animate-fade-in-up" style={{ animationDelay: "100ms" }}>
-            Red Hospitalaria en <span className="text-accent underline decoration-4 underline-offset-8">Sonora</span>
+            Red Hospitalaria en <span className="text-accent underline decoration-4 underline-offset-8">Sonora y Nacional</span>
           </h1>
           <p className="text-lg md:text-xl text-neutral-200 mb-10 max-w-2xl mx-auto animate-fade-in-up" style={{ animationDelay: "200ms" }}>
-            Contamos con convenio directo en los mejores hospitales del estado para garantizarte la mejor atención cuando más lo necesitas.
+            Contamos con seguros de amplia red médica Nacional de acuerdo al plan contratado para garantizarte la mejor atención cuando más lo necesitas.
           </p>
 
           {/* Buscador */}

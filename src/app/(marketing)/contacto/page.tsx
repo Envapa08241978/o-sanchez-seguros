@@ -6,11 +6,12 @@ import ScrollReveal from "@/components/shared/ScrollReveal";
 import { SITE_CONFIG } from "@/utils/constants";
 
 const INSURANCE_OPTIONS = [
-  { value: "gmm", label: "Gastos Médicos Mayores" },
-  { value: "fronterizo", label: "Seguros Fronterizos / USA" },
   { value: "vida", label: "Seguros de Vida" },
+  { value: "gmm", label: "Gastos Médicos Mayores" },
   { value: "auto", label: "Seguros de Auto" },
+  { value: "vida-ahorro", label: "Seguros de Vida con Ahorro" },
   { value: "empresarial", label: "Seguros Empresariales" },
+  { value: "fronterizo", label: "Seguros Fronterizos" },
   { value: "otro", label: "Otro" },
 ];
 
@@ -30,6 +31,9 @@ export default function ContactoPage() {
       fullName: formData.get("fullName") as string,
       phone: formData.get("phone") as string,
       email: formData.get("email") as string,
+      birthDate: formData.get("birthDate") as string,
+      gender: formData.get("gender") as string,
+      zipCode: formData.get("zipCode") as string,
       insuranceType: formData.get("insuranceType") as string,
       message: formData.get("message") as string,
       privacyConsent: formData.get("privacyConsent") === "on",
@@ -164,19 +168,69 @@ export default function ContactoPage() {
                       </div>
                     </div>
 
-                    <div>
-                      <label htmlFor="contact-email" className="block text-sm font-medium text-brand mb-2">
-                        Correo electrónico *
-                      </label>
-                      <input
-                        type="email"
-                        id="contact-email"
-                        name="email"
-                        required
-                        className={`w-full px-4 py-3 rounded-xl border ${errors.email ? "border-red-400 ring-2 ring-red-100" : "border-border"} bg-surface-elevated text-brand text-sm focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand transition-all`}
-                        placeholder="tu@email.com"
-                      />
-                      {errors.email && <p className="mt-1 text-xs text-red-600">{errors.email}</p>}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                      <div>
+                        <label htmlFor="contact-email" className="block text-sm font-medium text-brand mb-2">
+                          Correo electrónico *
+                        </label>
+                        <input
+                          type="email"
+                          id="contact-email"
+                          name="email"
+                          required
+                          className={`w-full px-4 py-3 rounded-xl border ${errors.email ? "border-red-400 ring-2 ring-red-100" : "border-border"} bg-surface-elevated text-brand text-sm focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand transition-all`}
+                          placeholder="tu@email.com"
+                        />
+                        {errors.email && <p className="mt-1 text-xs text-red-600">{errors.email}</p>}
+                      </div>
+                      <div>
+                        <label htmlFor="contact-birthdate" className="block text-sm font-medium text-brand mb-2">
+                          Fecha de nacimiento *
+                        </label>
+                        <input
+                          type="date"
+                          id="contact-birthdate"
+                          name="birthDate"
+                          required
+                          className={`w-full px-4 py-3 rounded-xl border ${errors.birthDate ? "border-red-400 ring-2 ring-red-100" : "border-border"} bg-surface-elevated text-brand text-sm focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand transition-all`}
+                        />
+                        {errors.birthDate && <p className="mt-1 text-xs text-red-600">{errors.birthDate}</p>}
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                      <div>
+                        <label htmlFor="contact-gender" className="block text-sm font-medium text-brand mb-2">
+                          Sexo *
+                        </label>
+                        <select
+                          id="contact-gender"
+                          name="gender"
+                          required
+                          className={`w-full px-4 py-3 rounded-xl border ${errors.gender ? "border-red-400 ring-2 ring-red-100" : "border-border"} bg-surface-elevated text-brand text-sm focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand transition-all`}
+                        >
+                          <option value="">Selecciona</option>
+                          <option value="Masculino">Masculino</option>
+                          <option value="Femenino">Femenino</option>
+                          <option value="Otro">Otro</option>
+                          <option value="Prefiero no decirlo">Prefiero no decirlo</option>
+                        </select>
+                        {errors.gender && <p className="mt-1 text-xs text-red-600">{errors.gender}</p>}
+                      </div>
+                      <div>
+                        <label htmlFor="contact-zipcode" className="block text-sm font-medium text-brand mb-2">
+                          Código Postal *
+                        </label>
+                        <input
+                          type="text"
+                          id="contact-zipcode"
+                          name="zipCode"
+                          required
+                          className={`w-full px-4 py-3 rounded-xl border ${errors.zipCode ? "border-red-400 ring-2 ring-red-100" : "border-border"} bg-surface-elevated text-brand text-sm focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand transition-all`}
+                          placeholder="Ej. 83000"
+                        />
+                        {errors.zipCode && <p className="mt-1 text-xs text-red-600">{errors.zipCode}</p>}
+                      </div>
                     </div>
 
                     <div>
