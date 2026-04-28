@@ -34,9 +34,8 @@ export const contactSchema = z.object({
   email: z.string().email("Ingresa un correo electrónico válido"),
   phone: z.string().min(10, "El teléfono debe tener al menos 10 dígitos"),
   birthDate: z.string().min(1, "La fecha de nacimiento es obligatoria"),
-  gender: z.enum(["Masculino", "Femenino", "Otro", "Prefiero no decirlo"], {
-    invalid_type_error: "Selecciona una opción de sexo",
-    required_error: "Selecciona una opción de sexo",
+  gender: z.enum(["Masculino", "Femenino", "Otro", "Prefiero no decirlo"] as const, {
+    message: "Selecciona una opción de sexo",
   }),
   zipCode: z.string().min(4, "Ingresa un código postal válido").max(10, "El código postal es demasiado largo"),
   insuranceType: z.enum(insuranceTypes),
