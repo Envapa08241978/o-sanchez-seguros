@@ -435,6 +435,77 @@ AXA, CHUBB, Allianz, Qualitas, BX+, GNP, Plan Seguro, Zurich, Mapfre, Inbursa, B
 - Los nuevos campos en el formulario de contacto se definieron como obligatorios.
 - Se mantuvo el orden exacto de los seguros solicitado por el usuario para mayor consistencia visual y de datos.
 
+### Chat 2 — [Fecha: 29-30 de abril de 2026]
+**Tema:** Rediseño del Dashboard Admin + Transformación a Mini-CRM con 4 funcionalidades nuevas.
+
+**Parte 1 — Rediseño Visual del Dashboard Admin:**
+- Se rediseñó completamente `src/app/admin/page.tsx` con la identidad de marca de O Sanchez Seguros.
+- Se integraron los colores corporativos (Navy `#202F71`, Accent Rojo `#D32020`, Fondo Crema `#FFFAF3`).
+- Se añadió el logotipo SVG oficial en el header y la pantalla de login.
+- Se implementó glassmorphism en el header y tarjetas para coherencia con el sitio público.
+- Se añadieron KPI cards (Total Leads, Leads Nuevos, Último Registro) y un banner con gradiente.
+- La tabla de leads ahora muestra avatares, badges de estatus con colores, y formato de fecha optimizado.
+
+**Parte 2 — 4 Funcionalidades CRM Nuevas:**
+
+1. **Comunicación Directa (WhatsApp + Email):**
+   - Cada fila de la tabla tiene botones de acción rápida en la columna "Acciones".
+   - WhatsApp abre `wa.me/52{teléfono}` con mensaje personalizado pre-escrito.
+   - Email abre `mailto:{email}` con asunto pre-configurado "Cotización O Sanchez Seguros".
+
+2. **Cotizador de Aseguradoras:**
+   - Modal que muestra las 20 aseguradoras aliadas en cuadrícula con logos.
+   - Cada aseguradora es un link directo a su portal de cotización.
+   - Se agregó `quoteUrl` a cada objeto en `INSURERS[]` de `src/utils/constants.ts`.
+   - Accesible desde botón "Cotizar Aseguradoras" en la tabla o icono 🔍 por cada lead.
+
+3. **Historial de Actividad por Lead (CRM Timeline):**
+   - Drawer lateral que se abre al hacer clic en el icono de reloj ⏰ de cada lead.
+   - Muestra: información completa del lead, acciones rápidas de WA/Email, cambio de estatus, agregar notas categorizadas, y timeline de historial.
+   - **Nueva subcollection en Firestore:** `leads/{leadId}/history` con documentos que tienen `type`, `note`, `createdAt`.
+   - Tipos de nota: Llamada (📞), WhatsApp (💬), Email (📧), Cotización (📋), Nota general (📝).
+   - Estatus disponibles: Nuevo → Contactado → Calificado → Propuesta → Negociación → Ganado/Perdido/Archivado.
+   - Los cambios de estatus se auto-registran en el historial.
+
+4. **Creación Manual de Leads:**
+   - Botón rojo "+ Nuevo Lead" en el header del dashboard.
+   - Modal con formulario: Nombre, Teléfono, Email, Tipo de seguro, Fuente, Notas.
+   - Fuentes disponibles: Referido, WhatsApp, Teléfono, Redes Sociales, Visita en persona, Google Ads, Meta Ads.
+   - El lead se guarda en Firestore con `source: "manual"` y auto-registra entrada en historial.
+
+**Archivos creados/modificados:**
+
+| Archivo | Tipo | Descripción |
+|---------|------|-------------|
+| `src/app/admin/page.tsx` | MODIFICADO | Dashboard completo con modales, drawer y acciones |
+| `src/app/admin/components/NewLeadModal.tsx` | NUEVO | Modal de creación manual de leads |
+| `src/app/admin/components/QuoteModal.tsx` | NUEVO | Modal de cotización con logos de 20 aseguradoras |
+| `src/app/admin/components/LeadDetailDrawer.tsx` | NUEVO | Drawer lateral de historial CRM con timeline |
+| `src/lib/firebase/firestore.ts` | MODIFICADO | 4 funciones nuevas: `createManualLead()`, `updateLeadStatus()`, `addLeadHistoryEntry()`, `getLeadHistory()` |
+| `src/utils/constants.ts` | MODIFICADO | Agregado `quoteUrl` a cada objeto en `INSURERS[]` |
+
+**Estructura de datos en Firestore actualizada:**
+```
+leads/{leadId}
+  ├── fullName, phone, email, insuranceType, status, source, ...
+  ├── createdAt, updatedAt
+  └── history/ (subcollection)
+      ├── {entryId}: { type: "call"|"email"|"whatsapp"|"note"|"status_change"|"quote", note: string, createdAt: timestamp }
+      └── ...
+```
+
+**Decisiones clave:**
+- Se mantiene autenticación simple con contraseña maestra `AdminSanchez123` vía `sessionStorage`.
+- Los URLs de cotización son los portales públicos de las aseguradoras (no portales de agente).
+- El historial es visible únicamente desde el dashboard admin.
+- Los componentes se separaron en archivos independientes (`components/`) para mantener el archivo principal manejable.
+- Todos los cambios de estatus y creaciones manuales auto-generan entradas de historial.
+
+**Credenciales y URLs:**
+- **URL producción:** `https://o-sanchez-seguros.vercel.app/admin`
+- **Contraseña:** `AdminSanchez123`
+- **Commit:** `f5988b0` — desplegado exitosamente en Vercel.
+
 ---
 
 *Este archivo debe mantenerse actualizado cada vez que se hagan cambios significativos al proyecto.*
