@@ -5,6 +5,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import WhatsAppButton from "@/components/shared/WhatsAppButton";
 import ChatWidget from "@/components/shared/ChatWidget";
+import JsonLd from "@/components/shared/JsonLd";
 
 const outfit = Outfit({
   variable: "--font-display",
@@ -100,6 +101,7 @@ export default function RootLayout({
         <Footer />
         <WhatsAppButton />
         <ChatWidget />
+        <JsonLd />
       </body>
     </html>
   );
