@@ -75,7 +75,7 @@ src/lib/firebase/firestore.ts → Funciones createLead() y createContactSubmissi
 - **Project ID:** `prj_PWIKYb96yQSnkskAVB3JYc4k6ZnJ`
 - **Org/Team ID:** `team_zSb8hJlZgiVrlftqSzV4NyaK`
 - **Project Name:** `o-sanchez-seguros`
-- **URL de producción:** `https://o-sanchez-seguros.vercel.app`
+- **URL de producción:** `https://osanchezseguros.com`
 - **Plan:** Pro
 
 ### 4.2 Variables de Entorno (`.env.local`)
@@ -374,7 +374,7 @@ AXA, CHUBB, Allianz, Qualitas, BX+, GNP, Plan Seguro, Zurich, Mapfre, Inbursa, B
 ## 13. SEO Y METADATA
 
 - **Title:** "O Sanchez Seguros | Especialista en Seguros desde 2009 | Hermosillo, Sonora"
-- **metadataBase:** `https://o-sanchez-seguros.vercel.app`
+- **metadataBase:** `https://osanchezseguros.com`
 - **Open Graph:** Configurado con imagen OG, locale es_MX
 - **Twitter Card:** summary_large_image
 - **Keywords:** seguros hermosillo, gastos médicos mayores, seguros fronterizos, etc.
@@ -502,7 +502,7 @@ leads/{leadId}
 - Todos los cambios de estatus y creaciones manuales auto-generan entradas de historial.
 
 **Credenciales y URLs:**
-- **URL producción:** `https://o-sanchez-seguros.vercel.app/admin`
+- **URL producción:** `https://osanchezseguros.com/admin`
 - **Contraseña:** `AdminSanchez123`
 - **Commit:** `f5988b0` — desplegado exitosamente en Vercel.
 

@@ -21,7 +21,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://o-sanchez-seguros.vercel.app"),
+  metadataBase: new URL("https://osanchezseguros.com"),
   title: {
     default:
       "O Sanchez Seguros | Especialista en Seguros desde 2009 | Hermosillo, Sonora",
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "es_MX",
-    url: "https://o-sanchez-seguros.vercel.app",
+    url: "https://osanchezseguros.com",
     siteName: "O Sanchez Seguros",
     title: "O Sanchez Seguros | Especialista en Seguros desde 2009",
     description:
