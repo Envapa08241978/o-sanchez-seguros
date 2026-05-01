@@ -1,4 +1,4 @@
-import { streamText } from "ai";
+import { streamText, convertToModelMessages } from "ai";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
 
 // Allow streaming responses up to 30 seconds
@@ -27,10 +27,13 @@ export async function POST(req: Request) {
     4. Resuelve dudas básicas de seguros (ej. "qué es un deducible", "me cubre en USA"), pero siempre invitando a la asesoría personalizada real.
     `;
 
+    // Convert UIMessage format (v6) to model messages for Gemini
+    const modelMessages = await convertToModelMessages(messages);
+
     // Provide the model, messages, and system instructions
     const result = await streamText({
       model: googleAuth("gemini-2.5-flash"), 
-      messages: messages,
+      messages: modelMessages,
       system: systemPrompt,
     });
 
