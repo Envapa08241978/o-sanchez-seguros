@@ -585,5 +585,62 @@ Implementar SEO técnico completo para posicionar `osanchezseguros.com` en Googl
 
 ---
 
+## Sesión: Admin Delete + Chat IA Migration (30 abril 2026 - noche)
+
+### Cambios completados y en producción
+
+**1. Botón Eliminar Lead (Admin CRM Drawer)**
+- Agregada función `deleteLead()` en `src/lib/firebase/firestore.ts`
+  - Elimina toda la subcolección `history/` del lead primero
+  - Luego elimina el documento del lead
+- Botón rojo "Eliminar Lead" al fondo del drawer `LeadDetailDrawer.tsx`
+  - Confirmación en 2 pasos con mensaje "¿Seguro que quieres eliminar a [nombre]?"
+  - Botones "Cancelar" y "Sí, Eliminar" con spinner de carga
+- **Commit:** `b56d2ca`
+
+### Chat IA — Migración a ai SDK v6 (EN PROGRESO - NO EN PRODUCCIÓN)
+
+**Estado:** ⚠️ DESACTIVADO TEMPORALMENTE en producción. El `<ChatWidget />` está comentado en `src/app/layout.tsx`. Necesita testing local antes de activar.
+
+**Problema original:** El chat dejó de funcionar por incompatibilidades con `ai@6.x` / `@ai-sdk/react@3.x` / `@ai-sdk/google@3.x`.
+
+**Cambios realizados (en los archivos, pero widget desactivado):**
+
+| Archivo | Cambio | Detalle |
+|---|---|---|
+| `src/app/api/chat/route.ts` | Modelo actualizado | `gemini-1.5-flash` → `gemini-2.5-flash` (1.5 deprecado) |
+| `src/app/api/chat/route.ts` | Stream response | `toTextStreamResponse()` → `toUIMessageStreamResponse()` |
+| `src/app/api/chat/route.ts` | Mensajes | Añadido `convertToModelMessages()` para UIMessage → ModelMessage |
+| `src/app/api/chat/route.ts` | Tool calling | Añadida herramienta `capturarLead` para auto-crear leads en Firestore |
+| `src/components/shared/ChatWidget.tsx` | API v6 | `append()` → `sendMessage({ parts: [...] })` |
+| `src/components/shared/ChatWidget.tsx` | Rendering | `m.content` → `m.parts` con filtro por tipo `text` |
+| `src/components/shared/ChatWidget.tsx` | Estado | `isLoading` → `status === "streaming"` |
+| `src/app/layout.tsx` | Desactivado | `<ChatWidget />` comentado |
+
+**Qué falta para activar el chat:**
+1. Probar localmente con `npm run dev` que el chat responda correctamente
+2. Verificar que la tool `capturarLead` cree leads en Firestore
+3. Verificar que la notificación por email se envíe
+4. Descomentar `<ChatWidget />` en `layout.tsx` y hacer push
+
+**API Key de Gemini:**
+- **Proyecto GCP:** O SANCHEZ SEGUROS
+- **Key name:** BOT O SANCHEZ
+- **Restrictions:** Gemini API
+- **Variable env:** `GEMINI_API_KEY` en `.env.local` y Vercel
+
+### Commits de esta sesión
+| Commit | Descripción |
+|---|---|
+| `b56d2ca` | feat(admin): add delete lead button |
+| `92c98bf` | fix(chat): update Gemini model to 2.5-flash |
+| `143bddb` | fix(chat): use toUIMessageStreamResponse |
+| `d27feff` | fix(chat): convertToModelMessages for v6 |
+| `9c912c2` | fix(chat): sendMessage with UIMessage parts |
+| `5f8dd24` | feat(chat): add AI tool calling for lead capture |
+| `6f7444f` | chore: temporarily disable ChatWidget |
+
+---
+
 *Este archivo debe mantenerse actualizado cada vez que se hagan cambios significativos al proyecto.*
 
