@@ -3,6 +3,7 @@ import {
   addDoc,
   doc,
   updateDoc,
+  deleteDoc,
   getDocs,
   query,
   orderBy,
@@ -117,3 +118,18 @@ export async function getLeadHistory(leadId: string) {
     ...d.data(),
   }));
 }
+
+// ---- Delete Lead (and its history subcollection) ----
+export async function deleteLead(leadId: string) {
+  // First, delete all history subcollection documents
+  const historyRef = collection(db, "leads", leadId, "history");
+  const historySnapshot = await getDocs(historyRef);
+  const deletePromises = historySnapshot.docs.map((d) =>
+    deleteDoc(doc(db, "leads", leadId, "history", d.id))
+  );
+  await Promise.all(deletePromises);
+
+  // Then delete the lead document itself
+  await deleteDoc(doc(db, "leads", leadId));
+}
+

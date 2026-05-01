@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
-import { updateLeadStatus, addLeadHistoryEntry, getLeadHistory } from "@/lib/firebase/firestore";
+import { updateLeadStatus, addLeadHistoryEntry, getLeadHistory, deleteLead } from "@/lib/firebase/firestore";
 
 type Lead = {
   id: string;
@@ -60,6 +60,8 @@ export default function LeadDetailDrawer({ isOpen, onClose, lead, onUpdated }: P
   const [noteType, setNoteType] = useState("note");
   const [savingNote, setSavingNote] = useState(false);
   const [changingStatus, setChangingStatus] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   const fetchHistory = useCallback(async () => {
     if (!lead) return;
@@ -121,6 +123,22 @@ export default function LeadDetailDrawer({ isOpen, onClose, lead, onUpdated }: P
   function getTypeIcon(type: string) {
     const found = NOTE_TYPES.find(t => t.value === type);
     return found?.icon || "📝";
+  }
+
+  async function handleDeleteLead() {
+    if (!lead) return;
+    setDeleting(true);
+    try {
+      await deleteLead(lead.id);
+      setShowDeleteConfirm(false);
+      onClose();
+      onUpdated();
+    } catch (err) {
+      console.error("Error deleting lead:", err);
+      alert("Error al eliminar el lead. Intenta de nuevo.");
+    } finally {
+      setDeleting(false);
+    }
   }
 
   return (
@@ -236,6 +254,50 @@ export default function LeadDetailDrawer({ isOpen, onClose, lead, onUpdated }: P
                     </div>
                   </div>
                 ))}
+              </div>
+            )}
+          </div>
+
+          {/* Delete Section */}
+          <div className="p-5 border-t border-red-100">
+            {!showDeleteConfirm ? (
+              <button
+                onClick={() => setShowDeleteConfirm(true)}
+                className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-red-50 text-red-600 rounded-xl text-sm font-bold hover:bg-red-100 transition-all border border-red-200"
+              >
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+                Eliminar Lead
+              </button>
+            ) : (
+              <div className="bg-red-50 border border-red-200 rounded-xl p-4 space-y-3">
+                <p className="text-sm text-red-700 font-medium text-center">
+                  ¿Seguro que quieres eliminar a <strong>{displayName}</strong>? Esta acción no se puede deshacer.
+                </p>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setShowDeleteConfirm(false)}
+                    disabled={deleting}
+                    className="flex-1 px-4 py-2.5 bg-white text-neutral-600 rounded-lg text-sm font-bold hover:bg-neutral-50 transition-all border border-border"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    onClick={handleDeleteLead}
+                    disabled={deleting}
+                    className="flex-1 px-4 py-2.5 bg-red-600 text-white rounded-lg text-sm font-bold hover:bg-red-700 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+                  >
+                    {deleting ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                        Eliminando...
+                      </>
+                    ) : (
+                      "Sí, Eliminar"
+                    )}
+                  </button>
+                </div>
               </div>
             )}
           </div>
