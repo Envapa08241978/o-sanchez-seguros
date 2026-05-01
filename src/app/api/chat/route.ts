@@ -29,7 +29,7 @@ export async function POST(req: Request) {
 
     // Provide the model, messages, and system instructions
     const result = await streamText({
-      model: googleAuth("gemini-1.5-flash"), 
+      model: googleAuth("gemini-2.5-flash"), 
       messages: messages,
       system: systemPrompt,
     });
