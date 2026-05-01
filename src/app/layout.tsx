@@ -4,7 +4,7 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import WhatsAppButton from "@/components/shared/WhatsAppButton";
-import ChatWidget from "@/components/shared/ChatWidget";
+// import ChatWidget from "@/components/shared/ChatWidget"; // TEMPORALMENTE DESACTIVADO - trabajar localmente antes de activar
 import JsonLd from "@/components/shared/JsonLd";
 
 const outfit = Outfit({
@@ -100,7 +100,7 @@ export default function RootLayout({
         <main className="flex-1 pt-18 md:pt-20">{children}</main>
         <Footer />
         <WhatsAppButton />
-        <ChatWidget />
+        {/* <ChatWidget /> TEMPORALMENTE DESACTIVADO */}
         <JsonLd />
       </body>
     </html>
