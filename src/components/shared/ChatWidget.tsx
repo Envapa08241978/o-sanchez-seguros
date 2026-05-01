@@ -1,55 +1,73 @@
-// @ts-nocheck
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { useChat, UIMessage } from "@ai-sdk/react";
+import { useChat } from "@ai-sdk/react";
 import { usePathname } from "next/navigation";
-import Image from "next/image";
 
 export default function ChatWidget() {
   const pathname = usePathname();
-  if (pathname?.startsWith("/admin")) return null;
-
   const [isOpen, setIsOpen] = useState(false);
   const [localInput, setLocalInput] = useState("");
-  const { messages, append, isLoading, error } = useChat({
-    onError: (err) => {
-      alert("Error de conexión: " + err.message);
-    }
-  });
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Auto-scroll al recibir mensajes
+  // Hide on admin pages
+  if (pathname?.startsWith("/admin")) return null;
+
+  const { messages, sendMessage, status, error } = useChat({
+    onError: (err) => {
+      console.error("Chat error:", err);
+    },
+  });
+
+  const isLoading = status === "streaming" || status === "submitted";
+
+  // Auto-scroll when messages update
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  function handleFormSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!localInput.trim() || isLoading) return;
+    sendMessage({
+      parts: [{ type: "text" as const, text: localInput.trim() }],
+    });
+    setLocalInput("");
+  }
+
+  // Extract text content from a message (v6 UIMessage uses parts)
+  function getMessageText(m: (typeof messages)[number]): string {
+    if (m.parts && m.parts.length > 0) {
+      return m.parts
+        .filter((p): p is { type: "text"; text: string } => p.type === "text")
+        .map((p) => p.text)
+        .join("");
+    }
+    return "";
+  }
+
   return (
     <>
-      {/* Botón flotante para abrir/cerrar */}
+      {/* Floating toggle button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 bg-brand text-white rounded-full shadow-2xl hover:scale-105 transition-transform"
         aria-label="Abrir asistente inteligente"
       >
         {isOpen ? (
-          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-          </svg>
+          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
         ) : (
-          <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-          </svg>
+          <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
         )}
       </button>
 
-      {/* Ventana de Chat */}
+      {/* Chat Window */}
       <div 
         className={`fixed bottom-24 right-6 w-[90vw] sm:w-[380px] h-[550px] max-h-[75vh] bg-white rounded-2xl shadow-2xl border border-border flex flex-col z-50 transition-all duration-300 origin-bottom-right ${
           isOpen ? "scale-100 opacity-100" : "scale-95 opacity-0 pointer-events-none"
         }`}
       >
-        {/* Cabecera del chat */}
+        {/* Header */}
         <div className="flex items-center gap-3 p-4 bg-brand text-white rounded-t-2xl">
           <div className="relative w-10 h-10 rounded-full bg-white/10 flex items-center justify-center overflow-hidden">
             <div className="absolute inset-0 flex items-center justify-center">
@@ -67,7 +85,7 @@ export default function ChatWidget() {
           </div>
         </div>
 
-        {/* Cesta de Mensajes */}
+        {/* Messages */}
         <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-50/50">
           {messages.length === 0 && (
             <div className="text-center text-sm text-muted mt-10 p-6 bg-white rounded-xl border border-border shadow-sm">
@@ -76,7 +94,7 @@ export default function ChatWidget() {
             </div>
           )}
 
-          {messages.map((m: UIMessage) => (
+          {messages.map((m) => (
             <div key={m.id} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
               {m.role !== "user" && (
                 <div className="w-8 h-8 rounded-full bg-brand flex items-center justify-center mr-2 flex-shrink-0">
@@ -93,7 +111,7 @@ export default function ChatWidget() {
                     : "bg-white border border-border text-brand rounded-tl-none"
                 }`}
               >
-                {m.content}
+                {getMessageText(m)}
               </div>
             </div>
           ))}
@@ -115,19 +133,9 @@ export default function ChatWidget() {
           <div ref={messagesEndRef} />
         </div>
 
-        {/* Caja de Input */}
+        {/* Input */}
         <div className="p-3 bg-white border-t border-border rounded-b-2xl">
-          <form 
-            onSubmit={(e) => {
-              e.preventDefault();
-              if (!localInput.trim()) return;
-              if (append) {
-                append({ role: "user", content: localInput });
-                setLocalInput("");
-              }
-            }} 
-            className="flex gap-2"
-          >
+          <form onSubmit={handleFormSubmit} className="flex gap-2">
             <input
               type="text"
               value={localInput}
