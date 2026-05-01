@@ -508,4 +508,82 @@ leads/{leadId}
 
 ---
 
+## Sesión: Implementación SEO Completa (30 abril 2026)
+
+### Objetivo
+Implementar SEO técnico completo para posicionar `osanchezseguros.com` en Google desde cero (0 páginas indexadas previamente).
+
+### Dominio y DNS
+- **Proveedor de dominio:** Squarespace (`account.squarespace.com/domains`)
+- **Dominio principal:** `osanchezseguros.com` (redirige a `www`)
+- **Dominio canónico:** `www.osanchezseguros.com`
+- **DNS configurado en Squarespace:**
+  - `A` → `@` → `216.150.1.1`
+  - `CNAME` → `www` → `65ac7ee7acd34064.vercel-dns-016.com` (Vercel)
+  - `TXT` → `@` → `v=spf1 include:_spf.google.com ~all` (email)
+  - `TXT` → `@` → `google-site-verification=AqFRlvRa61PBfo66Ana3iIzxt1dVX4aXmh9ueOY6cYY` (GSC)
+
+### Google Search Console
+- **Propiedad:** `sc-domain:osanchezseguros.com` (tipo Domain)
+- **Verificación:** DNS TXT record via Squarespace ✅
+- **Sitemap enviado:** `https://www.osanchezseguros.com/sitemap.xml` — 14 URLs
+- **URL del panel:** `https://search.google.com/search-console?resource_id=sc-domain:osanchezseguros.com`
+
+### Google Analytics (GA4)
+- **Cuenta:** o sanchez seguros
+- **Propiedad:** o-sanchez-seguros
+- **Stream:** o-sanchez-seguros-web (ID: 14326630693)
+- **Measurement ID:** `G-45R76JVTZS`
+- **Conexión:** Via Firebase Analytics SDK en `src/lib/firebase/config.ts`
+- **Estado:** Activo — recolectando datos ✅
+- **URL del panel:** `https://analytics.google.com/analytics/web/#/a390173384p531551166/`
+
+### Archivos SEO creados/modificados
+
+| Archivo | Tipo | Propósito |
+|---|---|---|
+| `src/app/sitemap.ts` | NUEVO | Sitemap XML dinámico con 14 URLs y prioridades |
+| `src/app/robots.ts` | NUEVO | Robots.txt — permite rastreo público, bloquea `/admin`, `/api/`, `/_next/` |
+| `src/components/shared/JsonLd.tsx` | NUEVO | Datos estructurados Schema.org (InsuranceAgency, WebSite, Services, FAQ, Breadcrumbs) |
+| `src/app/(marketing)/contacto/layout.tsx` | NUEVO | Metadata SEO para página contacto (`"use client"` wrapper) |
+| `src/app/(marketing)/red-hospitalaria/layout.tsx` | NUEVO | Metadata SEO para red hospitalaria (`"use client"` wrapper) |
+| `src/app/layout.tsx` | MODIFICADO | Import y rendering de `<JsonLd />` en body |
+| `next.config.ts` | MODIFICADO | Headers seguridad (HSTS, X-Frame-Options), X-Robots-Tag noindex para /admin, cache para assets |
+
+### Datos estructurados (JSON-LD) implementados
+- **InsuranceAgency** — Nombre, dirección, teléfono, horario, coordenadas Hermosillo, redes sociales
+- **WebSite** — Nombre del sitio, URL, idioma es-MX
+- **ItemList/Service** — 6 servicios de seguros con URLs individuales
+- **Funciones exportadas:** `getBreadcrumbSchema()`, `getFaqSchema()` para uso en páginas individuales
+
+### Palabras clave objetivo
+
+**Alta intención (primarias):**
+- `seguros hermosillo`, `agente de seguros hermosillo`
+- `gastos medicos mayores hermosillo`, `seguro de auto hermosillo`
+- `seguros fronterizos sonora`, `cotizar seguro hermosillo`
+- `seguro de vida hermosillo`, `seguros empresariales hermosillo`
+
+**Long-tail (baja competencia):**
+- `seguro para cruzar a estados unidos desde sonora`
+- `seguro gastos medicos hospital cima hermosillo`
+- `plan de ahorro retiro hermosillo`
+- `seguro fronterizo para carro sonora arizona`
+- `comparar aseguradoras hermosillo axa gnp chubb`
+
+### Competidores locales identificados
+- SGroup Seguros (sgroup.com.mx)
+- Jiro y Asociados (jiro.mx)
+- Páez Páez y Asociados (agenciadesegurospaez.com)
+- Cobertura Inteligente (coberturainteligente.com)
+
+### Commit y deploy
+- **Commit:** `d33b3ed` — feat(seo): complete SEO implementation
+- **Archivos cambiados:** 7 (5 nuevos, 2 modificados)
+- **Deploy:** Automático via Vercel desde push a `main`
+- **Verificación:** sitemap.xml y robots.txt confirmados live en producción
+
+---
+
 *Este archivo debe mantenerse actualizado cada vez que se hagan cambios significativos al proyecto.*
+
