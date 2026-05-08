@@ -1,99 +1,45 @@
 "use client";
 
-import { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
 
-const HOSPITALS = [
+const NETWORK_LINKS = [
   {
     id: 1,
-    name: "Hospital CIMA Hermosillo",
-    specialty: "Clínicas Integrales y Especialidad",
-    description: "Este hospital destaca por contar con clínicas integrales de alta especialidad (como el Hermosillo Heart Team, la Unidad de Reproducción Asistida y la Clínica de Cirugía Bariátrica).",
-    specialtiesList: [
-      "Cardiología y Cirugía Cardiovascular: Incluyendo cardiología pediátrica, hemodinamia y cirugía del tórax.",
-      "Cirugía: General, oncológica, pediátrica, bariátrica y metabólica, plástica/estética y reconstructiva.",
-      "Ginecología y Obstetricia",
-      "Pediatría y Neonatología",
-      "Medicina Interna",
-      "Traumatología y Ortopedia",
-      "Neurología y Psiquiatría",
-      "Gastroenterología y Endoscopia",
-      "Dermatología, Urología, Neumología, Medicina del Deporte, Medicina Crítica, Angiología."
-    ],
-    address: "Paseo Río Sonora 76, Proyecto Rio Sonora, 83280 Hermosillo, Son.",
-    phone: "(662) 259 0900",
-    embedMapUrl: "https://maps.google.com/maps?q=Hospital+CIMA+Hermosillo&t=&z=15&ie=UTF8&iwloc=&output=embed",
+    insurer: "AXA Seguros",
+    logo: "/images/axxa.jpeg",
+    description:
+      "Busca hospitales, médicos y especialistas en toda la red nacional de AXA Seguros. Filtra por estado, ciudad y especialidad.",
+    label: "Buscador de Hospitales y Médicos Nacional",
+    url: "https://axa.mx/servicios/buscador-de-servicios",
+    color: "#00008f",
+    colorLight: "#1a1aaf",
   },
   {
     id: 2,
-    name: "Hospital San José",
-    specialty: "Especialidades y Diagnóstico",
-    description: "Es un hospital con un directorio médico extenso, fuertemente enfocado en intervenciones quirúrgicas, medicina preventiva y de diagnóstico.",
-    specialtiesList: [
-      "Cardiología y Angiología",
-      "Cirugía: General, pediátrica, y plástica.",
-      "Ginecología y Obstetricia",
-      "Neurología y Neurocirugía",
-      "Pediatría y Neonatología",
-      "Medicina Interna y Medicina Crítica (Terapia Intensiva)",
-      "Gastroenterología y Coloproctología",
-      "Nefrología, Neumología, Geriatría, Bariatría, Reumatología, Oftalmología, Ortopedia, Psicología."
-    ],
-    address: "Blvd. José Ma. Morelos 340, Bachoco, 83148 Hermosillo, Son.",
-    phone: "(662) 109 0500",
-    embedMapUrl: "https://maps.google.com/maps?q=Hospital+San+Jose+Hermosillo&t=&z=15&ie=UTF8&iwloc=&output=embed",
+    insurer: "GNP Seguros",
+    logo: "/images/GNP.jpeg",
+    description:
+      "Consulta el directorio completo de proveedores médicos de GNP. Encuentra hospitales, clínicas y especialistas cerca de ti.",
+    label: "Directorio de Proveedores Médicos",
+    url: "https://www.gnp.com.mx/directorio-proveedores-medicos",
+    color: "#e8792b",
+    colorLight: "#f09050",
   },
   {
     id: 3,
-    name: "Clínica del Noroeste",
-    specialty: "Tradición y Subespecialidades",
-    description: "Es uno de los centros médicos con mayor tradición en el centro de la ciudad, abarcando una amplia gama de subespecialidades clínicas y quirúrgicas:",
-    specialtiesList: [
-      "Cardiología: Incluyendo Cardiología Pediátrica.",
-      "Cirugía: General, pediátrica, y plástica, estética y reconstructiva.",
-      "Ginecología y Obstetricia",
-      "Neurología Clínica y Neurocirugía",
-      "Medicina Interna",
-      "Especialidades Sistémicas e Inmunológicas (Alergología, Endocrinología).",
-      "Dermatología, Endoscopia, Neumología, Oftalmología, Ortopedia, Otorrinolaringología, Psiquiatría."
-    ],
-    address: "Luis Donaldo Colosio O 14, Centro, 83000 Hermosillo, Son.",
-    phone: "(662) 259 4000",
-    embedMapUrl: "https://maps.google.com/maps?q=Clinica+del+Noroeste+Hermosillo&t=&z=16&ie=UTF8&iwloc=&output=embed",
-  },
-  {
-    id: 4,
-    name: "Hospital Licona",
-    specialty: "Enfoque Selecto y Cirugía",
-    description: "Este hospital mantiene un enfoque más selecto, destacando principalmente en áreas quirúrgicas, estéticas y de consulta externa especializada.",
-    specialtiesList: [
-      "Cirugía General",
-      "Cirugía Plástica, Estética y Reconstructiva",
-      "Ginecología y Obstetricia",
-      "Medicina Interna",
-      "Pediatría",
-      "Nefrología",
-      "Urología y Ortopedia",
-      "Dermatología clínica y cosmética, Quirófano de corta estancia y Psicología."
-    ],
-    address: "Río San Miguel 64, Proyecto Rio Sonora, 83280 Hermosillo, Son.",
-    phone: "(662) 217 2740",
-    embedMapUrl: "https://maps.google.com/maps?q=Hospital+Licona+Hermosillo&t=&z=16&ie=UTF8&iwloc=&output=embed",
+    insurer: "BX+ Seguros",
+    logo: "/images/SEGUROS_BX.jpeg",
+    description:
+      "Explora la red hospitalaria de BX+ Seguros (Ve por Más). Busca hospitales por ubicación y tipo de servicio.",
+    label: "Búsqueda de Red Hospitalaria",
+    url: "https://www.vepormas.com/red-medica/hospitalaria/",
+    color: "#003366",
+    colorLight: "#0a4a80",
   },
 ];
 
 export default function RedHospitalariaPage() {
-  const [searchTerm, setSearchTerm] = useState("");
-
-  const filteredHospitals = HOSPITALS.filter((hospital) => {
-    const term = searchTerm.toLowerCase();
-    return (
-      hospital.name.toLowerCase().includes(term) ||
-      hospital.specialty.toLowerCase().includes(term) ||
-      hospital.description.toLowerCase().includes(term) ||
-      hospital.specialtiesList.some((spec) => spec.toLowerCase().includes(term))
-    );
-  });
-
   return (
     <main className="min-h-screen bg-surface">
       {/* Hero Section */}
@@ -106,131 +52,154 @@ export default function RedHospitalariaPage() {
           <span className="inline-block px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-sm font-semibold tracking-wide text-white mb-6 animate-fade-in-up">
             NUESTRA COBERTURA
           </span>
-          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 animate-fade-in-up" style={{ animationDelay: "100ms" }}>
-            Red Hospitalaria en <span className="text-accent underline decoration-4 underline-offset-8">Sonora y Nacional</span>
+          <h1
+            className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 animate-fade-in-up"
+            style={{ animationDelay: "100ms" }}
+          >
+            Red Hospitalaria en{" "}
+            <span className="text-accent underline decoration-4 underline-offset-8">
+              Sonora y Nacional
+            </span>
           </h1>
-          <p className="text-lg md:text-xl text-neutral-200 mb-10 max-w-2xl mx-auto animate-fade-in-up" style={{ animationDelay: "200ms" }}>
-            Contamos con seguros de amplia red médica Nacional de acuerdo al plan contratado para garantizarte la mejor atención cuando más lo necesitas.
+          <p
+            className="text-lg md:text-xl text-neutral-200 mb-6 max-w-2xl mx-auto animate-fade-in-up"
+            style={{ animationDelay: "200ms" }}
+          >
+            Contamos con seguros de amplia red médica Nacional de acuerdo al plan
+            contratado para garantizarte la mejor atención cuando más lo
+            necesitas.
           </p>
-
-          {/* Buscador */}
-          <div className="max-w-xl mx-auto relative group animate-fade-in-up" style={{ animationDelay: "300ms" }}>
-            <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
-              <svg className="w-5 h-5 text-neutral-400 group-focus-within:text-brand transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-            </div>
-            <input
-              type="text"
-              placeholder="Buscar por nombre o especialidad..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full bg-white text-brand rounded-full py-4 pl-12 pr-6 shadow-xl focus:outline-none focus:ring-4 focus:ring-accent/30 transition-all font-medium"
-            />
-          </div>
+          <p
+            className="text-base text-neutral-300 max-w-xl mx-auto animate-fade-in-up"
+            style={{ animationDelay: "300ms" }}
+          >
+            Consulta directamente la red de hospitales y médicos de cada
+            aseguradora usando los buscadores oficiales.
+          </p>
         </div>
       </section>
 
-      {/* Grid de Hospitales */}
-      <section className="py-20 px-6 max-w-7xl mx-auto">
-        {filteredHospitals.length === 0 ? (
-          <div className="text-center py-20">
-            <h3 className="text-2xl font-bold text-brand mb-2">No se encontraron hospitales</h3>
-            <p className="text-muted">Prueba usando otros términos de búsqueda.</p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {filteredHospitals.map((hospital) => (
-              <div 
-                key={hospital.id} 
-                className="bg-white rounded-3xl overflow-hidden shadow-sm border border-border hover:shadow-xl transition-all duration-300 flex flex-col group"
-              >
-                {/* Contención Título y Datos */}
-                <div className="p-8 pb-6 flex-1">
-                  <div className="flex items-start justify-between mb-4">
-                    <div>
-                      <h3 className="text-2xl font-bold text-brand group-hover:text-brand-light transition-colors">{hospital.name}</h3>
-                      <span className="inline-block mt-2 px-3 py-1 bg-brand/5 text-brand-light text-xs font-bold rounded-full">
-                        {hospital.specialty}
-                      </span>
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-3 mt-6">
-                    <p className="text-sm text-neutral-600 leading-relaxed mb-4">
-                      {hospital.description}
-                    </p>
-                    
-                    {/* Lista Expandible de Especialidades */}
-                    <div className="mb-4">
-                      <details className="group/details">
-                        <summary className="text-sm font-semibold text-brand cursor-pointer select-none hover:text-accent transition-colors flex items-center justify-between p-2 -mx-2 rounded-lg hover:bg-brand/5">
-                          Ver Especialidades Principales
-                          <svg className="w-4 h-4 transform group-open/details:rotate-180 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                          </svg>
-                        </summary>
-                        <ul className="mt-3 space-y-2 text-sm text-neutral-600 list-inside list-disc">
-                          {hospital.specialtiesList.map((spec, i) => (
-                            <li key={i} className="pl-2 leading-tight">
-                              {spec}
-                            </li>
-                          ))}
-                        </ul>
-                      </details>
-                    </div>
+      {/* Network Links Cards */}
+      <section className="py-20 px-6 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {NETWORK_LINKS.map((item, index) => (
+            <a
+              key={item.id}
+              href={item.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group bg-white rounded-3xl overflow-hidden shadow-sm border border-border hover:shadow-2xl transition-all duration-500 flex flex-col animate-fade-in-up"
+              style={{ animationDelay: `${index * 150}ms` }}
+            >
+              {/* Logo Area */}
+              <div className="relative p-8 pb-6 flex flex-col items-center text-center">
+                {/* Decorative gradient blob */}
+                <div
+                  className="absolute top-0 left-0 right-0 h-32 opacity-[0.07] rounded-b-[60%] transition-opacity duration-500 group-hover:opacity-[0.12]"
+                  style={{
+                    background: `linear-gradient(135deg, ${item.color}, ${item.colorLight})`,
+                  }}
+                />
 
-                    <div className="pt-4 border-t border-border"></div>
-
-                    <div className="flex items-start gap-3 text-muted">
-                      <svg className="w-5 h-5 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                      </svg>
-                      <span className="text-sm">{hospital.address}</span>
-                    </div>
-                    <div className="flex items-center gap-3 text-muted">
-                      <svg className="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                      </svg>
-                      <span className="text-sm font-medium">{hospital.phone}</span>
-                    </div>
-                  </div>
+                <div className="relative w-24 h-24 rounded-2xl overflow-hidden shadow-lg mb-5 border-2 border-neutral-100 group-hover:scale-110 group-hover:shadow-xl transition-all duration-500">
+                  <Image
+                    src={item.logo}
+                    alt={`Logo ${item.insurer}`}
+                    fill
+                    className="object-contain p-2 bg-white"
+                    sizes="96px"
+                  />
                 </div>
 
-                {/* Mapa Iframe Dinámico */}
-                <div className="w-full h-64 bg-neutral-100 relative grayscale hover:grayscale-0 transition-all duration-500">
-                  <iframe
-                    title={`Ver ${hospital.name} en Google Maps`}
-                    src={hospital.embedMapUrl}
-                    className="w-full h-full border-0"
-                    allowFullScreen
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                  />
-                  {/* Subtle Map Overlay that disappears on hover pointer interactions natively */}
-                  <div className="absolute top-4 right-4 px-3 py-1 bg-white/90 backdrop-blur shadow-sm rounded-full pointer-events-none opacity-100 group-hover:opacity-0 transition-opacity">
-                    <span className="text-xs font-bold text-brand flex items-center gap-1.5">
-                      <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-                      Mapa Interactivo
-                    </span>
-                  </div>
+                <h3 className="text-xl font-bold text-brand group-hover:text-brand-light transition-colors">
+                  {item.insurer}
+                </h3>
+                <span
+                  className="inline-block mt-2 px-3 py-1 text-xs font-bold rounded-full text-white"
+                  style={{ backgroundColor: item.color }}
+                >
+                  {item.label}
+                </span>
+              </div>
+
+              {/* Description */}
+              <div className="px-8 pb-4 flex-1">
+                <p className="text-sm text-neutral-600 leading-relaxed text-center">
+                  {item.description}
+                </p>
+              </div>
+
+              {/* CTA Button */}
+              <div className="px-8 pb-8">
+                <div
+                  className="w-full py-3 rounded-full text-center font-bold text-white text-sm transition-all duration-300 group-hover:scale-[1.03] group-hover:shadow-lg flex items-center justify-center gap-2"
+                  style={{
+                    background: `linear-gradient(135deg, ${item.color}, ${item.colorLight})`,
+                  }}
+                >
+                  Buscar Red Médica
+                  <svg
+                    className="w-4 h-4 transform group-hover:translate-x-1 transition-transform"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M14 5l7 7m0 0l-7 7m7-7H3"
+                    />
+                  </svg>
                 </div>
               </div>
-            ))}
+            </a>
+          ))}
+        </div>
+
+        {/* Info Note */}
+        <div className="mt-16 bg-brand/5 border border-brand/10 rounded-2xl p-8 text-center animate-fade-in-up">
+          <div className="flex items-center justify-center gap-3 mb-3">
+            <svg
+              className="w-6 h-6 text-brand"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            <h3 className="text-lg font-bold text-brand">
+              ¿Tu aseguradora no aparece?
+            </h3>
           </div>
-        )}
+          <p className="text-sm text-neutral-600 max-w-xl mx-auto">
+            Trabajamos con más de 20 aseguradoras. Si necesitas consultar la red
+            hospitalaria de otra compañía, contáctanos y te ayudamos
+            directamente.
+          </p>
+        </div>
       </section>
 
       {/* CTA Section */}
       <section className="bg-brand-light py-16 px-6 text-center text-white">
-        <h2 className="text-2xl md:text-3xl font-bold mb-4">¿Tienes dudas sobre las coberturas?</h2>
+        <h2 className="text-2xl md:text-3xl font-bold mb-4">
+          ¿Tienes dudas sobre las coberturas?
+        </h2>
         <p className="text-neutral-200 mb-8 max-w-2xl mx-auto">
-          Contacta a nuestro equipo para asegurarte que el hospital de tu preferencia está cubierto por tu póliza actual.
+          Contacta a nuestro equipo para asegurarte que el hospital de tu
+          preferencia está cubierto por tu póliza actual.
         </p>
-        <button className="px-8 py-3 bg-white text-brand rounded-full font-bold hover:scale-105 transition-transform shadow-lg hover:shadow-xl">
+        <Link
+          href="/contacto"
+          className="inline-block px-8 py-3 bg-white text-brand rounded-full font-bold hover:scale-105 transition-transform shadow-lg hover:shadow-xl"
+        >
           Contactar Asesor
-        </button>
+        </Link>
       </section>
     </main>
   );
