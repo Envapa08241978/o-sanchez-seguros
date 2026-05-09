@@ -1,6 +1,6 @@
 # CONTEXTO COMPLETO DEL PROYECTO — O SANCHEZ SEGUROS
 
-> **Última actualización:** 26 de abril de 2026  
+> **Última actualización:** 7 de mayo de 2026  
 > **Propósito:** Archivo de referencia para que cualquier agente de IA tenga contexto completo al trabajar en este proyecto.
 
 ---
@@ -642,5 +642,41 @@ Implementar SEO técnico completo para posicionar `osanchezseguros.com` en Googl
 
 ---
 
+## Sesión: Rediseño Red Hospitalaria — Enlaces a Buscadores (7 mayo 2026)
+
+### Objetivo
+Reemplazar el contenido estático de hospitales individuales con enlaces directos a los buscadores oficiales de red hospitalaria de las principales aseguradoras.
+
+### Cambios realizados
+
+**Archivo modificado:** `src/app/(marketing)/red-hospitalaria/page.tsx`
+
+- ❌ **Eliminados:** Los 4 hospitales estáticos (Hospital CIMA, Hospital San José, Clínica del Noroeste, Hospital Licona) con sus mapas, especialidades y buscador local
+- ✅ **Agregadas:** 3 tarjetas premium con links directos a buscadores oficiales de aseguradoras:
+
+| # | Aseguradora | URL del Buscador | Descripción |
+|---|---|---|---|
+| 1 | **AXA Seguros** | `https://axa.mx/servicios/buscador-de-servicios` | Buscador de Hospitales y Médicos Nacional |
+| 2 | **GNP Seguros** | `https://www.gnp.com.mx/directorio-proveedores-medicos` | Directorio de Proveedores Médicos |
+| 3 | **BX+ Seguros** | `https://www.vepormas.com/red-medica/hospitalaria/` | Búsqueda de Red Hospitalaria |
+
+- Cada tarjeta usa el logo real de la aseguradora (`axxa.jpeg`, `GNP.jpeg`, `SEGUROS_BX.jpeg`)
+- Diseño con gradientes por aseguradora, hover effects, y botón "Buscar Red Médica" que abre en nueva pestaña
+- Se agregó sección inferior: "¿Tu aseguradora no aparece? — Contáctanos"
+- Se mantuvo el CTA "¿Tienes dudas sobre las coberturas?" → `/contacto`
+
+### Metadata SEO (sin cambios)
+- **Title:** "Red Hospitalaria en Hermosillo y Sonora | Hospitales Cubiertos"
+- **Layout:** `src/app/(marketing)/red-hospitalaria/layout.tsx` (keywords sobre hospitales + seguros Hermosillo)
+- **Nota:** La description del layout aún menciona hospitales individuales (CIMA, San José, etc.) — podría actualizarse para reflejar el nuevo enfoque de "buscadores oficiales de aseguradoras"
+
+### Commit y deploy
+- **Commit:** `5810a11` — feat(red-hospitalaria): replace hospitals with insurer network search links (AXA, GNP, BX+)
+- **Deploy:** Automático via Vercel desde push a `main`
+- **URL live:** `https://www.osanchezseguros.com/red-hospitalaria` ✅
+
+---
+
 *Este archivo debe mantenerse actualizado cada vez que se hagan cambios significativos al proyecto.*
+
 

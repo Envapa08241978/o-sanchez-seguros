@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import ScrollReveal from "@/components/shared/ScrollReveal";
 import { SITE_CONFIG } from "@/utils/constants";
 
@@ -50,16 +51,15 @@ export default function NosotrosPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <ScrollReveal>
               <div className="relative">
-                <div className="aspect-[4/5] rounded-2xl bg-surface-elevated border border-border overflow-hidden flex items-center justify-center">
-                  <div className="text-center p-10">
-                    <span className="text-8xl mb-4 block">👨‍💼</span>
-                    <p className="text-lg font-display font-bold text-brand">
-                      Oscar Sánchez Aguirre
-                    </p>
-                    <p className="text-sm text-muted mt-1">
-                      Especialista en Seguros
-                    </p>
-                  </div>
+                <div className="aspect-[4/5] rounded-2xl bg-surface-elevated border border-border overflow-hidden relative">
+                  <Image
+                    src="/images/oscar-sanchez.jpeg"
+                    alt="Oscar Sánchez Aguirre — Especialista en Seguros"
+                    fill
+                    className="object-cover object-top"
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    priority
+                  />
                 </div>
                 {/* Floating badge */}
                 <div className="absolute -bottom-6 -right-6 bg-brand text-white px-6 py-3 rounded-2xl shadow-lg">

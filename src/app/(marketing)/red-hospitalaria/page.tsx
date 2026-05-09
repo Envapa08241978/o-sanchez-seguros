@@ -37,6 +37,17 @@ const NETWORK_LINKS = [
     color: "#003366",
     colorLight: "#0a4a80",
   },
+  {
+    id: 4,
+    insurer: "Centauro Clínica Dental",
+    logo: "/images/centauro-dental.png",
+    description:
+      "Consulta la red dental externa nacional de Centauro Clínica Dental. Disponible para pólizas en convenio con cobertura dental.",
+    label: "Red Dental Nacional",
+    url: "https://www.centauro.com.mx/red-dental-externa",
+    color: "#00897B",
+    colorLight: "#26A69A",
+  },
 ];
 
 export default function RedHospitalariaPage() {
@@ -80,8 +91,8 @@ export default function RedHospitalariaPage() {
       </section>
 
       {/* Network Links Cards */}
-      <section className="py-20 px-6 max-w-5xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <section className="py-20 px-6 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {NETWORK_LINKS.map((item, index) => (
             <a
               key={item.id}
