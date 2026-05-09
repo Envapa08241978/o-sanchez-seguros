@@ -40,7 +40,7 @@ const NETWORK_LINKS = [
   {
     id: 4,
     insurer: "Centauro Clínica Dental",
-    logo: "/images/centauro-dental.png",
+    logo: "/images/centauro-dental.jpg",
     description:
       "Consulta la red dental externa nacional de Centauro Clínica Dental. Disponible para pólizas en convenio con cobertura dental.",
     label: "Red Dental Nacional",
