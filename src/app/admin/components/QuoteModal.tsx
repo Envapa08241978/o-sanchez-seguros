@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-import { INSURERS } from "@/utils/constants";
 
 type Props = {
   isOpen: boolean;
@@ -27,26 +26,19 @@ export default function QuoteModal({ isOpen, onClose, leadName }: Props) {
           </button>
         </div>
         <div className="p-6 overflow-y-auto">
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-            {INSURERS.map((insurer) => (
+          <div className="flex justify-center">
               <a
-                key={insurer.name}
-                href={insurer.quoteUrl}
+                href="https://gswas.com.mx/cas/login?service=https%3A%2F%2Fgswas.com.mx%2FOficinaGS%2F&acceso=2"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex flex-col items-center gap-2 p-4 rounded-xl border border-border hover:border-brand/30 hover:bg-brand/[0.03] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
+                className="group flex flex-col items-center gap-3 p-8 rounded-xl border border-border hover:border-brand/30 hover:bg-brand/[0.03] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
               >
-                <div className="w-14 h-14 rounded-xl bg-white border border-border flex items-center justify-center overflow-hidden">
-                  {insurer.logo ? (
-                    <Image src={insurer.logo} alt={insurer.name} width={48} height={48} className="object-contain w-11 h-11" />
-                  ) : (
-                    <span className="text-xs font-bold text-brand">{insurer.name.substring(0, 2)}</span>
-                  )}
+                <div className="w-20 h-20 rounded-xl bg-white border border-border flex items-center justify-center overflow-hidden">
+                  <Image src="/images/GENERAL DE SEGUROS.jpeg" alt="General de Seguros" width={64} height={64} className="object-contain w-16 h-16" />
                 </div>
-                <span className="text-[11px] font-semibold text-brand text-center leading-tight group-hover:text-accent transition-colors">{insurer.name}</span>
-                <span className="text-[10px] text-muted opacity-0 group-hover:opacity-100 transition-opacity">Abrir portal →</span>
+                <span className="text-sm font-semibold text-brand text-center leading-tight group-hover:text-accent transition-colors">General de Seguros</span>
+                <span className="text-xs text-muted opacity-0 group-hover:opacity-100 transition-opacity">Abrir portal →</span>
               </a>
-            ))}
           </div>
         </div>
       </div>
