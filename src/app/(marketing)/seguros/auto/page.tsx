@@ -2,11 +2,33 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import ScrollReveal from "@/components/shared/ScrollReveal";
 import { SITE_CONFIG } from "@/utils/constants";
+import { PageJsonLd } from "@/components/shared/JsonLd";
 
 export const metadata: Metadata = {
-  title: "Seguros de Auto",
+  title: "Seguro de Auto en Hermosillo — Cobertura Amplia y RC",
   description:
-    "Seguros de auto con cobertura amplia, limitada y responsabilidad civil. Asistencia vial 24/7 en Hermosillo. AXA, CHUBB, Qualitas. Cotiza con O Sanchez Seguros.",
+    "Seguros de auto con cobertura amplia, limitada y responsabilidad civil en Hermosillo, Sonora. Asistencia vial 24/7. Qualitas, AXA, CHUBB, GNP. Cotiza y compara con O Sanchez Seguros.",
+  keywords: [
+    "seguro de auto hermosillo",
+    "seguro auto sonora",
+    "cotizar seguro auto hermosillo",
+    "seguro auto Qualitas hermosillo",
+    "seguro auto AXA hermosillo",
+    "seguro vehicular hermosillo",
+    "cobertura amplia auto hermosillo",
+    "responsabilidad civil auto hermosillo",
+    "seguro auto CHUBB sonora",
+    "comparar seguros auto hermosillo",
+  ],
+  alternates: {
+    canonical: "https://www.osanchezseguros.com/seguros/auto",
+  },
+  openGraph: {
+    title: "Seguro de Auto en Hermosillo | Qualitas, AXA, CHUBB | O Sanchez Seguros",
+    description:
+      "Cobertura amplia, limitada y responsabilidad civil. Asistencia vial 24/7. Cotiza y compara entre las mejores aseguradoras.",
+    url: "https://www.osanchezseguros.com/seguros/auto",
+  },
 };
 
 const COVERAGES = [
@@ -63,6 +85,13 @@ const INSURERS = [
 export default function AutoPage() {
   return (
     <>
+      <PageJsonLd
+        breadcrumbs={[
+          { name: "Inicio", url: "https://www.osanchezseguros.com" },
+          { name: "Seguros", url: "https://www.osanchezseguros.com/seguros" },
+          { name: "Seguros de Auto", url: "https://www.osanchezseguros.com/seguros/auto" },
+        ]}
+      />
       {/* Hero */}
       <section
         className="relative py-20 md:py-28 overflow-hidden"

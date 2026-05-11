@@ -2,16 +2,43 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import ScrollReveal from "@/components/shared/ScrollReveal";
 import { INSURANCE_PRODUCTS } from "@/utils/constants";
+import { PageJsonLd } from "@/components/shared/JsonLd";
 
 export const metadata: Metadata = {
-  title: "Seguros",
+  title: "Seguros en Hermosillo — Catálogo Completo",
   description:
-    "Descubre nuestra gama completa de seguros: Gastos Médicos Mayores, Seguros Fronterizos/USA, Vida, Auto y Empresariales en Hermosillo, Sonora.",
+    "Descubre nuestra gama completa de seguros: Gastos Médicos Mayores, Vida, Vida con Ahorro, Auto, Empresariales y Fronterizos. Cotiza en Hermosillo, Sonora con O Sanchez Seguros.",
+  keywords: [
+    "seguros hermosillo catálogo",
+    "tipos de seguros hermosillo",
+    "gastos médicos mayores hermosillo",
+    "seguro de vida hermosillo",
+    "seguro de auto hermosillo",
+    "seguros empresariales sonora",
+    "vida con ahorro hermosillo",
+    "comparar seguros hermosillo",
+    "mejores seguros en hermosillo",
+  ],
+  alternates: {
+    canonical: "https://www.osanchezseguros.com/seguros",
+  },
+  openGraph: {
+    title: "Catálogo de Seguros | O Sanchez Seguros — Hermosillo",
+    description:
+      "Gastos Médicos Mayores, Vida, Vida con Ahorro, Auto y Empresariales. Soluciones personalizadas en Hermosillo, Sonora.",
+    url: "https://www.osanchezseguros.com/seguros",
+  },
 };
 
 export default function SegurosPage() {
   return (
     <>
+      <PageJsonLd
+        breadcrumbs={[
+          { name: "Inicio", url: "https://www.osanchezseguros.com" },
+          { name: "Seguros", url: "https://www.osanchezseguros.com/seguros" },
+        ]}
+      />
       {/* Hero */}
       <section className="relative py-20 md:py-28 gradient-hero overflow-hidden">
         <div className="absolute inset-0 gradient-radial-gold opacity-30" />

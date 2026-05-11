@@ -2,11 +2,32 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import ScrollReveal from "@/components/shared/ScrollReveal";
 import { SITE_CONFIG } from "@/utils/constants";
+import { PageJsonLd } from "@/components/shared/JsonLd";
 
 export const metadata: Metadata = {
-  title: "Seguros de Vida",
+  title: "Seguro de Vida en Hermosillo — Protege a tu Familia",
   description:
-    "Seguros de vida que protegen el futuro de tu familia. Planes con ahorro, inversión y cobertura por fallecimiento. Cotiza en O Sanchez Seguros, Hermosillo.",
+    "Seguros de vida en Hermosillo, Sonora. Planes temporales, vida entera e inversión. Protección familiar con ahorro y beneficios fiscales. Cotiza con O Sanchez Seguros.",
+  keywords: [
+    "seguro de vida hermosillo",
+    "seguro vida sonora",
+    "cotizar seguro de vida hermosillo",
+    "seguro de vida familiar hermosillo",
+    "seguro vida con ahorro hermosillo",
+    "seguro fallecimiento hermosillo",
+    "seguro vida inversión sonora",
+    "seguro educacional hermosillo",
+    "protección familiar seguros hermosillo",
+  ],
+  alternates: {
+    canonical: "https://www.osanchezseguros.com/seguros/vida",
+  },
+  openGraph: {
+    title: "Seguro de Vida en Hermosillo | Protección Familiar | O Sanchez Seguros",
+    description:
+      "Planes de vida temporal, entera e inversión. Protege el futuro de tu familia con beneficios fiscales.",
+    url: "https://www.osanchezseguros.com/seguros/vida",
+  },
 };
 
 const PLANS = [
@@ -82,6 +103,13 @@ const BENEFITS = [
 export default function VidaPage() {
   return (
     <>
+      <PageJsonLd
+        breadcrumbs={[
+          { name: "Inicio", url: "https://www.osanchezseguros.com" },
+          { name: "Seguros", url: "https://www.osanchezseguros.com/seguros" },
+          { name: "Seguros de Vida", url: "https://www.osanchezseguros.com/seguros/vida" },
+        ]}
+      />
       {/* Hero */}
       <section
         className="relative py-20 md:py-28 overflow-hidden"

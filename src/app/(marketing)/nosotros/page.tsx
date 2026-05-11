@@ -2,10 +2,28 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import ScrollReveal from "@/components/shared/ScrollReveal";
 import { SITE_CONFIG } from "@/utils/constants";
+import { PageJsonLd } from "@/components/shared/JsonLd";
 
 export const metadata: Metadata = {
   title: "Nosotros",
-  description: `Conoce a Oscar Sánchez Aguirre — Especialista en seguros desde 2009 en Hermosillo, Sonora. Más de ${SITE_CONFIG.yearsOfExperience} años protegiendo familias y empresas.`,
+  description: `Conoce a Oscar Sánchez Aguirre — Agente de seguros certificado CNSF con más de ${SITE_CONFIG.yearsOfExperience} años de experiencia en Hermosillo, Sonora. Asesoría personalizada en Gastos Médicos Mayores, Vida, Auto y Empresariales.`,
+  keywords: [
+    "oscar sanchez seguros hermosillo",
+    "agente seguros certificado CNSF hermosillo",
+    "asesor seguros hermosillo sonora",
+    "agente seguros independiente hermosillo",
+    "oscar sanchez aguirre seguros",
+    "especialista gastos médicos mayores hermosillo",
+    "agencia de seguros hermosillo",
+  ],
+  alternates: {
+    canonical: "https://www.osanchezseguros.com/nosotros",
+  },
+  openGraph: {
+    title: "Conoce a Oscar Sánchez Aguirre | Agente de Seguros en Hermosillo",
+    description: `Más de ${SITE_CONFIG.yearsOfExperience} años de experiencia protegiendo familias y empresas en Sonora. Agente certificado CNSF.`,
+    url: "https://www.osanchezseguros.com/nosotros",
+  },
 };
 
 const TIMELINE = [
@@ -25,6 +43,12 @@ const VALUES = [
 export default function NosotrosPage() {
   return (
     <>
+      <PageJsonLd
+        breadcrumbs={[
+          { name: "Inicio", url: "https://www.osanchezseguros.com" },
+          { name: "Nosotros", url: "https://www.osanchezseguros.com/nosotros" },
+        ]}
+      />
       {/* Hero */}
       <section className="relative py-20 md:py-28 gradient-hero overflow-hidden">
         <div className="absolute inset-0 gradient-radial-gold opacity-30" />

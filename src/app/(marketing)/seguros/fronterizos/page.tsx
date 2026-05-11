@@ -2,11 +2,30 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import ScrollReveal from "@/components/shared/ScrollReveal";
 import { SITE_CONFIG } from "@/utils/constants";
+import { PageJsonLd } from "@/components/shared/JsonLd";
 
 export const metadata: Metadata = {
-  title: "Seguros Fronterizos y USA",
+  title: "Seguros Fronterizos y USA — Cobertura Binacional",
   description:
-    "Seguros fronterizos para cruzar a Estados Unidos con tranquilidad. Cobertura médica y vehicular binacional. Cotiza con O Sanchez Seguros en Hermosillo.",
+    "Seguros fronterizos para cruzar a Estados Unidos. Cobertura vehicular y médica binacional en Arizona, California y Texas. Cotiza con O Sanchez Seguros en Hermosillo.",
+  keywords: [
+    "seguros fronterizos sonora",
+    "seguro fronterizo hermosillo",
+    "seguro para cruzar a estados unidos",
+    "seguro auto fronterizo sonora arizona",
+    "seguro médico USA hermosillo",
+    "cobertura binacional seguros",
+    "seguro vehicular frontera sonora",
+  ],
+  alternates: {
+    canonical: "https://www.osanchezseguros.com/seguros/fronterizos",
+  },
+  openGraph: {
+    title: "Seguros Fronterizos y USA | O Sanchez Seguros",
+    description:
+      "Cobertura vehicular y médica para cruzar la frontera. Arizona, California y Texas.",
+    url: "https://www.osanchezseguros.com/seguros/fronterizos",
+  },
 };
 
 const COVERAGES = [
@@ -70,6 +89,14 @@ const FAQS = [
 export default function FronterizosPage() {
   return (
     <>
+      <PageJsonLd
+        breadcrumbs={[
+          { name: "Inicio", url: "https://www.osanchezseguros.com" },
+          { name: "Seguros", url: "https://www.osanchezseguros.com/seguros" },
+          { name: "Seguros Fronterizos", url: "https://www.osanchezseguros.com/seguros/fronterizos" },
+        ]}
+        faq={FAQS.map(f => ({ question: f.q, answer: f.a }))}
+      />
       {/* Hero */}
       <section
         className="relative py-20 md:py-28 overflow-hidden"

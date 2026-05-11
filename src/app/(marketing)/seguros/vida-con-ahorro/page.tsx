@@ -2,11 +2,33 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import ScrollReveal from "@/components/shared/ScrollReveal";
 import { SITE_CONFIG } from "@/utils/constants";
+import { PageJsonLd } from "@/components/shared/JsonLd";
 
 export const metadata: Metadata = {
-  title: "Seguros de Vida con Ahorro",
+  title: "Seguro de Vida con Ahorro en Hermosillo — Retiro y Educación",
   description:
-    "Construye tu futuro financiero mientras proteges a los que más amas. Planes garantizados para el retiro o la educación con O Sanchez Seguros.",
+    "Planes de vida con ahorro para retiro, educación y patrimonio en Hermosillo, Sonora. Rendimientos garantizados, beneficios fiscales y protección de vida. Cotiza con O Sanchez Seguros.",
+  keywords: [
+    "seguro vida con ahorro hermosillo",
+    "plan de ahorro retiro hermosillo",
+    "plan ahorro educación hermosillo",
+    "seguro ahorro retiro sonora",
+    "plan de retiro garantizado hermosillo",
+    "fondo educativo seguros hermosillo",
+    "inversión seguro de vida hermosillo",
+    "seguro ahorro patrimonio sonora",
+    "planes ahorro CNSF hermosillo",
+    "seguro vida rendimiento garantizado",
+  ],
+  alternates: {
+    canonical: "https://www.osanchezseguros.com/seguros/vida-con-ahorro",
+  },
+  openGraph: {
+    title: "Seguro de Vida con Ahorro — Retiro y Educación | O Sanchez Seguros",
+    description:
+      "Construye tu futuro mientras proteges a tu familia. Planes para retiro, educación y patrimonio con rendimientos garantizados.",
+    url: "https://www.osanchezseguros.com/seguros/vida-con-ahorro",
+  },
 };
 
 const COVERAGES = [
@@ -45,6 +67,13 @@ const COVERAGES = [
 export default function VidaAhorroPage() {
   return (
     <>
+      <PageJsonLd
+        breadcrumbs={[
+          { name: "Inicio", url: "https://www.osanchezseguros.com" },
+          { name: "Seguros", url: "https://www.osanchezseguros.com/seguros" },
+          { name: "Vida con Ahorro", url: "https://www.osanchezseguros.com/seguros/vida-con-ahorro" },
+        ]}
+      />
       {/* Hero */}
       <section className="relative py-20 md:py-28 overflow-hidden" style={{ background: "linear-gradient(135deg, #1e3a8add 0%, #17255499 100%)" }}>
         <div className="absolute inset-0 bg-gradient-to-r from-blue-900/30 to-transparent" />

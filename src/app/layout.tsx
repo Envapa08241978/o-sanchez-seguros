@@ -83,6 +83,12 @@ export const metadata: Metadata = {
     icon: "/images/favicon.png",
     apple: "/images/icon-512.png",
   },
+  alternates: {
+    canonical: "https://www.osanchezseguros.com",
+    languages: {
+      "es-MX": "https://www.osanchezseguros.com",
+    },
+  },
 };
 
 export default function RootLayout({

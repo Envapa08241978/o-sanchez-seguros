@@ -2,11 +2,33 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import ScrollReveal from "@/components/shared/ScrollReveal";
 import { SITE_CONFIG } from "@/utils/constants";
+import { PageJsonLd } from "@/components/shared/JsonLd";
 
 export const metadata: Metadata = {
-  title: "Seguros Empresariales",
+  title: "Seguros Empresariales en Hermosillo — Protección para tu Negocio",
   description:
-    "Seguros empresariales para proteger tu negocio, empleados y patrimonio. Grupo, RC, daños y más. Cotiza con O Sanchez Seguros en Hermosillo.",
+    "Seguros empresariales en Hermosillo, Sonora. Seguro de grupo GMM, responsabilidad civil, daños, hombre clave y flotilla. Protege tu negocio, empleados y patrimonio. Cotiza con O Sanchez Seguros.",
+  keywords: [
+    "seguros empresariales hermosillo",
+    "seguro empresarial sonora",
+    "seguro de grupo GMM hermosillo",
+    "responsabilidad civil empresarial hermosillo",
+    "seguro daños empresariales sonora",
+    "seguro flotilla vehicular hermosillo",
+    "seguro hombre clave hermosillo",
+    "seguro negocio hermosillo",
+    "seguro PyME hermosillo sonora",
+    "cotizar seguro empresarial hermosillo",
+  ],
+  alternates: {
+    canonical: "https://www.osanchezseguros.com/seguros/empresarial",
+  },
+  openGraph: {
+    title: "Seguros Empresariales en Hermosillo | O Sanchez Seguros",
+    description:
+      "Protege tu negocio, empleados y patrimonio. Seguro de grupo GMM, responsabilidad civil, daños y flotilla vehicular.",
+    url: "https://www.osanchezseguros.com/seguros/empresarial",
+  },
 };
 
 const PRODUCTS = [
@@ -87,6 +109,13 @@ const PRODUCTS = [
 export default function EmpresarialPage() {
   return (
     <>
+      <PageJsonLd
+        breadcrumbs={[
+          { name: "Inicio", url: "https://www.osanchezseguros.com" },
+          { name: "Seguros", url: "https://www.osanchezseguros.com/seguros" },
+          { name: "Seguros Empresariales", url: "https://www.osanchezseguros.com/seguros/empresarial" },
+        ]}
+      />
       {/* Hero */}
       <section
         className="relative py-20 md:py-28 overflow-hidden"

@@ -1,12 +1,34 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import Link from "next/link";
 import ScrollReveal from "@/components/shared/ScrollReveal";
 import { SITE_CONFIG } from "@/utils/constants";
+import { PageJsonLd } from "@/components/shared/JsonLd";
 
 export const metadata: Metadata = {
-  title: "Gastos Médicos Mayores",
+  title: "Seguro de Gastos Médicos Mayores en Hermosillo",
   description:
-    "Seguro de Gastos Médicos Mayores en Hermosillo, Sonora. Acceso a Hospital CIMA, San José y la mejor red hospitalaria. Cotiza con O Sanchez Seguros.",
+    "Seguro de Gastos Médicos Mayores en Hermosillo, Sonora. Acceso a Hospital CIMA, San José y la mejor red hospitalaria nacional. Cobertura de hospitalización, cirugía, maternidad y enfermedades graves. Cotiza con O Sanchez Seguros.",
+  keywords: [
+    "gastos médicos mayores hermosillo",
+    "seguro GMM hermosillo sonora",
+    "seguro médico hospital cima hermosillo",
+    "seguro hospitalización hermosillo",
+    "seguro gastos médicos mayores sonora",
+    "cotizar gastos médicos mayores",
+    "seguro médico familiar hermosillo",
+    "seguro enfermedades graves hermosillo",
+    "mejor seguro gastos médicos hermosillo",
+    "cobertura médica AXA GNP hermosillo",
+  ],
+  alternates: {
+    canonical: "https://www.osanchezseguros.com/seguros/gastos-medicos",
+  },
+  openGraph: {
+    title: "Seguro de Gastos Médicos Mayores en Hermosillo | O Sanchez Seguros",
+    description:
+      "Protección médica de primer nivel con acceso a la mejor red hospitalaria de Hermosillo. Hospital CIMA, San José y más.",
+    url: "https://www.osanchezseguros.com/seguros/gastos-medicos",
+  },
 };
 
 const HOSPITALS = [
@@ -63,6 +85,13 @@ const COVERAGES = [
 export default function GastosMedicosPage() {
   return (
     <>
+      <PageJsonLd
+        breadcrumbs={[
+          { name: "Inicio", url: "https://www.osanchezseguros.com" },
+          { name: "Seguros", url: "https://www.osanchezseguros.com/seguros" },
+          { name: "Gastos Médicos Mayores", url: "https://www.osanchezseguros.com/seguros/gastos-medicos" },
+        ]}
+      />
       {/* Hero */}
       <section className="relative py-20 md:py-28 overflow-hidden" style={{ background: "linear-gradient(135deg, #1e40afdd 0%, #1d4ed899 100%)" }}>
         <div className="absolute inset-0 bg-gradient-to-r from-blue-900/30 to-transparent" />
