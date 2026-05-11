@@ -1,6 +1,6 @@
 # CONTEXTO COMPLETO DEL PROYECTO — O SANCHEZ SEGUROS
 
-> **Última actualización:** 7 de mayo de 2026  
+> **Última actualización:** 8 de mayo de 2026  
 > **Propósito:** Archivo de referencia para que cualquier agente de IA tenga contexto completo al trabajar en este proyecto.
 
 ---
@@ -677,6 +677,60 @@ Reemplazar el contenido estático de hospitales individuales con enlaces directo
 
 ---
 
+## Sesión: Centauro Dental + Foto Oscar + QuoteModal (8 mayo 2026)
+
+### 1. Red Hospitalaria — Nueva tarjeta Centauro Clínica Dental
+
+**Archivo modificado:** `src/app/(marketing)/red-hospitalaria/page.tsx`
+
+- Añadida **4ª tarjeta** para **Centauro Clínica Dental**
+  - URL: `https://www.centauro.com.mx/red-dental-externa`
+  - Etiqueta: "Red Dental Nacional" — para pólizas en convenio con cobertura dental
+  - Color teal/verde (`#00897B`) para diferenciar dental de médico
+  - Logo real: `public/images/centauro-dental.jpg` (proporcionado por el cliente)
+- Grid cambiado de `md:grid-cols-3` → `md:grid-cols-2` (2x2) para balancear las 4 tarjetas
+- `max-w-5xl` → `max-w-6xl` para más espacio
+
+### 2. Página Nosotros — Foto real de Oscar
+
+**Archivo modificado:** `src/app/(marketing)/nosotros/page.tsx`
+
+- Eliminado el placeholder emoji (👨‍💼) de la sección "About Oscar"
+- Añadido `import Image from "next/image"`
+- Foto profesional de Oscar con `<Image>` component:
+  - `src="/images/oscar-sanchez.jpeg"`
+  - `object-cover object-top` para centrar en el rostro
+  - `priority` para carga inmediata (above-the-fold)
+  - `sizes="(max-width: 1024px) 100vw, 50vw"`
+- Foto recortada con Python (PIL) para eliminar espacio vacío superior y lateral:
+  - Original: 1131×1280 → Recortada: 930×1020
+  - Guardada en `public/images/oscar-sanchez.jpeg`
+
+### 3. Admin QuoteModal — Solo General de Seguros
+
+**Archivo modificado:** `src/app/admin/components/QuoteModal.tsx`
+
+- Eliminada la iteración sobre las 20 aseguradoras (`INSURERS.map(...)`)
+- Eliminado el import de `INSURERS` de `@/utils/constants`
+- Ahora muestra **únicamente General de Seguros** con link directo al portal:
+  - URL: `https://gswas.com.mx/cas/login?service=https%3A%2F%2Fgswas.com.mx%2FOficinaGS%2F&acceso=2`
+  - Logo: `/images/GENERAL DE SEGUROS.jpeg`
+- Card centrada con `flex justify-center`, más grande (w-20 h-20 logo, p-8)
+
+### Archivos nuevos en public/images/
+| Archivo | Descripción |
+|---|---|
+| `oscar-sanchez.jpeg` | Foto profesional de Oscar (recortada 930×1020) |
+| `centauro-dental.jpg` | Logo real de Centauro Clínica Dental |
+
+### Commits de esta sesión
+| Commit | Descripción |
+|---|---|
+| `c56d43d` | feat: add Centauro dental network card + Oscar photo on nosotros page |
+| `3721947` | fix: use real Centauro logo |
+| `165c95c` | feat(admin): QuoteModal shows only General de Seguros portal |
+| `50ea4d8` | fix: crop Oscar photo for better framing on nosotros page |
+
+---
+
 *Este archivo debe mantenerse actualizado cada vez que se hagan cambios significativos al proyecto.*
-
-
