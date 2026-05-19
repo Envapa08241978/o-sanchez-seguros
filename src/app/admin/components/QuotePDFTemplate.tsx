@@ -6,24 +6,96 @@ import {
   Text,
   View,
   StyleSheet,
-  Font,
+  Image,
+  Svg,
+  Path,
+  Rect,
+  Circle,
 } from "@react-pdf/renderer";
 import type { QuoteMember, QuoteSection } from "@/lib/firebase/firestore";
 
-// ── Brand Colors ──
+// ── Brand Colors — Aligned with osanchezseguros.com ──
 const COLORS = {
-  navy: "#0F2044",
-  navyLight: "#1B3A6B",
-  gold: "#C5A55A",
-  goldDark: "#A68B3E",
+  navy: "#202F71",        // --color-primary (brand)
+  navyLight: "#2b3e94",   // --color-primary-light
+  accent: "#D32020",      // --color-accent (red)
+  accentDark: "#b31b1b",  // --color-accent-dark
   white: "#FFFFFF",
-  cream: "#F8F6F1",
-  gray: "#6B7280",
+  cream: "#FFFAF3",       // --background
+  gray: "#6E6965",        // --text-muted
   grayLight: "#E5E7EB",
   grayDark: "#374151",
   text: "#1F2937",
   checkGreen: "#059669",
+  secondary: "#2B818C",   // --color-secondary
 };
+
+// ── SVG Icon Components for PDF ──
+
+function ShieldIcon({ color = COLORS.accent }: { color?: string }) {
+  return (
+    <Svg viewBox="0 0 32 32" style={{ width: 28, height: 28 }}>
+      <Path
+        d="M16 3L5 8v7c0 7.5 4.7 14.5 11 17 6.3-2.5 11-9.5 11-17V8L16 3z"
+        fill="none"
+        stroke={color}
+        strokeWidth={1.8}
+      />
+      <Rect x="14" y="10" width="4" height="12" rx="1" fill={color} />
+      <Rect x="10" y="14" width="12" height="4" rx="1" fill={color} />
+    </Svg>
+  );
+}
+
+function TrendingUpIcon({ color = COLORS.accent }: { color?: string }) {
+  return (
+    <Svg viewBox="0 0 32 32" style={{ width: 28, height: 28 }}>
+      <Path
+        d="M4 24l8-8 4 4 12-12"
+        fill="none"
+        stroke={color}
+        strokeWidth={2.2}
+      />
+      <Path
+        d="M20 8h8v8"
+        fill="none"
+        stroke={color}
+        strokeWidth={2.2}
+      />
+    </Svg>
+  );
+}
+
+function ShieldCheckIcon({ color = COLORS.accent }: { color?: string }) {
+  return (
+    <Svg viewBox="0 0 32 32" style={{ width: 28, height: 28 }}>
+      <Path
+        d="M16 3L5 8v7c0 7.5 4.7 14.5 11 17 6.3-2.5 11-9.5 11-17V8L16 3z"
+        fill="none"
+        stroke={color}
+        strokeWidth={1.8}
+      />
+      <Path
+        d="M11 16l3.5 3.5L21 13"
+        fill="none"
+        stroke={color}
+        strokeWidth={2.2}
+      />
+    </Svg>
+  );
+}
+
+function HeartShieldIcon({ color = COLORS.accent }: { color?: string }) {
+  return (
+    <Svg viewBox="0 0 32 32" style={{ width: 28, height: 28 }}>
+      <Circle cx="16" cy="16" r="13" fill="none" stroke={color} strokeWidth={1.8} />
+      <Path
+        d="M16 24s-6-4.35-6-8.5c0-2.2 1.8-4 4-4 1.3 0 2 .7 2 .7s.7-.7 2-.7c2.2 0 4 1.8 4 4C22 19.65 16 24 16 24z"
+        fill={color}
+      />
+    </Svg>
+  );
+}
 
 // ── Styles ──
 const s = StyleSheet.create({
@@ -53,6 +125,12 @@ const s = StyleSheet.create({
   },
 
   // Cover
+  coverLogo: {
+    width: 80,
+    height: 80,
+    marginBottom: 24,
+    borderRadius: 12,
+  },
   coverTitle: {
     fontSize: 42,
     fontWeight: "bold",
@@ -64,7 +142,7 @@ const s = StyleSheet.create({
   coverTitle360: {
     fontSize: 42,
     fontWeight: "bold",
-    color: COLORS.gold,
+    color: COLORS.accent,
   },
   coverSubtitle: {
     fontSize: 14,
@@ -76,7 +154,7 @@ const s = StyleSheet.create({
   },
   coverPrepared: {
     fontSize: 13,
-    color: COLORS.gold,
+    color: COLORS.accent,
     textAlign: "center",
     fontWeight: "bold",
     letterSpacing: 1,
@@ -91,7 +169,7 @@ const s = StyleSheet.create({
   coverLine: {
     width: 80,
     height: 2,
-    backgroundColor: COLORS.gold,
+    backgroundColor: COLORS.accent,
     marginVertical: 24,
   },
   coverAgentInfo: {
@@ -154,7 +232,7 @@ const s = StyleSheet.create({
     color: COLORS.navy,
     marginBottom: 6,
     borderLeftWidth: 4,
-    borderLeftColor: COLORS.gold,
+    borderLeftColor: COLORS.accent,
     paddingLeft: 14,
   },
   visionSubtitle: {
@@ -175,10 +253,8 @@ const s = StyleSheet.create({
     borderTopWidth: 3,
     borderTopColor: COLORS.navy,
   },
-  visionCardIcon: {
-    fontSize: 22,
+  visionCardIconWrap: {
     marginBottom: 10,
-    color: COLORS.gold,
   },
   visionCardTitle: {
     fontSize: 13,
@@ -209,7 +285,7 @@ const s = StyleSheet.create({
   sectionDivider: {
     width: 60,
     height: 3,
-    backgroundColor: COLORS.gold,
+    backgroundColor: COLORS.accent,
     alignSelf: "center",
     marginBottom: 24,
   },
@@ -240,7 +316,7 @@ const s = StyleSheet.create({
   },
   detailHighlight: {
     fontSize: 10,
-    color: COLORS.navy,
+    color: COLORS.accent,
     fontWeight: "bold",
     flex: 1,
   },
@@ -288,6 +364,12 @@ const s = StyleSheet.create({
   },
 
   // Closing
+  closingLogo: {
+    width: 60,
+    height: 60,
+    marginBottom: 20,
+    borderRadius: 8,
+  },
   closingTitle: {
     fontSize: 22,
     fontWeight: "bold",
@@ -307,12 +389,12 @@ const s = StyleSheet.create({
   closingLine: {
     width: 60,
     height: 2,
-    backgroundColor: COLORS.gold,
+    backgroundColor: COLORS.accent,
     marginBottom: 20,
   },
   closingContact: {
     fontSize: 10,
-    color: COLORS.gold,
+    color: COLORS.accent,
     textAlign: "center",
     fontWeight: "bold",
     marginBottom: 4,
@@ -415,6 +497,20 @@ const CHECK_FIELDS = new Set([
   "coberturasEspeciales",
 ]);
 
+// ── Vision Card Icon Selector ──
+function getVisionIcon(key: string) {
+  switch (key) {
+    case "salud":
+      return <ShieldIcon color={COLORS.accent} />;
+    case "crecimiento":
+      return <TrendingUpIcon color={COLORS.accent} />;
+    case "sinergia":
+      return <ShieldCheckIcon color={COLORS.accent} />;
+    default:
+      return <HeartShieldIcon color={COLORS.accent} />;
+  }
+}
+
 // ── Document Component ──
 
 type Props = {
@@ -440,24 +536,24 @@ export default function QuotePDFTemplate({
   const hasAhorro = sections.some((s) => s.type === "ahorro");
   const hasVida = sections.some((s) => s.type === "vida");
 
-  const visionCards: { icon: string; title: string; desc: string }[] = [];
+  const visionCards: { iconKey: string; title: string; desc: string }[] = [];
   if (hasGMM) {
     visionCards.push({
-      icon: "🛡",
+      iconKey: "salud",
       title: "Salud Inmediata",
       desc: "Protección contra imprevistos médicos con la red hospitalaria más prestigiosa de México y cobertura internacional.",
     });
   }
   if (hasAhorro || hasVida) {
     visionCards.push({
-      icon: "📈",
+      iconKey: "crecimiento",
       title: "Crecimiento Patrimonial",
       desc: "Ahorro garantizado en UDIs, protegiendo el poder adquisitivo frente a la inflación y generando rendimientos sólidos.",
     });
   }
   if (sections.length >= 2) {
     visionCards.push({
-      icon: "💰",
+      iconKey: "sinergia",
       title: "Sinergia Fiscal",
       desc: "Un plan diseñado para que la estabilidad de hoy construya el patrimonio del mañana de forma automática.",
     });
@@ -465,7 +561,7 @@ export default function QuotePDFTemplate({
   // Fallback: if less than 2 cards, fill
   while (visionCards.length < 2) {
     visionCards.push({
-      icon: "✓",
+      iconKey: "proteccion",
       title: "Protección Integral",
       desc: "Cobertura diseñada a la medida de sus necesidades con las mejores condiciones del mercado.",
     });
@@ -475,6 +571,9 @@ export default function QuotePDFTemplate({
     <Document>
       {/* ═══ PAGE 1: COVER ═══ */}
       <Page size="LETTER" style={s.pageCover}>
+        {/* Logo */}
+        <Image src="/images/icon-512.png" style={s.coverLogo} />
+
         <View style={s.coverLine} />
         <Text style={s.coverTitle}>
           Blindaje Familiar <Text style={s.coverTitle360}>360°</Text>
@@ -492,7 +591,7 @@ export default function QuotePDFTemplate({
           <Text style={s.coverAgentText}>
             Oscar Sánchez Aguirre · Asesor Certificado
           </Text>
-          <Text style={s.coverAgentText}>Tel: 662 182 2481</Text>
+          <Text style={s.coverAgentText}>Tel: 662 182 2481 · www.osanchezseguros.com</Text>
         </View>
       </Page>
 
@@ -513,7 +612,9 @@ export default function QuotePDFTemplate({
         <View style={s.visionCardsRow}>
           {visionCards.map((card, i) => (
             <View key={i} style={s.visionCard}>
-              <Text style={s.visionCardIcon}>{card.icon}</Text>
+              <View style={s.visionCardIconWrap}>
+                {getVisionIcon(card.iconKey)}
+              </View>
               <Text style={s.visionCardTitle}>{card.title}</Text>
               <Text style={s.visionCardText}>{card.desc}</Text>
             </View>
@@ -545,7 +646,7 @@ export default function QuotePDFTemplate({
 
         {/* Footer */}
         <View style={s.pageFooter}>
-          <Text style={s.footerText}>O Sanchez Seguros · Hermosillo, Sonora</Text>
+          <Text style={s.footerText}>O Sanchez Seguros · www.osanchezseguros.com</Text>
           <Text style={s.footerText}>{quoteNumber}</Text>
         </View>
       </Page>
@@ -601,14 +702,14 @@ export default function QuotePDFTemplate({
               })}
               <View
                 style={{
-                  backgroundColor: COLORS.gold,
+                  backgroundColor: COLORS.accent,
                   borderRadius: 12,
                   paddingHorizontal: 10,
                   paddingVertical: 4,
                 }}
               >
                 <Text
-                  style={{ fontSize: 9, color: COLORS.navy, fontWeight: "bold" }}
+                  style={{ fontSize: 9, color: COLORS.white, fontWeight: "bold" }}
                 >
                   {section.memberIndices.length} integrantes
                 </Text>
@@ -660,7 +761,7 @@ export default function QuotePDFTemplate({
             {/* Footer */}
             <View style={s.pageFooter}>
               <Text style={s.footerText}>
-                O Sanchez Seguros · Hermosillo, Sonora
+                O Sanchez Seguros · www.osanchezseguros.com
               </Text>
               <Text style={s.footerText}>{quoteNumber}</Text>
             </View>
@@ -670,6 +771,7 @@ export default function QuotePDFTemplate({
 
       {/* ═══ CLOSING PAGE ═══ */}
       <Page size="LETTER" style={s.pageClosing}>
+        <Image src="/images/icon-512.png" style={s.closingLogo} />
         <Text style={s.closingTitle}>
           Protegemos lo que más importa
         </Text>
@@ -686,7 +788,10 @@ export default function QuotePDFTemplate({
           Asesor Certificado de Seguros
         </Text>
         <Text style={s.closingContactSub}>
-          Tel: 662 182 2481 · oscareduardosanchezaguirre@gmail.com
+          Tel: 662 182 2481 · admin@osanchezseguros.com
+        </Text>
+        <Text style={s.closingContactSub}>
+          www.osanchezseguros.com
         </Text>
         <Text style={s.closingContactSub}>
           Hermosillo, Sonora, México

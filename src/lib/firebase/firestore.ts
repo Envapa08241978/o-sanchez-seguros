@@ -241,3 +241,15 @@ export async function updateQuoteStatus(
 export async function deleteQuote(quoteId: string) {
   await deleteDoc(doc(db, "quotes", quoteId));
 }
+
+// Update an existing quote's data (for editing)
+export async function updateQuote(
+  quoteId: string,
+  data: Partial<Omit<QuoteData, "leadId">> & { finalMessage?: string }
+) {
+  const quoteRef = doc(db, "quotes", quoteId);
+  await updateDoc(quoteRef, {
+    ...data,
+    updatedAt: serverTimestamp(),
+  });
+}

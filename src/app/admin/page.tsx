@@ -31,7 +31,7 @@ export default function AdminDashboardPage() {
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
   const [showDrawer, setShowDrawer] = useState(false);
   const [showQuoteGen, setShowQuoteGen] = useState(false);
-  const [quoteGenPrefill, setQuoteGenPrefill] = useState<{ name?: string; phone?: string; email?: string }>({});
+  const [quoteGenPrefill, setQuoteGenPrefill] = useState<{ name?: string; phone?: string; email?: string; editId?: string; editNumber?: string; members?: any[]; sections?: any[]; message?: string }>({});
 
   useEffect(() => {
     if (sessionStorage.getItem("adminAuth") === "true") { setIsAuthenticated(true); fetchLeads(); }
@@ -221,7 +221,7 @@ export default function AdminDashboardPage() {
         </div>
 
         {/* Quotes List */}
-        <QuotesList isOpen={isAuthenticated} />
+        <QuotesList isOpen={isAuthenticated} onEditQuote={(q) => { setQuoteGenPrefill({ name: q.clientName, phone: q.clientPhone, email: q.clientEmail, editId: q.id, editNumber: q.quoteNumber, members: q.members, sections: q.sections, message: q.finalMessage }); setShowQuoteGen(true); }} />
       </div>
 
       {/* Footer */}
@@ -236,7 +236,7 @@ export default function AdminDashboardPage() {
       <NewLeadModal isOpen={showNewLead} onClose={() => setShowNewLead(false)} onCreated={fetchLeads} />
       <QuoteModal isOpen={showQuote} onClose={() => setShowQuote(false)} leadName={quoteLead} />
       <LeadDetailDrawer isOpen={showDrawer} onClose={() => setShowDrawer(false)} lead={selectedLead} onUpdated={fetchLeads} onCreateQuote={(name, phone, email) => { setQuoteGenPrefill({ name, phone, email }); setShowQuoteGen(true); }} />
-      <QuoteGenerator isOpen={showQuoteGen} onClose={() => setShowQuoteGen(false)} onCreated={() => {}} prefillName={quoteGenPrefill.name} prefillPhone={quoteGenPrefill.phone} prefillEmail={quoteGenPrefill.email} />
+      <QuoteGenerator isOpen={showQuoteGen} onClose={() => { setShowQuoteGen(false); setQuoteGenPrefill({}); }} onCreated={() => {}} prefillName={quoteGenPrefill.name} prefillPhone={quoteGenPrefill.phone} prefillEmail={quoteGenPrefill.email} editQuoteId={quoteGenPrefill.editId} editQuoteNumber={quoteGenPrefill.editNumber} prefillMembers={quoteGenPrefill.members} prefillSections={quoteGenPrefill.sections} prefillMessage={quoteGenPrefill.message} />
     </main>
   );
 }

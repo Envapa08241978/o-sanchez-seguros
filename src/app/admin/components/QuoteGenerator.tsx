@@ -80,9 +80,14 @@ type Props = {
   prefillName?: string;
   prefillPhone?: string;
   prefillEmail?: string;
+  editQuoteId?: string | null;
+  editQuoteNumber?: string | null;
+  prefillMembers?: QuoteMember[];
+  prefillSections?: QuoteSection[];
+  prefillMessage?: string;
 };
 
-export default function QuoteGenerator({ isOpen, onClose, onCreated, prefillName, prefillPhone, prefillEmail }: Props) {
+export default function QuoteGenerator({ isOpen, onClose, onCreated, prefillName, prefillPhone, prefillEmail, editQuoteId, editQuoteNumber, prefillMembers, prefillSections, prefillMessage }: Props) {
   const [step, setStep] = useState(1);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
@@ -116,11 +121,11 @@ export default function QuoteGenerator({ isOpen, onClose, onCreated, prefillName
       setError("");
       setGeneratedQuoteNumber("");
       setGeneratedBlobUrl("");
-      setSections([]);
-      setFinalMessage("");
-      setMembers([{ gender: "H", age: 38, relationship: "Titular" }]);
+      setSections(prefillSections || []);
+      setFinalMessage(prefillMessage || "");
+      setMembers(prefillMembers || [{ gender: "H", age: 38, relationship: "Titular" }]);
     }
-  }, [isOpen, prefillName, prefillPhone, prefillEmail]);
+  }, [isOpen, prefillName, prefillPhone, prefillEmail, prefillMembers, prefillSections, prefillMessage]);
 
   if (!isOpen) return null;
 
@@ -192,16 +197,29 @@ export default function QuoteGenerator({ isOpen, onClose, onCreated, prefillName
     setSaving(true);
     setError("");
     try {
-      const { createQuote } = await import("@/lib/firebase/firestore");
-      const result = await createQuote({
-        clientName, clientPhone, clientEmail,
-        members, sections, finalMessage,
-      });
+      let quoteNum: string;
+      if (editQuoteId && editQuoteNumber) {
+        // Update existing quote
+        const { updateQuote } = await import("@/lib/firebase/firestore");
+        await updateQuote(editQuoteId, {
+          clientName, clientPhone, clientEmail,
+          members, sections, finalMessage,
+        });
+        quoteNum = editQuoteNumber;
+      } else {
+        // Create new quote
+        const { createQuote } = await import("@/lib/firebase/firestore");
+        const result = await createQuote({
+          clientName, clientPhone, clientEmail,
+          members, sections, finalMessage,
+        });
+        quoteNum = result.quoteNumber;
+      }
 
       // Generate PDF blob with explicit MIME type
       const rawBlob = await pdf(
         <QuotePDFTemplate
-          quoteNumber={result.quoteNumber}
+          quoteNumber={quoteNum}
           clientName={clientName}
           members={members}
           sections={sections}
@@ -211,7 +229,7 @@ export default function QuoteGenerator({ isOpen, onClose, onCreated, prefillName
 
       // Ensure PDF MIME type
       const pdfBlob = new Blob([rawBlob], { type: "application/pdf" });
-      const fileName = `${result.quoteNumber} - ${clientName}.pdf`;
+      const fileName = `${quoteNum} - ${clientName}.pdf`;
 
       // Download
       const url = URL.createObjectURL(pdfBlob);
@@ -221,13 +239,12 @@ export default function QuoteGenerator({ isOpen, onClose, onCreated, prefillName
       a.style.display = "none";
       document.body.appendChild(a);
       a.click();
-      // Small delay before cleanup to ensure download starts
       setTimeout(() => {
         document.body.removeChild(a);
       }, 100);
 
       // Keep blob URL for re-download, store success state
-      setGeneratedQuoteNumber(result.quoteNumber);
+      setGeneratedQuoteNumber(quoteNum);
       setGeneratedBlobUrl(url);
       setStep(4); // Success step
       onCreated();
@@ -239,14 +256,43 @@ export default function QuoteGenerator({ isOpen, onClose, onCreated, prefillName
     }
   }
 
-  // ── WhatsApp share ──
-  function handleWhatsAppShare() {
+  // ── WhatsApp share with Web Share API (mobile) or fallback (desktop) ──
+  async function handleWhatsAppShare() {
     const phone = clientPhone.replace(/\D/g, "");
-    const msg = encodeURIComponent(
-      `Hola ${clientName}, soy Oscar de O Sanchez Seguros.\n\n` +
-      `Le comparto su propuesta de protección integral *Blindaje Familiar 360°* (${generatedQuoteNumber}).\n\n` +
-      `Quedo a sus órdenes para resolver cualquier duda. 🛡️`
-    );
+    const msgText = `Hola ${clientName}, soy Oscar de O Sanchez Seguros.\n\nLe comparto su propuesta de protección integral *Blindaje Familiar 360°* (${generatedQuoteNumber}).\n\nQuedo a sus órdenes para resolver cualquier duda.`;
+
+    // Try Web Share API (works on mobile — can attach files to WhatsApp)
+    if (generatedBlobUrl && navigator.share && navigator.canShare) {
+      try {
+        const response = await fetch(generatedBlobUrl);
+        const blob = await response.blob();
+        const pdfFile = new File([blob], `${generatedQuoteNumber} - ${clientName}.pdf`, { type: "application/pdf" });
+
+        if (navigator.canShare({ files: [pdfFile] })) {
+          await navigator.share({
+            title: `Blindaje Familiar 360° - ${clientName}`,
+            text: msgText,
+            files: [pdfFile],
+          });
+          return;
+        }
+      } catch (err) {
+        // User cancelled or Share API failed — fall through to wa.me
+        if ((err as Error).name === "AbortError") return;
+      }
+    }
+
+    // Fallback: download PDF + open WhatsApp Web
+    if (generatedBlobUrl) {
+      const a = document.createElement("a");
+      a.href = generatedBlobUrl;
+      a.download = `${generatedQuoteNumber} - ${clientName}.pdf`;
+      a.style.display = "none";
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => document.body.removeChild(a), 100);
+    }
+    const msg = encodeURIComponent(msgText);
     window.open(`https://wa.me/52${phone}?text=${msg}`, "_blank");
   }
 
@@ -275,9 +321,9 @@ export default function QuoteGenerator({ isOpen, onClose, onCreated, prefillName
         <div className="p-5 border-b border-border flex items-center justify-between flex-shrink-0 bg-brand/[0.02]">
           <div>
             <h2 className="font-display font-bold text-brand text-lg flex items-center gap-2">
-              {step === 4 ? "✅" : "📄"} {step === 4 ? "Presentación Generada" : "Nueva Presentación"}
+              {step === 4 ? "✅" : "📄"} {step === 4 ? "Presentación Generada" : editQuoteId ? "Editar Presentación" : "Nueva Presentación"}
             </h2>
-            <p className="text-xs text-muted mt-0.5">{step === 4 ? `Cotización ${generatedQuoteNumber} lista` : `Paso ${step} de 3 — ${step === 1 ? "Datos e Integrantes" : step === 2 ? "Planes de Protección" : "Mensaje Final y Generar"}`}</p>
+            <p className="text-xs text-muted mt-0.5">{step === 4 ? `Cotización ${generatedQuoteNumber} lista` : `Paso ${step} de 3 — ${step === 1 ? "Datos e Integrantes" : step === 2 ? "Planes de Protección" : "Mensaje Final y Generar"}`}{editQuoteId && step < 4 ? " (editando)" : ""}</p>
           </div>
           <button onClick={onClose} className="w-8 h-8 rounded-full hover:bg-brand/5 flex items-center justify-center text-muted hover:text-brand transition-colors">
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
@@ -529,7 +575,7 @@ export default function QuoteGenerator({ isOpen, onClose, onCreated, prefillName
                 {saving ? (
                   <><div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />Generando...</>
                 ) : (
-                  <>📄 Generar y Descargar PDF</>
+                  <>{editQuoteId ? "📄 Guardar Cambios y Descargar" : "📄 Generar y Descargar PDF"}</>
                 )}
               </button>
             )}
