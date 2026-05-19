@@ -836,5 +836,160 @@ Registrar la agencia en Apple Business Connect para aparecer en Apple Maps y ser
 
 ---
 
+## Sesión: Blindaje Familiar 360 — Generador de Presentaciones PDF (18 mayo 2026)
+
+### Objetivo
+Implementar un sistema completo para que Oscar pueda generar presentaciones PDF profesionales ("cotizaciones") directamente desde el CRM admin. El sistema permite combinar múltiples productos de seguros (GMM, Ahorro, Vida, Auto, etc.) en una sola propuesta visual con branding de O Sanchez Seguros.
+
+### Contexto del negocio
+Oscar recibe cotizaciones de múltiples aseguradoras (GMM Diamante Elite, Vida Pagos Limitados, etc.) y necesita entregarle al cliente un documento unificado que presente todo como un "paquete de protección". Anteriormente lo hacía manualmente o con ayuda de IA externa.
+
+### Dependencia instalada
+- `@react-pdf/renderer` — Generación de PDF en el cliente (no requiere API externa)
+- Agregada al `package.json`
+
+### Archivos nuevos creados
+
+#### `src/app/admin/components/QuotePDFTemplate.tsx`
+- Template de `@react-pdf/renderer` que genera un PDF multi-página
+- **Página 1 — Portada:** "Blindaje Familiar 360°" con nombre del cliente, número de cotización, datos del agente. Colores Navy (#0F2044) + Gold (#C5A55A)
+- **Página 2 — Visión Estratégica:** Cards dinámicas según los planes incluidos (Salud, Crecimiento Patrimonial, Sinergia Fiscal). Muestra badges de integrantes
+- **Páginas 3-N — Secciones de Planes:** Una página por cada plan agregado. Muestra tabla de campos (Suma Asegurada, Deducible, Costo, etc.) con campos highlight para costos. Badges de integrantes asignados al plan
+- **Página Final — Cierre:** Mensaje personalizado, datos de contacto de Oscar, disclaimer legal con vigencia de 30 días
+- Labels predefinidos para GMM, Ahorro y Vida. Soporte para campos personalizados
+- Campos tipo "check" (ceroDeducible, internacional, coberturasEspeciales) se renderizan con ✓ verde
+
+#### `src/app/admin/components/QuoteGenerator.tsx`
+- Drawer de 4 pasos que se abre desde el detalle de un lead
+- **Paso 1 — Datos e Integrantes:** Nombre del cliente/familia, teléfono, email. Tabla editable de integrantes con Género (H/M), Edad, Relación (Titular, Cónyuge, Hijo, etc.). Notación automática: H38, M33, H19
+- **Paso 2 — Planes de Protección:** Botón "Agregar Plan" abre selector de 7 tipos: GMM (🏥), Ahorro (📈), Vida (❤️), Auto (🚗), Empresarial (🏢), Fronterizo (🌎), Personalizado (⚙️). Cada tipo tiene campos predefinidos específicos. Selector de qué integrantes aplican a cada plan. Título del plan editable
+- **Paso 3 — Mensaje Final:** Resumen visual de la presentación. Textarea para mensaje personalizado (opcional, tiene default genérico)
+- **Paso 4 — Éxito:** Pantalla de confirmación con número de cotización. 3 botones: "Descargar PDF otra vez", "Enviar por WhatsApp" (abre wa.me con mensaje pre-escrito), "Cerrar"
+- Props: `isOpen`, `onClose`, `onCreated`, `prefillName`, `prefillPhone`, `prefillEmail`
+- El `useEffect` sincroniza los datos del lead cuando se abre el drawer
+- El blob se genera con MIME type explícito: `new Blob([rawBlob], { type: "application/pdf" })`
+
+#### `src/app/admin/components/QuotesList.tsx`
+- Tabla de cotizaciones guardadas debajo de la tabla de leads
+- Columnas: No. Cotización (font-mono), Cliente, Planes (tags), Estatus (select), Fecha, Acciones
+- **Estatus disponibles:** Borrador (amber), Enviada (blue), Aceptada (emerald), Expirada (neutral)
+- **Acciones:** Re-descargar PDF (regenera el PDF con los datos guardados), Eliminar
+- Se carga automáticamente cuando el admin está autenticado
+
+### Archivos modificados
+
+#### `src/lib/firebase/firestore.ts`
+Nuevas funciones y tipos agregados:
+
+```typescript
+// Tipos
+type QuoteMember = { gender: "H" | "M"; age: number; relationship: string };
+type QuoteSection = { type: string; title: string; memberIndices: number[]; fields: Record<string, string> };
+type QuoteData = { clientName, clientPhone, clientEmail, members, sections, finalMessage, leadId? };
+
+// Funciones
+getNextQuoteNumber()    // Atomic counter via runTransaction → "OSS-2026-0001"
+createQuote(data)       // Saves to 'quotes' collection + auto-generates number
+getQuotes()             // Returns all quotes ordered by createdAt desc
+updateQuoteStatus(id, status)  // Updates status: draft | sent | accepted | expired
+deleteQuote(id)         // Deletes a quote document
+```
+
+Imports agregados: `getDoc`, `setDoc`, `runTransaction`
+
+#### `src/app/admin/page.tsx`
+- Imports agregados: `QuoteGenerator`, `QuotesList`
+- States nuevos: `showQuoteGen`, `quoteGenPrefill` (name, phone, email)
+- Se removió el botón "Nueva Presentación" del header (el flujo ahora inicia desde un contacto)
+- Se agregó `<QuotesList isOpen={isAuthenticated} />` debajo de la tabla de leads
+- Se agregó `<QuoteGenerator>` con prefill props
+- Se pasó `onCreateQuote` callback al `LeadDetailDrawer`
+
+#### `src/app/admin/components/LeadDetailDrawer.tsx`
+- Nuevo prop opcional: `onCreateQuote?: (name: string, phone: string, email: string) => void`
+- Se agregó botón **"Crear Presentación PDF"** (azul marino, full-width) después de los botones de WhatsApp/Email en la sección de Quick Actions
+- Al hacer clic: llama `onCreateQuote` con los datos del lead y cierra el drawer
+
+### Firestore — Schema nuevo
+
+#### Colección `counters`
+```
+counters/quotes {
+  lastNumber: number,      // Último número secuencial usado
+  year: number,           // Año actual (se resetea si cambia)
+  prefix: "OSS"           // Prefijo fijo
+}
+```
+
+#### Colección `quotes`
+```
+quotes/{autoId} {
+  quoteNumber: "OSS-2026-0001",    // Generado automáticamente
+  clientName: string,
+  clientPhone: string,
+  clientEmail: string,
+  members: QuoteMember[],           // [{gender:"H", age:38, relationship:"Titular"}, ...]
+  sections: QuoteSection[],         // [{type:"gmm", title:"GMM Diamante Elite", memberIndices:[0,1], fields:{...}}, ...]
+  finalMessage: string,
+  leadId?: string,                  // Opcional: referencia al lead
+  status: "draft" | "sent" | "accepted" | "expired",
+  createdAt: Timestamp,
+  updatedAt: Timestamp
+}
+```
+
+### Flujo completo del usuario
+1. Oscar abre el panel admin (`/admin`)
+2. Ve la tabla de leads → clic en el ícono de reloj (Historial) de un lead
+3. En el drawer del lead, clic en **"Crear Presentación PDF"**
+4. Se abre el QuoteGenerator con datos pre-llenados
+5. **Paso 1:** Ajusta integrantes (agrega H38, M33, H19, etc.)
+6. **Paso 2:** Agrega planes — GMM con campos, Ahorro con campos, etc.
+7. **Paso 3:** Revisa resumen y opcionalmente escribe mensaje final
+8. Clic en "Generar y Descargar PDF" → se guarda en Firestore + descarga PDF
+9. **Paso 4:** Pantalla de éxito → puede re-descargar o enviar por WhatsApp
+10. Las cotizaciones aparecen en la tabla "Presentaciones Generadas" abajo
+
+### Campos predefinidos por tipo de plan
+
+| Tipo | Campos |
+|---|---|
+| **GMM** | Suma Asegurada, Gama Hospitalaria, Deducible, Cero Deducible, Red Hospitalaria, Coberturas Especiales, Internacional, Costo Anual, Descuento Familiar, Costo Total |
+| **Ahorro** | Suma Asegurada, Ahorro Buscado, Inversión Anual, Ahorro Año 10/15/20, Recompensas Paquete, Recompensa Económica, Indemnización por Supervivencia |
+| **Vida** | Suma Asegurada, Prima Anual, Beneficiarios, Coberturas Adicionales, Costo Total |
+| **Auto** | Vehículo, Modelo/Año, Cobertura, Deducible, Prima, Asistencia Vial |
+| **Empresarial** | Tipo de Cobertura, No. de Empleados, Suma Asegurada, Prima, Coberturas |
+| **Fronterizo** | País de Cobertura, Vigencia, Tipo de Cobertura, Prima |
+| **Personalizado** | Campos libres (key-value editables) |
+
+### WhatsApp — Mensaje pre-escrito
+Al presionar "Enviar por WhatsApp" después de generar, se abre:
+```
+wa.me/52{phone}?text=Hola {nombre}, soy Oscar de O Sanchez Seguros.
+
+Le comparto su propuesta de protección integral *Blindaje Familiar 360°* (OSS-2026-XXXX).
+
+Quedo a sus órdenes para resolver cualquier duda. 🛡️
+```
+**Nota:** WhatsApp Web no permite adjuntar archivos vía URL. Oscar debe adjuntar el PDF manualmente después de que se abra la conversación.
+
+### Commits y deploy
+- **Commit 1:** `dde2cdf` — feat: Add Blindaje Familiar 360 PDF presentation generator (7 files, +2011 lines)
+- **Commit 2:** `02663b9` — fix: PDF download, WhatsApp share, contact-first flow (5 files, +247/-46 lines)
+- **Build:** ✅ Exitoso (23 páginas, 0 errores)
+- **Deploy:** Automático via Vercel desde push a `main`
+
+### Problemas conocidos resueltos
+1. **PDF descargaba como blob sin extensión** → Se forzó MIME type `application/pdf` con `new Blob([rawBlob], { type: "application/pdf" })`
+2. **Datos del lead no se pre-llenaban** → Se agregó `useEffect` que sincroniza props cuando el drawer se abre
+3. **Sin opción WhatsApp** → Se agregó Step 4 de éxito con botón dedicado
+
+### Preguntas pendientes para Oscar
+1. ¿La lógica de "Recompensa por paquete" en planes de ahorro tiene un cálculo específico?
+2. ¿"Red Medida" en GMM es una clasificación estándar o específica de una aseguradora?
+3. ¿Quiere mantener el QuoteModal existente (General de Seguros portal link) o reemplazarlo?
+
+---
+
 *Este archivo debe mantenerse actualizado cada vez que se hagan cambios significativos al proyecto.*
 
