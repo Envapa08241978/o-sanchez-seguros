@@ -54,7 +54,7 @@ export default function QuotesList({ isOpen, onRefresh }: Props) {
   async function handleRedownload(quote: Quote) {
     setDownloading(quote.id);
     try {
-      const blob = await pdf(
+      const rawBlob = await pdf(
         <QuotePDFTemplate
           quoteNumber={quote.quoteNumber}
           clientName={quote.clientName}
@@ -64,14 +64,18 @@ export default function QuotesList({ isOpen, onRefresh }: Props) {
         />
       ).toBlob();
 
-      const url = URL.createObjectURL(blob);
+      const pdfBlob = new Blob([rawBlob], { type: "application/pdf" });
+      const url = URL.createObjectURL(pdfBlob);
       const a = document.createElement("a");
       a.href = url;
       a.download = `${quote.quoteNumber} - ${quote.clientName}.pdf`;
+      a.style.display = "none";
       document.body.appendChild(a);
       a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
+      setTimeout(() => {
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }, 200);
     } catch (err) {
       console.error("Error downloading PDF:", err);
     } finally {

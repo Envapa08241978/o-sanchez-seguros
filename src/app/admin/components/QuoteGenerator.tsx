@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { pdf } from "@react-pdf/renderer";
 import QuotePDFTemplate from "./QuotePDFTemplate";
 import type { QuoteMember, QuoteSection } from "@/lib/firebase/firestore";
@@ -102,8 +102,25 @@ export default function QuoteGenerator({ isOpen, onClose, onCreated, prefillName
   // Step 3: Final message
   const [finalMessage, setFinalMessage] = useState("");
 
-  // Custom fields for personalizado
-  const [customFields, setCustomFields] = useState<{ key: string; value: string }[]>([{ key: "", value: "" }]);
+  // Success state after generation
+  const [generatedQuoteNumber, setGeneratedQuoteNumber] = useState("");
+  const [generatedBlobUrl, setGeneratedBlobUrl] = useState("");
+
+  // Sync prefill props when drawer opens
+  useEffect(() => {
+    if (isOpen) {
+      setClientName(prefillName || "");
+      setClientPhone(prefillPhone || "");
+      setClientEmail(prefillEmail || "");
+      setStep(1);
+      setError("");
+      setGeneratedQuoteNumber("");
+      setGeneratedBlobUrl("");
+      setSections([]);
+      setFinalMessage("");
+      setMembers([{ gender: "H", age: 38, relationship: "Titular" }]);
+    }
+  }, [isOpen, prefillName, prefillPhone, prefillEmail]);
 
   if (!isOpen) return null;
 
@@ -181,8 +198,8 @@ export default function QuoteGenerator({ isOpen, onClose, onCreated, prefillName
         members, sections, finalMessage,
       });
 
-      // Generate PDF blob
-      const blob = await pdf(
+      // Generate PDF blob with explicit MIME type
+      const rawBlob = await pdf(
         <QuotePDFTemplate
           quoteNumber={result.quoteNumber}
           clientName={clientName}
@@ -192,24 +209,57 @@ export default function QuoteGenerator({ isOpen, onClose, onCreated, prefillName
         />
       ).toBlob();
 
+      // Ensure PDF MIME type
+      const pdfBlob = new Blob([rawBlob], { type: "application/pdf" });
+      const fileName = `${result.quoteNumber} - ${clientName}.pdf`;
+
       // Download
-      const url = URL.createObjectURL(blob);
+      const url = URL.createObjectURL(pdfBlob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `${result.quoteNumber} - ${clientName}.pdf`;
+      a.download = fileName;
+      a.style.display = "none";
       document.body.appendChild(a);
       a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
+      // Small delay before cleanup to ensure download starts
+      setTimeout(() => {
+        document.body.removeChild(a);
+      }, 100);
 
+      // Keep blob URL for re-download, store success state
+      setGeneratedQuoteNumber(result.quoteNumber);
+      setGeneratedBlobUrl(url);
+      setStep(4); // Success step
       onCreated();
-      onClose();
     } catch (err: any) {
       console.error("Error generating quote:", err);
       setError("Error al generar la cotización. Intenta de nuevo.");
     } finally {
       setSaving(false);
     }
+  }
+
+  // ── WhatsApp share ──
+  function handleWhatsAppShare() {
+    const phone = clientPhone.replace(/\D/g, "");
+    const msg = encodeURIComponent(
+      `Hola ${clientName}, soy Oscar de O Sanchez Seguros.\n\n` +
+      `Le comparto su propuesta de protección integral *Blindaje Familiar 360°* (${generatedQuoteNumber}).\n\n` +
+      `Quedo a sus órdenes para resolver cualquier duda. 🛡️`
+    );
+    window.open(`https://wa.me/52${phone}?text=${msg}`, "_blank");
+  }
+
+  // ── Re-download PDF ──
+  function handleRedownload() {
+    if (!generatedBlobUrl) return;
+    const a = document.createElement("a");
+    a.href = generatedBlobUrl;
+    a.download = `${generatedQuoteNumber} - ${clientName}.pdf`;
+    a.style.display = "none";
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => document.body.removeChild(a), 100);
   }
 
   // ── Validation ──
@@ -225,9 +275,9 @@ export default function QuoteGenerator({ isOpen, onClose, onCreated, prefillName
         <div className="p-5 border-b border-border flex items-center justify-between flex-shrink-0 bg-brand/[0.02]">
           <div>
             <h2 className="font-display font-bold text-brand text-lg flex items-center gap-2">
-              📄 Nueva Presentación
+              {step === 4 ? "✅" : "📄"} {step === 4 ? "Presentación Generada" : "Nueva Presentación"}
             </h2>
-            <p className="text-xs text-muted mt-0.5">Paso {step} de 3 — {step === 1 ? "Datos e Integrantes" : step === 2 ? "Planes de Protección" : "Mensaje Final y Generar"}</p>
+            <p className="text-xs text-muted mt-0.5">{step === 4 ? `Cotización ${generatedQuoteNumber} lista` : `Paso ${step} de 3 — ${step === 1 ? "Datos e Integrantes" : step === 2 ? "Planes de Protección" : "Mensaje Final y Generar"}`}</p>
           </div>
           <button onClick={onClose} className="w-8 h-8 rounded-full hover:bg-brand/5 flex items-center justify-center text-muted hover:text-brand transition-colors">
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
@@ -235,11 +285,13 @@ export default function QuoteGenerator({ isOpen, onClose, onCreated, prefillName
         </div>
 
         {/* Progress bar */}
-        <div className="flex gap-1 px-5 pt-3">
-          {[1, 2, 3].map(n => (
-            <div key={n} className={`flex-1 h-1.5 rounded-full transition-all ${n <= step ? "bg-brand" : "bg-border"}`} />
-          ))}
-        </div>
+        {step < 4 && (
+          <div className="flex gap-1 px-5 pt-3">
+            {[1, 2, 3].map(n => (
+              <div key={n} className={`flex-1 h-1.5 rounded-full transition-all ${n <= step ? "bg-brand" : "bg-border"}`} />
+            ))}
+          </div>
+        )}
 
         {/* Content */}
         <div className="flex-1 overflow-y-auto p-5 space-y-5">
@@ -425,27 +477,64 @@ export default function QuoteGenerator({ isOpen, onClose, onCreated, prefillName
               </div>
             </>
           )}
+
+          {/* ═══ STEP 4: Success ═══ */}
+          {step === 4 && (
+            <div className="flex flex-col items-center justify-center py-8 space-y-6">
+              <div className="w-20 h-20 rounded-full bg-emerald-50 flex items-center justify-center">
+                <svg className="w-10 h-10 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+              </div>
+              <div className="text-center">
+                <h3 className="text-lg font-bold text-brand">¡Presentación generada exitosamente!</h3>
+                <p className="text-sm text-muted mt-1">Cotización <span className="font-mono font-bold">{generatedQuoteNumber}</span></p>
+                <p className="text-sm text-muted">Cliente: <span className="font-semibold">{clientName}</span></p>
+              </div>
+
+              <div className="w-full space-y-3 max-w-sm">
+                {/* Re-download button */}
+                <button onClick={handleRedownload} className="w-full flex items-center justify-center gap-2 px-5 py-3 bg-brand text-white text-sm font-bold rounded-xl hover:bg-brand-light transition-all shadow-md">
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                  Descargar PDF otra vez
+                </button>
+
+                {/* WhatsApp button */}
+                {clientPhone && (
+                  <button onClick={handleWhatsAppShare} className="w-full flex items-center justify-center gap-2 px-5 py-3 bg-[#25D366] text-white text-sm font-bold rounded-xl hover:bg-[#1da851] transition-all shadow-md">
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>
+                    Enviar por WhatsApp
+                  </button>
+                )}
+
+                {/* Close */}
+                <button onClick={onClose} className="w-full px-5 py-3 border border-border text-muted text-sm font-semibold rounded-xl hover:bg-brand/5 transition-all">
+                  Cerrar
+                </button>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Footer navigation */}
-        <div className="p-5 border-t border-border flex items-center justify-between flex-shrink-0 bg-brand/[0.01]">
-          {step > 1 ? (
-            <button onClick={() => setStep(step - 1)} className={btnSecondary}>← Anterior</button>
-          ) : <div />}
-          {step < 3 ? (
-            <button onClick={() => setStep(step + 1)} disabled={step === 1 ? !canGoStep2 : !canGoStep3} className={btnPrimary}>
-              Siguiente →
-            </button>
-          ) : (
-            <button onClick={handleGenerate} disabled={saving} className={`${btnPrimary} flex items-center gap-2`}>
-              {saving ? (
-                <><div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />Generando...</>
-              ) : (
-                <>📄 Generar y Descargar PDF</>
-              )}
-            </button>
-          )}
-        </div>
+        {step < 4 && (
+          <div className="p-5 border-t border-border flex items-center justify-between flex-shrink-0 bg-brand/[0.01]">
+            {step > 1 ? (
+              <button onClick={() => setStep(step - 1)} className={btnSecondary}>← Anterior</button>
+            ) : <div />}
+            {step < 3 ? (
+              <button onClick={() => setStep(step + 1)} disabled={step === 1 ? !canGoStep2 : !canGoStep3} className={btnPrimary}>
+                Siguiente →
+              </button>
+            ) : (
+              <button onClick={handleGenerate} disabled={saving} className={`${btnPrimary} flex items-center gap-2`}>
+                {saving ? (
+                  <><div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />Generando...</>
+                ) : (
+                  <>📄 Generar y Descargar PDF</>
+                )}
+              </button>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

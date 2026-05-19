@@ -733,4 +733,108 @@ Reemplazar el contenido estático de hospitales individuales con enlaces directo
 
 ---
 
+## Sesión: Mejoras SEO Avanzadas — Metadata, OG, Breadcrumbs, FAQ Schema (11 mayo 2026)
+
+### Objetivo
+Enriquecer el SEO de todas las páginas del sitio con metadata individual, Open Graph, canonical URLs, breadcrumbs JSON-LD y FAQ schema para mejorar posicionamiento orgánico y la apariencia al compartir enlaces en redes sociales.
+
+### Diagnóstico previo
+El sitio ya tenía una base sólida: sitemap.xml, robots.txt, JSON-LD global (InsuranceAgency, WebSite, ItemList), security headers y Google Search Console verificado. Sin embargo:
+- Las páginas internas NO tenían Open Graph propio (al compartir en WhatsApp/FB mostraban la descripción genérica)
+- No se usaban breadcrumbs JSON-LD (el componente `PageJsonLd` existía pero no se utilizaba)
+- La meta description de Red Hospitalaria seguía mencionando hospitales individuales eliminados (CIMA, San José, etc.)
+- Las sub-páginas de seguros no tenían `keywords` ni `canonical` explícitos
+- La página de fronterizos tenía FAQs pero no generaba el schema FAQPage para rich results
+
+### Archivos modificados (11)
+
+| Archivo | Cambios |
+|---|---|
+| `src/app/layout.tsx` | + `alternates.canonical` + `alternates.languages.es-MX` |
+| `src/app/(marketing)/contacto/layout.tsx` | Fix description, + keywords (7), + canonical, + openGraph |
+| `src/app/(marketing)/red-hospitalaria/layout.tsx` | **FIX URGENTE:** description actualizada (ya no menciona hospitales eliminados), + keywords (10), + canonical, + openGraph |
+| `src/app/(marketing)/nosotros/page.tsx` | + keywords (7), + canonical, + openGraph, + `<PageJsonLd>` breadcrumbs |
+| `src/app/(marketing)/seguros/page.tsx` | Title mejorado, + keywords (9), + canonical, + openGraph, + `<PageJsonLd>` breadcrumbs |
+| `src/app/(marketing)/seguros/gastos-medicos/page.tsx` | Title mejorado, description enriquecida, + keywords (10), + canonical, + openGraph, + breadcrumbs |
+| `src/app/(marketing)/seguros/auto/page.tsx` | Title mejorado, + keywords (10), + canonical, + openGraph, + breadcrumbs |
+| `src/app/(marketing)/seguros/vida/page.tsx` | Title mejorado, + keywords (9), + canonical, + openGraph, + breadcrumbs |
+| `src/app/(marketing)/seguros/vida-con-ahorro/page.tsx` | Title mejorado, + keywords (10), + canonical, + openGraph, + breadcrumbs |
+| `src/app/(marketing)/seguros/empresarial/page.tsx` | Title mejorado, + keywords (10), + canonical, + openGraph, + breadcrumbs |
+| `src/app/(marketing)/seguros/fronterizos/page.tsx` | Title mejorado, + keywords (7), + canonical, + openGraph, + breadcrumbs, + **FAQ schema** |
+
+### Keywords agregados por página
+
+| Página | Keywords principales |
+|---|---|
+| **Contacto** | `cotizar seguros hermosillo`, `contacto agente seguros hermosillo`, `cotización gastos médicos mayores`, `asesor de seguros hermosillo contacto` |
+| **Red Hospitalaria** | `red hospitalaria seguros hermosillo`, `buscador hospitales AXA seguros`, `directorio médicos GNP seguros`, `red dental Centauro`, `cobertura hospitalaria seguros México` |
+| **Nosotros** | `oscar sanchez seguros hermosillo`, `agente seguros certificado CNSF hermosillo`, `agente seguros independiente hermosillo` |
+| **Seguros (índice)** | `seguros hermosillo catálogo`, `tipos de seguros hermosillo`, `comparar seguros hermosillo`, `mejores seguros en hermosillo` |
+| **GMM** | `gastos médicos mayores hermosillo`, `seguro GMM hermosillo sonora`, `seguro médico hospital cima hermosillo`, `cobertura médica AXA GNP hermosillo` |
+| **Auto** | `seguro de auto hermosillo`, `seguro auto Qualitas hermosillo`, `cobertura amplia auto hermosillo`, `comparar seguros auto hermosillo` |
+| **Vida** | `seguro de vida hermosillo`, `cotizar seguro de vida hermosillo`, `protección familiar seguros hermosillo` |
+| **Vida con Ahorro** | `plan de ahorro retiro hermosillo`, `plan ahorro educación hermosillo`, `fondo educativo seguros hermosillo`, `seguro vida rendimiento garantizado` |
+| **Empresarial** | `seguros empresariales hermosillo`, `seguro de grupo GMM hermosillo`, `seguro flotilla vehicular hermosillo`, `seguro PyME hermosillo sonora` |
+| **Fronterizos** | `seguros fronterizos sonora`, `seguro para cruzar a estados unidos`, `seguro auto fronterizo sonora arizona` |
+
+### Datos estructurados JSON-LD nuevos
+
+| Tipo | Páginas | Detalle |
+|---|---|---|
+| **BreadcrumbList** | 10 sub-páginas | Jerarquía: Inicio → Seguros → [Producto] |
+| **FAQPage** | `/seguros/fronterizos` | 4 preguntas frecuentes (Google rich results) |
+
+### Nota sobre Fronterizos
+El usuario indicó que Seguros Fronterizos **NO es el nicho principal** de la empresa. Se depriorizaron sus keywords (solo 7 vs 10 en GMM/Auto/Empresarial) y se mantuvieron los OG tags básicos.
+
+### Plataformas gratuitas recomendadas para crecimiento orgánico
+
+| # | Plataforma | Prioridad | URL |
+|---|---|---|---|
+| 1 | **Google Business Profile** | 🔴 URGENTE | business.google.com |
+| 2 | **Bing Places for Business** | Alta | bingplaces.com |
+| 3 | **Apple Business Connect** | Alta | businessconnect.apple.com |
+| 4 | **Facebook Business Page** | Alta | facebook.com/business |
+| 5 | **Yelp** | Media | biz.yelp.com |
+| 6 | **Hotfrog México** | Media | hotfrog.com.mx |
+| 7 | **Páginas Amarillas** | Media | paginasamarillas.com.mx |
+| 8 | **Sección Amarilla** | Media | seccionamarilla.com.mx |
+| 9 | **LinkedIn Company Page** | Complementaria | linkedin.com/company |
+| 10 | **Cylex México** | Complementaria | cylex.com.mx |
+| 11 | **Foursquare** | Complementaria | business.foursquare.com |
+| 12 | **CANACO Hermosillo** | Complementaria | Contactar directamente |
+
+**Regla NAP (consistencia obligatoria en todas las plataformas):**
+- Nombre: O Sanchez Seguros
+- Teléfono: +52 662 182 2481
+- Email: admon@osanchezseguros.com
+- URL: https://www.osanchezseguros.com
+- Ubicación: Hermosillo, Sonora, México
+
+### Commit y deploy
+- **Commit:** `bebb7ba` — feat(seo): enrich metadata, OG tags, canonical URLs, breadcrumbs and FAQ schema across all pages
+- **Archivos cambiados:** 11 (+281 líneas, -28 líneas)
+- **Build:** ✅ Exitoso (23 páginas generadas, 0 errores)
+- **Deploy:** Automático via Vercel desde push a `main`
+
+---
+
+## Sesión: Registro en Apple Business Connect (12 mayo 2026)
+
+### Objetivo
+Registrar la agencia en Apple Business Connect para aparecer en Apple Maps y servicios del ecosistema Apple.
+
+### Problema Técnico
+- Al intentar verificar la identidad del negocio ("Business ID") usando el **CURP** (`SAAO761215HSRNGS05`) como *Unique Population Registry Code*, el sistema de Apple marcaba "Enter a valid ID".
+- Al intentar usar el **RFC** de persona física (`SAAO761215T5A`, 13 caracteres) como *Federal Tax Registration Number*, el sistema de Apple volvía a marcar "Enter a valid ID".
+- **Motivo:** Apple Business suele tener problemas de validación en México con las Personas Físicas (13 caracteres), ya que la validación a menudo está programada estrictamente para Personas Morales (12 caracteres).
+
+### Decisión y Próximos Pasos
+- Se decidió detener el uso de RFC/CURP para el registro directo en Apple.
+- El cliente está solicitando un número **D-U-N-S** oficial de manera gratuita a través del portal de Apple (`https://developer.apple.com/enroll/duns-lookup/`).
+- Una vez recibido el correo de confirmación con el número D-U-N-S (tarda de 1 a 5 días hábiles), se retomará el registro en Apple Business Connect usando el método de verificación "D-U-N-S Number".
+
+---
+
 *Este archivo debe mantenerse actualizado cada vez que se hagan cambios significativos al proyecto.*
+

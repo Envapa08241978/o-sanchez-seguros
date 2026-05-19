@@ -51,9 +51,10 @@ type Props = {
   onClose: () => void;
   lead: Lead | null;
   onUpdated: () => void;
+  onCreateQuote?: (name: string, phone: string, email: string) => void;
 };
 
-export default function LeadDetailDrawer({ isOpen, onClose, lead, onUpdated }: Props) {
+export default function LeadDetailDrawer({ isOpen, onClose, lead, onUpdated, onCreateQuote }: Props) {
   const [history, setHistory] = useState<HistoryEntry[]>([]);
   const [loadingHistory, setLoadingHistory] = useState(false);
   const [newNote, setNewNote] = useState("");
@@ -187,6 +188,13 @@ export default function LeadDetailDrawer({ isOpen, onClose, lead, onUpdated }: P
                 Email
               </a>
             </div>
+            {/* Crear Presentación */}
+            {onCreateQuote && (
+              <button onClick={() => { onCreateQuote(displayName, lead.phone, lead.email); onClose(); }} className="w-full flex items-center justify-center gap-2 px-3 py-2.5 bg-brand text-white rounded-lg text-xs font-bold hover:bg-brand-light transition-all shadow-sm mt-2">
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                Crear Presentación PDF
+              </button>
+            )}
           </div>
 
           {/* Status Change */}
