@@ -7,6 +7,8 @@ import { db } from "@/lib/firebase/config";
 import NewLeadModal from "./components/NewLeadModal";
 import QuoteModal from "./components/QuoteModal";
 import LeadDetailDrawer from "./components/LeadDetailDrawer";
+import QuoteGenerator from "./components/QuoteGenerator";
+import QuotesList from "./components/QuotesList";
 
 const MASTER_PASSWORD = "AdminSanchez123";
 
@@ -28,6 +30,8 @@ export default function AdminDashboardPage() {
   const [quoteLead, setQuoteLead] = useState("");
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
   const [showDrawer, setShowDrawer] = useState(false);
+  const [showQuoteGen, setShowQuoteGen] = useState(false);
+  const [quoteGenPrefill, setQuoteGenPrefill] = useState<{ name?: string; phone?: string; email?: string }>({});
 
   useEffect(() => {
     if (sessionStorage.getItem("adminAuth") === "true") { setIsAuthenticated(true); fetchLeads(); }
@@ -102,6 +106,10 @@ export default function AdminDashboardPage() {
             <div className="hidden sm:block"><h1 className="font-display font-bold text-brand text-sm leading-none">Panel Admin</h1><span className="text-xs text-muted font-medium">Gestión de Leads</span></div>
           </div>
           <div className="flex items-center gap-2">
+            <button onClick={() => { setQuoteGenPrefill({}); setShowQuoteGen(true); }} className="inline-flex items-center gap-2 px-4 py-2 bg-brand text-white text-sm font-bold rounded-full hover:bg-brand-light transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5">
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+              <span className="hidden sm:inline">Nueva Presentación</span>
+            </button>
             <button onClick={() => setShowNewLead(true)} className="inline-flex items-center gap-2 px-4 py-2 bg-accent text-white text-sm font-bold rounded-full hover:bg-accent-dark transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5">
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>
               <span className="hidden sm:inline">Nuevo Lead</span>
@@ -215,6 +223,9 @@ export default function AdminDashboardPage() {
           </div>
           {leads.length > 0 && <div className="p-4 border-t border-border bg-brand/[0.02] flex items-center justify-between"><p className="text-xs text-muted">Mostrando {leads.length} registros</p><p className="text-xs text-subtle">Actualizado: {new Date().toLocaleTimeString("es-MX", { hour: "2-digit", minute: "2-digit" })}</p></div>}
         </div>
+
+        {/* Quotes List */}
+        <QuotesList isOpen={isAuthenticated} />
       </div>
 
       {/* Footer */}
@@ -229,6 +240,7 @@ export default function AdminDashboardPage() {
       <NewLeadModal isOpen={showNewLead} onClose={() => setShowNewLead(false)} onCreated={fetchLeads} />
       <QuoteModal isOpen={showQuote} onClose={() => setShowQuote(false)} leadName={quoteLead} />
       <LeadDetailDrawer isOpen={showDrawer} onClose={() => setShowDrawer(false)} lead={selectedLead} onUpdated={fetchLeads} />
+      <QuoteGenerator isOpen={showQuoteGen} onClose={() => setShowQuoteGen(false)} onCreated={() => {}} prefillName={quoteGenPrefill.name} prefillPhone={quoteGenPrefill.phone} prefillEmail={quoteGenPrefill.email} />
     </main>
   );
 }

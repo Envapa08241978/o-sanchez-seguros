@@ -5,9 +5,12 @@ import {
   updateDoc,
   deleteDoc,
   getDocs,
+  getDoc,
+  setDoc,
   query,
   orderBy,
   serverTimestamp,
+  runTransaction,
 } from "firebase/firestore";
 import { db } from "./config";
 import type { LeadFormData, ContactFormData } from "@/lib/schemas/lead.schema";
@@ -133,3 +136,108 @@ export async function deleteLead(leadId: string) {
   await deleteDoc(doc(db, "leads", leadId));
 }
 
+
+// ---- Quotes System ----
+
+export type QuoteMember = {
+  gender: "H" | "M";
+  age: number;
+  relationship: string;
+};
+
+export type QuoteSection = {
+  type: string;
+  title: string;
+  memberIndices: number[];
+  fields: Record<string, string>;
+};
+
+export type QuoteData = {
+  clientName: string;
+  clientPhone: string;
+  clientEmail: string;
+  members: QuoteMember[];
+  sections: QuoteSection[];
+  finalMessage: string;
+  leadId?: string;
+};
+
+// Generate next sequential quote number: OSS-YYYY-XXXX
+export async function getNextQuoteNumber(): Promise<string> {
+  const currentYear = new Date().getFullYear();
+  const counterRef = doc(db, "counters", "quotes");
+
+  const newNumber = await runTransaction(db, async (transaction) => {
+    const counterDoc = await transaction.get(counterRef);
+
+    if (!counterDoc.exists()) {
+      // First quote ever
+      transaction.set(counterRef, {
+        lastNumber: 1,
+        year: currentYear,
+        prefix: "OSS",
+      });
+      return 1;
+    }
+
+    const data = counterDoc.data();
+    let nextNumber = (data.lastNumber || 0) + 1;
+
+    // Reset counter if year changed
+    if (data.year !== currentYear) {
+      nextNumber = 1;
+    }
+
+    transaction.update(counterRef, {
+      lastNumber: nextNumber,
+      year: currentYear,
+    });
+
+    return nextNumber;
+  });
+
+  const paddedNumber = String(newNumber).padStart(4, "0");
+  return `OSS-${currentYear}-${paddedNumber}`;
+}
+
+// Create a quote and save to Firestore
+export async function createQuote(data: QuoteData) {
+  const quoteNumber = await getNextQuoteNumber();
+
+  const docRef = await addDoc(collection(db, "quotes"), {
+    quoteNumber,
+    ...data,
+    status: "draft",
+    createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp(),
+  });
+
+  return { id: docRef.id, quoteNumber };
+}
+
+// Get all quotes ordered by creation date
+export async function getQuotes() {
+  const q = query(collection(db, "quotes"), orderBy("createdAt", "desc"));
+  const snapshot = await getDocs(q);
+  return snapshot.docs.map((d) => ({
+    id: d.id,
+    ...d.data(),
+  }));
+}
+
+// Update quote status
+export async function updateQuoteStatus(
+  quoteId: string,
+  newStatus: "draft" | "sent" | "accepted" | "expired"
+) {
+  const quoteRef = doc(db, "quotes", quoteId);
+  await updateDoc(quoteRef, {
+    status: newStatus,
+    updatedAt: serverTimestamp(),
+  });
+}
+
+// Delete a quote
+export async function deleteQuote(quoteId: string) {
+  await deleteDoc(doc(db, "quotes", quoteId));
+}
