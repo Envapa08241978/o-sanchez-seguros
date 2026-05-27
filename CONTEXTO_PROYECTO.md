@@ -991,5 +991,141 @@ Quedo a sus órdenes para resolver cualquier duda. 🛡️
 
 ---
 
+## Sesión: Blindaje Familiar 360 — Rediseño PDF + CRM Edición + WhatsApp (18 mayo 2026 — noche)
+
+### Objetivo
+Mejorar el generador de presentaciones PDF "Blindaje Familiar 360°" alineando el branding al sitio web, corrigiendo problemas visuales, agregando funcionalidades de edición en el CRM y mejorando el envío por WhatsApp.
+
+### Cambios completados
+
+#### 1. PDF Template — Rediseño visual completo (`QuotePDFTemplate.tsx`)
+
+**Colores alineados al sitio web:**
+
+| Antes (Gold theme) | Después (Brand theme) |
+|---|---|
+| Navy `#0F2044` | Navy `#202F71` (--color-primary) |
+| NavyLight `#1B3A6B` | NavyLight `#2b3e94` |
+| Gold `#C5A55A` | Rojo `#D32020` (--color-accent) |
+| Cream `#F8F6F1` | Cream `#FFFAF3` (--background) |
+| Gray `#6B7280` | Gray `#6E6965` (--text-muted) |
+
+**Logo en el PDF:**
+- Portada (Página 1): Logo `icon-512.png` (80x80px) arriba del título "Blindaje Familiar 360°"
+- Página de cierre: Logo `icon-512.png` (60x60px) arriba del mensaje final
+- Utiliza `<Image>` de `@react-pdf/renderer`
+
+**Iconos SVG inline (solución a emojis rotos):**
+- Problema: Los emojis (`🛡`, `📈`, `💰`) se renderizaban como caracteres corruptos (`=á`, `=È`, `=°`) porque `@react-pdf/renderer` no soporta emojis sin fuente compatible
+- Solución: 4 componentes SVG inline usando `<Svg>`, `<Path>`, `<Rect>`, `<Circle>` de `@react-pdf/renderer`:
+  - `ShieldIcon` — Escudo con cruz médica (Salud)
+  - `TrendingUpIcon` — Gráfica ascendente (Crecimiento)
+  - `ShieldCheckIcon` — Escudo con checkmark (Sinergia/Protección)
+  - `HeartShieldIcon` — Círculo con corazón (Protección Integral, fallback)
+
+**Footer actualizado (todas las páginas internas):**
+- Antes: `O Sanchez Seguros · Hermosillo, Sonora`
+- Después: `O Sanchez Seguros · www.osanchezseguros.com`
+- Sin redes sociales (decisión del cliente)
+
+**Email corregido en página de cierre:**
+- Antes: `oscareduardosanchezaguirre@gmail.com`
+- Después: `admin@osanchezseguros.com`
+
+**Página de cierre actualizada:**
+- Incluye: nombre, cargo, teléfono, email, web, ubicación
+- Web: `www.osanchezseguros.com` agregada
+
+---
+
+#### 2. Firestore — Nueva función `updateQuote()` (`firestore.ts`)
+
+```typescript
+export async function updateQuote(
+  quoteId: string,
+  data: Partial<Omit<QuoteData, "leadId">> & { finalMessage?: string }
+)
+```
+- Permite actualizar datos de una cotización existente (members, sections, clientName, etc.)
+- Mantiene el mismo `quoteNumber` y `createdAt`
+- Actualiza `updatedAt` automáticamente con `serverTimestamp()`
+
+---
+
+#### 3. QuoteGenerator — Modo edición + Web Share API (`QuoteGenerator.tsx`)
+
+**Nuevas props para modo edición:**
+```typescript
+editQuoteId?: string | null;      // ID del documento Firestore a editar
+editQuoteNumber?: string | null;  // Número de cotización existente
+prefillMembers?: QuoteMember[];   // Integrantes pre-cargados
+prefillSections?: QuoteSection[]; // Planes pre-cargados
+prefillMessage?: string;          // Mensaje final pre-cargado
+```
+
+**Comportamiento en modo edición:**
+- El drawer muestra "Editar Presentación" en vez de "Nueva Presentación"
+- Indicador "(editando)" en la barra de progreso
+- Botón final: "Guardar Cambios y Descargar" en vez de "Generar y Descargar PDF"
+- Al guardar: llama `updateQuote()` en vez de `createQuote()` → mantiene el mismo número de cotización
+
+**WhatsApp con Web Share API:**
+- **Móvil (Android/iOS):** Usa `navigator.share({ files: [pdfFile] })` para adjuntar el PDF directamente a WhatsApp
+- **Desktop (fallback):** Descarga el PDF automáticamente + abre `wa.me/` con mensaje pre-escrito. Oscar adjunta el PDF manualmente
+- Si el usuario cancela el Share dialog, no se abre wa.me (manejo de `AbortError`)
+
+---
+
+#### 4. QuotesList — Nuevos botones de acción (`QuotesList.tsx`)
+
+**Nueva prop:**
+```typescript
+onEditQuote?: (quote: Quote) => void;
+```
+
+**Nuevos botones por cotización (columna Acciones):**
+
+| Botón | Color | Acción |
+|---|---|---|
+| ✏️ Editar | Amber | Abre QuoteGenerator con datos pre-cargados de la cotización |
+| 💬 WhatsApp | Verde #25D366 | Genera PDF + comparte vía Web Share API (móvil) o wa.me (desktop) |
+| 📥 Descargar | Brand | Re-genera y descarga el PDF (existente) |
+| 🗑 Eliminar | Rojo | Elimina la cotización de Firestore (existente) |
+
+**Refactor:** Se extrajo función `generatePdfBlob(quote)` para reutilizar la generación de PDF en download y WhatsApp.
+
+---
+
+#### 5. Admin Page — Conexión del flujo de edición (`admin/page.tsx`)
+
+- `quoteGenPrefill` ampliado con campos: `editId`, `editNumber`, `members`, `sections`, `message`
+- `QuotesList` recibe `onEditQuote` que abre `QuoteGenerator` con datos completos de la cotización
+- Al cerrar QuoteGenerator, se limpia `quoteGenPrefill` (reset a `{}`)
+- Props de edición pasados al `QuoteGenerator`: `editQuoteId`, `editQuoteNumber`, `prefillMembers`, `prefillSections`, `prefillMessage`
+
+### Archivos modificados (5)
+
+| Archivo | Cambio | Detalle |
+|---|---|---|
+| `src/app/admin/components/QuotePDFTemplate.tsx` | REESCRITO | Colores brand, logo, SVG icons, footer web, email |
+| `src/app/admin/components/QuoteGenerator.tsx` | MODIFICADO | Modo edición + Web Share API |
+| `src/app/admin/components/QuotesList.tsx` | REESCRITO | Botones editar + WhatsApp + refactor |
+| `src/app/admin/page.tsx` | MODIFICADO | Flujo de edición conectado |
+| `src/lib/firebase/firestore.ts` | MODIFICADO | Nueva función `updateQuote()` |
+
+### Commits y deploy
+- **Commit:** `43984b7` — feat(blindaje360): brand colors, logo, SVG icons, edit/WhatsApp in CRM
+- **Archivos cambiados:** 5 (+298 líneas, -71 líneas)
+- **Build:** ✅ Exitoso (23 páginas generadas, 0 errores)
+- **Deploy:** Automático via Vercel desde push a `main`
+
+### Notas técnicas
+- `@react-pdf/renderer` no soporta emojis Unicode sin registrar una fuente que los contenga. La solución permanente es usar componentes `<Svg>` inline
+- `@react-pdf/renderer` `<Image>` funciona con rutas relativas (`/images/icon-512.png`) que el browser resuelve contra el origin del sitio
+- La Web Share API (`navigator.share`) con archivos solo funciona en móviles (Android Chrome, iOS Safari). En desktop, `navigator.canShare({ files })` retorna `false`
+- El `QuoteModal` existente (portal General de Seguros) sigue activo y separado del `QuoteGenerator`
+
+---
+
 *Este archivo debe mantenerse actualizado cada vez que se hagan cambios significativos al proyecto.*
 
