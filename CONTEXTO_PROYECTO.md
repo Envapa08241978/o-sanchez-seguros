@@ -1127,5 +1127,23 @@ onEditQuote?: (quote: Quote) => void;
 
 ---
 
+## Sesión: Actualización del Certificado AMASFAC 2026 (27 mayo 2026)
+
+### Objetivo
+Reemplazar el certificado de la Asociación Mexicana (AMASFAC) vencido en el sitio por la versión actualizada del año 2026 (`AMASFAC 2026.jpeg`).
+
+### Cambios realizados
+- **Conversión de Imagen a PDF:** Se tomó el archivo de imagen original de alta resolución `AMASFAC 2026.jpeg` (1024x1536 píxeles) y se convirtió mediante un script en Python (utilizando `Pillow`) en un archivo PDF válido de una sola página.
+- **Optimización de Dimensiones de Pantalla (DPI):** Para evitar que el archivo PDF se visualizara demasiado grande en los navegadores (lo cual ocurría por usar por defecto 72 DPI para 1024x1536 píxeles), se recompiló el PDF especificando una resolución interna de **150 DPI**. Esto redujo las dimensiones físicas de la página del PDF a **491.52 x 737.28 puntos** (un tamaño muy cómodo que cabe completo en cualquier pantalla al 100% de zoom), manteniendo intactos los 1024x1536 píxeles de resolución interna para una máxima nitidez y legibilidad al hacer zoom.
+- **Ruta de Reemplazo:** El archivo resultante se guardó directamente sobre escribiendo el archivo original en la ruta pública `public/pdf/asociacion-mexicana.pdf`, lo que evitó la necesidad de modificar código en los componentes de la página de certificaciones (`cedula-agente/page.tsx`).
+
+### Commit y deploy
+- **Commit 1:** `50dca6d` — feat: update AMASFAC 2026 certificate PDF
+- **Commit 2:** `6f9ee88` — style: optimize AMASFAC 2026 PDF page size for better screen fit
+- **Deploy:** Automático vía Vercel desde push a `main` exitoso.
+- **Resultado:** El nuevo certificado de 2026 ya se encuentra live y de tamaño óptimo en: `https://www.osanchezseguros.com/pdf/asociacion-mexicana.pdf`.
+
+---
+
 *Este archivo debe mantenerse actualizado cada vez que se hagan cambios significativos al proyecto.*
 
