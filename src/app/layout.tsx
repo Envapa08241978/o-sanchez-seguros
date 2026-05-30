@@ -37,6 +37,8 @@ export const metadata: Metadata = {
     "gastos médicos mayores hermosillo",
     "asesoría personalizada en seguros",
     "seguro de maternidad",
+    "seguro para parto",
+    "seguros para embarazadas",
     "seguros empresariales",
     "seguros hermosillo",
     "seguros fronterizos sonora",
