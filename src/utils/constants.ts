@@ -55,6 +55,22 @@ export const INSURANCE_PRODUCTS = [
     ],
   },
   {
+    id: "maternidad",
+    title: "Seguros de Maternidad",
+    shortTitle: "Maternidad",
+    description:
+      "Ayuda económica desde $35,000 hasta $170,000 para tu parto o cesárea. Planifica con anticipación.",
+    icon: "🍼",
+    href: "/seguros/gastos-medicos/maternidad",
+    color: "#a21caf",
+    highlights: [
+      "Ayuda económica directa",
+      "Cobertura de parto y cesárea",
+      "Atención hospitalaria premium",
+      "Protección para el recién nacido",
+    ],
+  },
+  {
     id: "auto",
     title: "Seguros de Auto",
     shortTitle: "Auto",
