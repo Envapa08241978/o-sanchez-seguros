@@ -1145,5 +1145,43 @@ Reemplazar el certificado de la Asociación Mexicana (AMASFAC) vencido en el sit
 
 ---
 
-*Este archivo debe mantenerse actualizado cada vez que se hagan cambios significativos al proyecto.*
+## Sesión: Estrategia SEO y Landing Page de Maternidad (29 mayo 2026)
 
+### Objetivo
+Diseñar una estrategia SEO basada en el análisis de competidores locales (ABE Seguros) y conversaciones reales de ventas con clientes, para atraer tráfico orgánico con intención de compra mediante palabras clave específicas. 
+
+### Análisis Competitivo y de Cliente
+- Se descubrió que la competencia acapara nichos específicos creando páginas dedicadas (ej. Maternidad).
+- A través del análisis de capturas de WhatsApp con clientes reales, se identificó que el término técnico "Ayuda de Maternidad" no es como buscan los clientes.
+- Los clientes buscan términos orgánicos de alto volumen como: `"seguro para parto"`, `"seguros para embarazadas"`, `"seguros que pagan el embarazo"`.
+- **Estrategia adoptada:** Crear una landing page visualmente elegante bajo el nombre de "Seguro con Pago de Maternidad", pero inyectar las palabras clave "feas/comunes" en el SEO interno (metadata, FAQ estructurado) para rankear sin perder elegancia.
+
+### Cambios realizados
+
+#### 1. Creación de Landing Page Específica
+- **Ruta nueva:** `/seguros/gastos-medicos/maternidad`
+- **Archivos creados:**
+  - `page.tsx`: Diseño visual (Hero, Regla de 10 meses de espera, Beneficios de 35k a 170k, y FAQs optimizadas con las palabras clave).
+  - `layout.tsx`: Metadata SEO dedicada (Title, Description, Keywords ocultas).
+- **Navegación actualizada (`constants.ts`):** Se añadió el producto "Seguros de Maternidad" a la lista `INSURANCE_PRODUCTS`, integrándolo automáticamente en la página índice `/seguros` y en el dropdown del header.
+
+#### 2. Inyección SEO Global
+- **Archivo modificado:** `src/app/layout.tsx` (Global Metadata)
+- Se inyectaron agresivamente los términos `"seguro para parto"` y `"seguros para embarazadas"` en el array de keywords globales del sitio, dotando a todo el dominio `osanchezseguros.com` de relevancia temática.
+
+#### 3. Indexación Forzada (Search Console)
+- Se instruyó y guió al cliente para ingresar manualmente la nueva URL en Google Search Console y pulsar "Solicitar indexación" (Request Indexing) para evadir el Sandbox y ser rastreados en 24-48 hrs.
+
+### Materiales Adicionales Generados
+- Se generaron 3 variaciones de "copy" publicitario enfocado en SEO local y "Google Mi Negocio", aprovechando las keywords y la regla de urgencia (10 meses de espera).
+- Se generó una fotografía profesional mediante IA (madre e hijo en hospital) para acompañar las publicaciones orgánicas de la agencia.
+
+### Commits de esta sesión
+| Commit | Descripción |
+|---|---|
+| `831ec67` | feat(maternidad): add new landing page for Maternidad |
+| `52b5f18` | chore(seo): inject maternity keywords globally |
+
+---
+
+*Este archivo debe mantenerse actualizado cada vez que se hagan cambios significativos al proyecto.*
