@@ -6,6 +6,7 @@ import Footer from "@/components/layout/Footer";
 import WhatsAppButton from "@/components/shared/WhatsAppButton";
 // import ChatWidget from "@/components/shared/ChatWidget"; // TEMPORALMENTE DESACTIVADO - trabajar localmente antes de activar
 import JsonLd from "@/components/shared/JsonLd";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 const outfit = Outfit({
   variable: "--font-display",
@@ -112,6 +113,7 @@ export default function RootLayout({
         <WhatsAppButton />
         {/* <ChatWidget /> TEMPORALMENTE DESACTIVADO */}
         <JsonLd />
+        <GoogleAnalytics gaId="G-45R76JVTZS" />
       </body>
     </html>
   );
