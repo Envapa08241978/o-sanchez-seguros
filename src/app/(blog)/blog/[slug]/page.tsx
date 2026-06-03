@@ -24,7 +24,7 @@ export default async function BlogPostPage({
         breadcrumbs={[
           { name: "Inicio", url: "https://www.osanchezseguros.com" },
           { name: "Blog", url: "https://www.osanchezseguros.com/blog" },
-          { name: post.title, url: \`https://www.osanchezseguros.com/blog/\${post.slug}\` },
+          { name: post.title, url: `https://www.osanchezseguros.com/blog/${post.slug}` },
         ]}
       />
 
