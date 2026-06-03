@@ -1,31 +1,8 @@
 import Link from "next/link";
+import Image from "next/image";
 import ScrollReveal from "@/components/shared/ScrollReveal";
 import { PageJsonLd } from "@/components/shared/JsonLd";
-
-// Placeholder for future blog posts
-const POSTS = [
-  {
-    title: "¿Cuánto cuesta un Seguro de Gastos Médicos Mayores en Hermosillo en 2026?",
-    excerpt: "Descubre los factores que determinan el costo de tu póliza y cómo elegir la mejor opción para tu presupuesto y necesidades médicas.",
-    date: "Proximamente",
-    category: "Gastos Médicos",
-    href: "#", // To be implemented
-  },
-  {
-    title: "Diferencias clave entre Seguro de Vida con Ahorro y AFORE",
-    excerpt: "Analizamos los pros y contras de cada instrumento financiero para que tomes la mejor decisión sobre tu fondo de retiro.",
-    date: "Proximamente",
-    category: "Ahorro y Vida",
-    href: "#",
-  },
-  {
-    title: "Guía para cruzar a Arizona: Qué seguro de auto fronterizo necesitas",
-    excerpt: "Todo lo que debes saber antes de cruzar la frontera en auto. Evita multas y viaja tranquilo con la cobertura adecuada.",
-    date: "Proximamente",
-    category: "Fronterizos",
-    href: "#",
-  }
-];
+import { BLOG_POSTS } from "@/data/blog";
 
 export default function BlogPage() {
   return (
@@ -52,12 +29,17 @@ export default function BlogPage() {
       <section className="section-padding bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {POSTS.map((post, index) => (
+            {BLOG_POSTS.map((post, index) => (
               <ScrollReveal key={post.title} delay={index * 100}>
-                <Link href={post.href} className="group block h-full">
+                <Link href={`/blog/${post.slug}`} className="group block h-full">
                   <div className="bg-white rounded-2xl border border-border overflow-hidden h-full flex flex-col transition-all group-hover:border-brand/30 group-hover:shadow-lg group-hover:-translate-y-1">
-                    <div className="h-48 bg-gray-100 flex items-center justify-center relative overflow-hidden">
-                      <span className="text-4xl opacity-50">📰</span>
+                    <div className="h-48 relative overflow-hidden">
+                      <Image 
+                        src={post.image}
+                        alt={post.title}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
                       <div className="absolute inset-0 bg-brand/5 group-hover:bg-transparent transition-colors" />
                     </div>
                     <div className="p-6 flex flex-col flex-grow">
