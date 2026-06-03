@@ -1184,4 +1184,46 @@ Diseñar una estrategia SEO basada en el análisis de competidores locales (ABE 
 
 ---
 
+## Sesión: Mantenimiento y Crecimiento SEO Local (junio 2026)
+
+### Objetivo
+Realizar mantenimiento SEO enfocado en tráfico local (Local SEO), snippets enriquecidos (Rich Snippets) y generación de tráfico orgánico de cola larga (Long-tail SEO) para capturar más presencia en las búsquedas locales de Hermosillo.
+
+### Cambios realizados
+
+#### 1. Inyección de schemas FAQPage (Rich Snippets)
+- Se inyectó schema.org de tipo `FAQPage` con preguntas y respuestas estratégicas en las páginas de mayor valor:
+  - `/seguros/auto` (Seguros de Auto)
+  - `/seguros/vida` (Seguros de Vida)
+  - `/seguros/empresarial` (Seguros Empresariales)
+  - `/seguros/gastos-medicos` (Gastos Médicos Mayores)
+- Esto aumenta significativamente la probabilidad de aparecer en la sección "Otras personas también buscan" (People Also Ask) de Google y permite ocupar más espacio visual en los resultados de búsqueda.
+
+#### 2. Expansión del Sitemap
+- Se incluyó explícitamente la ruta `/seguros/gastos-medicos/maternidad` en `src/app/sitemap.ts` que había quedado fuera del sitemap estático en la sesión anterior.
+
+#### 3. Nuevas Páginas Estructurales (Testimonios y Blog)
+- **Testimonios (`/testimonios/page.tsx`):**
+  - Creada para capitalizar la reputación online (5 estrellas en Google Maps).
+  - Incluye schema `LocalBusiness` acoplado con `AggregateRating` apuntando al rating real de Google Maps.
+  - Diseñada con tarjetas de reseñas con UI limpia y link directo para dejar más reviews en Google Maps.
+- **Blog (`/blog/page.tsx`):**
+  - Creada como estructura base para empezar a publicar artículos informativos de seguros ("¿Cuánto cuesta un seguro?", "Mejores hospitales", etc.).
+  - Incluye placeholders estructurados con diseño amigable para SEO que simulan artículos.
+- Ambas páginas se enlazaron en la navegación principal (`constants.ts`) y se agregaron al `sitemap.ts`.
+
+#### 4. Integración Profunda con Google Maps
+- Se actualizó la dirección estática en `constants.ts` a la dirección exacta registrada en Google Maps: `Blvd. Juan Navarrete 154-Int. 168U, Valle Grande, 83205 Hermosillo, Son.` (esto fortalece la coherencia NAP - Name, Address, Phone).
+- Se incrustó el mapa interactivo (iframe) de Google Maps apuntando exactamente a la oficina de O Sanchez Seguros de manera global, justo por encima del `<Footer />` para máxima visibilidad.
+- Se añadió un botón "Ver en Google Maps" en la sección de contacto en reemplazo del texto plano de dirección.
+
+### Commits de esta sesión
+| Commit | Descripción |
+|---|---|
+| `37207c9` | chore(sitemap): add maternidad page to sitemap |
+| `007c6f0` | feat(seo): add FAQ schema to multiple insurance pages |
+| `6b080fb` | feat(pages): add testimonios and blog pages for local SEO |
+| `50010ff` | feat(contact): add google maps iframe and update exact address |
+| `99f9835` | feat(footer): move google maps iframe to global footer and remove text link |
+
 *Este archivo debe mantenerse actualizado cada vez que se hagan cambios significativos al proyecto.*
