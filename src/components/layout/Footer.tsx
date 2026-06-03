@@ -178,7 +178,12 @@ export default function Footer() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
-                {SITE_CONFIG.address}
+                <div className="flex flex-col gap-1">
+                  <span>{SITE_CONFIG.address}</span>
+                  <a href={SITE_CONFIG.googleMapsUrl} target="_blank" rel="noopener noreferrer" className="text-accent hover:text-accent-dark font-semibold text-xs mt-1 inline-flex items-center gap-1 transition-colors">
+                    Cómo llegar <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                  </a>
+                </div>
               </li>
             </ul>
           </div>

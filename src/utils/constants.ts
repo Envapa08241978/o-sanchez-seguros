@@ -10,6 +10,7 @@ export const SITE_CONFIG = {
   whatsappUrl: "https://wa.me/526621822481",
   email: "oscareduardosanchezaguirre@gmail.com",
   address: "Hermosillo, Sonora, México",
+  googleMapsUrl: "https://www.google.com/maps/place/OSanchez+Seguros+-+Oficina+Oscar+Sanchez/@29.0862245,-110.9775244,950m/data=!3m2!1e3!4b1!4m6!3m5!1s0x86ce857f14777283:0x9925c26431d0ec84!8m2!3d29.0862198!4d-110.9749495",
   yearFounded: 2009,
   yearsOfExperience: 16,
   socialMedia: {
