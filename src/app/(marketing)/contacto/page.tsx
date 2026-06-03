@@ -412,19 +412,6 @@ export default function ContactoPage() {
         </div>
       </section>
 
-      {/* Map Section */}
-      <section className="w-full h-96 relative">
-        <iframe 
-          src="https://maps.google.com/maps?q=OSanchez%20Seguros%20-%20Oficina%20Oscar%20Sanchez,%20Hermosillo&t=&z=16&ie=UTF8&iwloc=&output=embed" 
-          className="w-full h-full" 
-          style={{ border: 0 }} 
-          allowFullScreen={true} 
-          loading="lazy" 
-          referrerPolicy="no-referrer-when-downgrade"
-          title="Ubicación de O Sanchez Seguros en Google Maps"
-        />
-        <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_20px_rgba(0,0,0,0.1)]" />
-      </section>
     </>
   );
 }

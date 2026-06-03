@@ -13,6 +13,20 @@ export default function Footer() {
 
   return (
     <footer className="bg-brand text-white">
+      {/* Global Map Section */}
+      <div className="w-full h-72 sm:h-80 relative">
+        <iframe 
+          src="https://maps.google.com/maps?q=OSanchez%20Seguros%20-%20Oficina%20Oscar%20Sanchez,%20Hermosillo&t=&z=16&ie=UTF8&iwloc=&output=embed" 
+          className="w-full h-full" 
+          style={{ border: 0 }} 
+          allowFullScreen={true} 
+          loading="lazy" 
+          referrerPolicy="no-referrer-when-downgrade"
+          title="Ubicación de O Sanchez Seguros en Google Maps"
+        />
+        <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_20px_rgba(0,0,0,0.2)]" />
+      </div>
+
       {/* Main Footer */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
@@ -178,12 +192,7 @@ export default function Footer() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
-                <div className="flex flex-col gap-1">
-                  <span>{SITE_CONFIG.address}</span>
-                  <a href={SITE_CONFIG.googleMapsUrl} target="_blank" rel="noopener noreferrer" className="text-accent hover:text-accent-dark font-semibold text-xs mt-1 inline-flex items-center gap-1 transition-colors">
-                    Cómo llegar <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-                  </a>
-                </div>
+                {SITE_CONFIG.address}
               </li>
             </ul>
           </div>
