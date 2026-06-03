@@ -100,6 +100,21 @@ const BENEFITS = [
   },
 ];
 
+const FAQS = [
+  {
+    question: "¿A qué edad es recomendable contratar un seguro de vida?",
+    answer: "Lo ideal es contratarlo joven y con buena salud, ya que las tarifas son mucho más accesibles y garantizas tu asegurabilidad futura.",
+  },
+  {
+    question: "¿Qué es un seguro de vida con inversión?",
+    answer: "Es un instrumento financiero que combina la protección por fallecimiento con un fondo de inversión, permitiendo que tu dinero genere rendimientos a lo largo del tiempo.",
+  },
+  {
+    question: "¿Los seguros de vida son deducibles de impuestos?",
+    answer: "Sí, en México existen planes diseñados específicamente para el retiro (como los PPR) que te permiten deducir aportaciones anuales de acuerdo con la Ley del ISR.",
+  },
+];
+
 export default function VidaPage() {
   return (
     <>
@@ -109,6 +124,7 @@ export default function VidaPage() {
           { name: "Seguros", url: "https://www.osanchezseguros.com/seguros" },
           { name: "Seguros de Vida", url: "https://www.osanchezseguros.com/seguros/vida" },
         ]}
+        faq={FAQS}
       />
       {/* Hero */}
       <section

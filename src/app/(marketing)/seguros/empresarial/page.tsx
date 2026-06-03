@@ -106,6 +106,21 @@ const PRODUCTS = [
   },
 ];
 
+const FAQS = [
+  {
+    question: "¿Por qué es importante un seguro de Responsabilidad Civil Empresarial?",
+    answer: "Porque protege el patrimonio de tu empresa ante demandas o reclamaciones legales por daños a terceros causados accidentalmente por tu operación, productos o empleados.",
+  },
+  {
+    question: "¿Puedo asegurar mi flotilla vehicular aunque sean pocos autos?",
+    answer: "Sí, ofrecemos seguros de flotilla vehicular que se adaptan desde pequeñas PyMEs con pocos vehículos hasta grandes corporativos, ofreciendo tarifas preferenciales por volumen.",
+  },
+  {
+    question: "¿Qué beneficios tiene el Seguro de Grupo de Gastos Médicos?",
+    answer: "Además de proteger la salud de tus colaboradores y ayudar en la retención de talento, es un gasto 100% deducible de impuestos para tu empresa según la Ley del ISR en México.",
+  },
+];
+
 export default function EmpresarialPage() {
   return (
     <>
@@ -115,6 +130,7 @@ export default function EmpresarialPage() {
           { name: "Seguros", url: "https://www.osanchezseguros.com/seguros" },
           { name: "Seguros Empresariales", url: "https://www.osanchezseguros.com/seguros/empresarial" },
         ]}
+        faq={FAQS}
       />
       {/* Hero */}
       <section

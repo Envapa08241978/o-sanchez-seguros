@@ -82,6 +82,21 @@ const INSURERS = [
   { name: "Zurich", description: "Soluciones personalizadas para tu vehículo" },
 ];
 
+const FAQS = [
+  {
+    question: "¿Qué cubre el seguro de auto de cobertura amplia en Hermosillo?",
+    answer: "Cubre robo total, daños materiales de tu vehículo, responsabilidad civil por daños a terceros, gastos médicos de los ocupantes y asistencia vial 24/7.",
+  },
+  {
+    question: "¿Es obligatorio tener seguro de auto en Sonora?",
+    answer: "Sí, la Ley de Tránsito exige contar al menos con un seguro de Responsabilidad Civil que cubra daños a terceros.",
+  },
+  {
+    question: "¿Con qué aseguradoras de auto trabajan?",
+    answer: "Comparamos entre las mejores aseguradoras con presencia sólida en Hermosillo y Sonora, incluyendo Qualitas, AXA, CHUBB y GNP.",
+  },
+];
+
 export default function AutoPage() {
   return (
     <>
@@ -91,6 +106,7 @@ export default function AutoPage() {
           { name: "Seguros", url: "https://www.osanchezseguros.com/seguros" },
           { name: "Seguros de Auto", url: "https://www.osanchezseguros.com/seguros/auto" },
         ]}
+        faq={FAQS}
       />
       {/* Hero */}
       <section

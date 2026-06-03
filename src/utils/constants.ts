@@ -156,6 +156,8 @@ export const NAVIGATION: { main: NavItem[]; legal: NavItem[] } = {
     },
     { label: "Red Hospitalaria", href: "/red-hospitalaria" },
     { label: "Nosotros", href: "/nosotros" },
+    { label: "Testimonios", href: "/testimonios" },
+    { label: "Blog", href: "/blog" },
     { label: "Contacto", href: "/contacto" },
   ],
   legal: [

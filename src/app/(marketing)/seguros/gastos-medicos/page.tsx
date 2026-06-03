@@ -82,6 +82,21 @@ const COVERAGES = [
   },
 ];
 
+const FAQS = [
+  {
+    question: "¿Qué hospitales cubre el seguro de Gastos Médicos Mayores en Hermosillo?",
+    answer: "Dependiendo del plan, tienes acceso a la red hospitalaria Premium de Hermosillo, incluyendo el Hospital CIMA, Hospital San José y Star Médica.",
+  },
+  {
+    question: "¿El seguro cubre maternidad y complicaciones del embarazo?",
+    answer: "Sí, nuestros planes incluyen apoyo económico para maternidad (parto o cesárea) y cobertura para complicaciones, sujeto a un periodo de espera (generalmente 10 meses).",
+  },
+  {
+    question: "¿Qué diferencia hay entre deducible y coaseguro?",
+    answer: "El deducible es el primer monto fijo a pagar en caso de siniestro para activar el seguro. El coaseguro es un porcentaje (comúnmente 10%) que pagas sobre el gasto restante, y tiene un tope máximo para proteger tu economía.",
+  },
+];
+
 export default function GastosMedicosPage() {
   return (
     <>
@@ -91,6 +106,7 @@ export default function GastosMedicosPage() {
           { name: "Seguros", url: "https://www.osanchezseguros.com/seguros" },
           { name: "Gastos Médicos Mayores", url: "https://www.osanchezseguros.com/seguros/gastos-medicos" },
         ]}
+        faq={FAQS}
       />
       {/* Hero */}
       <section className="relative py-20 md:py-28 overflow-hidden" style={{ background: "linear-gradient(135deg, #1e40afdd 0%, #1d4ed899 100%)" }}>
