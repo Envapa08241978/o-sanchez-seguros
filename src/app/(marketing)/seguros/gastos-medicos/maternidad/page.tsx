@@ -126,6 +126,26 @@ export default function MaternidadPage() {
         </div>
       </section>
 
+      {/* Enlace al Blog */}
+      <section className="py-12 bg-purple-50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <ScrollReveal>
+            <h2 className="font-display text-2xl md:text-3xl font-bold text-brand mb-4">
+              ¿Quieres saber más detalles?
+            </h2>
+            <p className="text-muted text-lg mb-6">
+              Lee nuestro nuevo artículo con toda la información sobre costos de parto, hospitales privados en Hermosillo y cómo elegir la mejor póliza.
+            </p>
+            <Link
+              href="/blog/seguro-de-embarazo-hermosillo"
+              className="inline-flex items-center text-accent font-bold hover:text-accent-dark transition-colors underline decoration-2 underline-offset-4"
+            >
+              Leer la guía: Todo lo que debes saber sobre el seguro de embarazo en Hermosillo →
+            </Link>
+          </ScrollReveal>
+        </div>
+      </section>
+
       {/* FAQ SEO Section */}
       <section className="section-padding bg-background">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
