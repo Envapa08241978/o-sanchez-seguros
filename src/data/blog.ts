@@ -1,5 +1,34 @@
 export const BLOG_POSTS = [
   {
+    slug: "seguro-de-embarazo-hermosillo",
+    title: "Seguro de Maternidad y Embarazo en Hermosillo: Todo lo que debes saber",
+    excerpt: "Conoce las mejores opciones de seguros para mujeres embarazadas en Sonora. Asegura la salud de tu bebé y tu tranquilidad financiera antes, durante y después del parto.",
+    content: `
+La llegada de un bebé es uno de los momentos más importantes y emocionantes de la vida. Sin embargo, también implica una planeación financiera importante. En Hermosillo, los costos de un parto o cesárea en hospitales privados pueden ser muy altos. Es aquí donde contar con un **seguro de embarazada** o un **seguro de maternidad** se vuelve esencial.
+
+### ¿Qué cubre un Seguro de Maternidad?
+Un **seguro de parto** (o más formalmente, cobertura de maternidad dentro de un Seguro de Gastos Médicos Mayores) está diseñado para apoyar a las futuras madres. Entre los beneficios más comunes se encuentran:
+
+1. **Ayuda para Parto o Cesárea:** Recibes un monto económico para cubrir los gastos de la clínica u hospital en Sonora.
+2. **Complicaciones del Embarazo:** Cubre gastos médicos imprevistos si se presentan complicaciones durante la gestación.
+3. **Protección para el Recién Nacido:** Desde su nacimiento, tu bebé queda protegido ante posibles padecimientos congénitos o necesidades de incubadora.
+4. **Consultas y Estudios:** Algunas pólizas incluyen apoyos o descuentos para consultas ginecológicas y ultrasonidos.
+
+### La Regla de Oro: El Tiempo de Espera
+Es fundamental entender que los **seguros para mujeres embarazadas** operan con algo llamado "periodo de espera" (generalmente de 10 meses). Esto significa que **debes contratar tu seguro antes de quedar embarazada**. Si ya estás esperando un bebé, lamentablemente las pólizas tradicionales de **seguros de embarazo** no cubrirán los gastos del parto, aunque la protección preventiva siempre es una gran inversión a futuro.
+
+### ¿Cómo elegir el mejor Seguro para Mujeres Embarazadas en Hermosillo?
+En O Sanchez Seguros trabajamos con las mejores aseguradoras que ofrecen excelente atención en Hermosillo, Sonora. Al acercarte con nosotros, te ayudamos a comparar qué opciones te brindan el mayor monto de "Ayuda de Maternidad" y qué nivel hospitalario se ajusta a tus necesidades.
+
+**No dejes el futuro de tu familia al azar.** Si estás planeando tener un bebé, este es el momento ideal para empezar. [Contáctanos ahora](https://wa.me/5216621822481) y da el primer paso hacia una maternidad segura y sin estrés financiero.
+
+*¿No es lo que buscas? Explora nuestro [catálogo completo de seguros](/seguros).*
+    `,
+    date: "7 de Junio, 2026",
+    category: "Gastos Médicos",
+    image: "/images/blog_maternidad.jpg",
+  },
+  {
     slug: "costo-seguro-gastos-medicos-hermosillo",
     title: "¿Cuánto cuesta un Seguro de Gastos Médicos Mayores en Hermosillo en 2026?",
     excerpt: "Descubre los factores que determinan el costo de tu póliza y cómo elegir la mejor opción para tu presupuesto y necesidades médicas.",
@@ -60,33 +89,6 @@ Para estar verdaderamente tranquilo, te sugerimos tramitar un **Seguro de Auto F
     date: "20 de Mayo, 2026",
     category: "Fronterizos",
     image: "/images/blog_fronterizo.png",
-  },
-  {
-    slug: "seguro-de-embarazo-hermosillo",
-    title: "Seguro de Maternidad y Embarazo en Hermosillo: Todo lo que debes saber",
-    excerpt: "Conoce las mejores opciones de seguros para mujeres embarazadas en Sonora. Asegura la salud de tu bebé y tu tranquilidad financiera antes, durante y después del parto.",
-    content: `
-La llegada de un bebé es uno de los momentos más importantes y emocionantes de la vida. Sin embargo, también implica una planeación financiera importante. En Hermosillo, los costos de un parto o cesárea en hospitales privados pueden ser muy altos. Es aquí donde contar con un **seguro de embarazada** o un **seguro de maternidad** se vuelve esencial.
-
-### ¿Qué cubre un Seguro de Maternidad?
-Un **seguro de parto** (o más formalmente, cobertura de maternidad dentro de un Seguro de Gastos Médicos Mayores) está diseñado para apoyar a las futuras madres. Entre los beneficios más comunes se encuentran:
-
-1. **Ayuda para Parto o Cesárea:** Recibes un monto económico para cubrir los gastos de la clínica u hospital en Sonora.
-2. **Complicaciones del Embarazo:** Cubre gastos médicos imprevistos si se presentan complicaciones durante la gestación.
-3. **Protección para el Recién Nacido:** Desde su nacimiento, tu bebé queda protegido ante posibles padecimientos congénitos o necesidades de incubadora.
-4. **Consultas y Estudios:** Algunas pólizas incluyen apoyos o descuentos para consultas ginecológicas y ultrasonidos.
-
-### La Regla de Oro: El Tiempo de Espera
-Es fundamental entender que los **seguros para mujeres embarazadas** operan con algo llamado "periodo de espera" (generalmente de 10 meses). Esto significa que **debes contratar tu seguro antes de quedar embarazada**. Si ya estás esperando un bebé, lamentablemente las pólizas tradicionales de **seguros de embarazo** no cubrirán los gastos del parto, aunque la protección preventiva siempre es una gran inversión a futuro.
-
-### ¿Cómo elegir el mejor Seguro para Mujeres Embarazadas en Hermosillo?
-En O Sanchez Seguros trabajamos con las mejores aseguradoras que ofrecen excelente atención en Hermosillo, Sonora. Al acercarte con nosotros, te ayudamos a comparar qué opciones te brindan el mayor monto de "Ayuda de Maternidad" y qué nivel hospitalario se ajusta a tus necesidades.
-
-**No dejes el futuro de tu familia al azar.** Si estás planeando tener un bebé, este es el momento ideal para empezar. Contáctanos ahora y da el primer paso hacia una maternidad segura y sin estrés financiero.
-    `,
-    date: "7 de Junio, 2026",
-    category: "Gastos Médicos",
-    image: "/images/blog_maternidad.jpg",
   }
 ];
 
