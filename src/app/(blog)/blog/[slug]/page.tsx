@@ -102,8 +102,25 @@ export default async function BlogPostPage({
               />
             </div>
 
-            <div className="prose prose-lg prose-blue max-w-none prose-headings:font-display prose-headings:text-brand prose-a:text-accent prose-a:font-semibold prose-a:underline prose-a:decoration-2 prose-a:underline-offset-2 hover:prose-a:text-accent-dark">
-              <ReactMarkdown>{post.content}</ReactMarkdown>
+            <div className="prose prose-lg prose-blue max-w-none prose-headings:font-display prose-headings:text-brand">
+              <ReactMarkdown
+                components={{
+                  a: ({ node, href, ...props }) => {
+                    const isExternal = href?.startsWith("http") || href?.startsWith("mailto") || href?.startsWith("tel");
+                    return (
+                      <a
+                        {...props}
+                        href={href}
+                        target={isExternal ? "_blank" : undefined}
+                        rel={isExternal ? "noopener noreferrer" : undefined}
+                        className="text-accent font-bold underline decoration-2 underline-offset-4 hover:text-accent-dark transition-colors"
+                      />
+                    );
+                  },
+                }}
+              >
+                {post.content}
+              </ReactMarkdown>
             </div>
           </ScrollReveal>
         </div>
