@@ -102,7 +102,7 @@ export default async function BlogPostPage({
               />
             </div>
 
-            <div className="prose prose-lg prose-blue max-w-none prose-headings:font-display prose-headings:text-brand prose-a:text-accent">
+            <div className="prose prose-lg prose-blue max-w-none prose-headings:font-display prose-headings:text-brand prose-a:text-accent prose-a:font-semibold prose-a:underline prose-a:decoration-2 prose-a:underline-offset-2 hover:prose-a:text-accent-dark">
               <ReactMarkdown>{post.content}</ReactMarkdown>
             </div>
           </ScrollReveal>
