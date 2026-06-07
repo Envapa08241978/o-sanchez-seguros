@@ -1,3 +1,4 @@
+import type { Metadata, ResolvingMetadata } from "next";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -5,6 +6,43 @@ import ReactMarkdown from "react-markdown";
 import { getBlogPost } from "@/data/blog";
 import { PageJsonLd } from "@/components/shared/JsonLd";
 import ScrollReveal from "@/components/shared/ScrollReveal";
+
+export async function generateMetadata(
+  { params }: { params: Promise<{ slug: string }> },
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const resolvedParams = await params;
+  const post = getBlogPost(resolvedParams.slug);
+
+  if (!post) {
+    return {
+      title: "Artículo no encontrado",
+    };
+  }
+
+  return {
+    title: `${post.title} | O Sanchez Seguros`,
+    description: post.excerpt,
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      url: `https://www.osanchezseguros.com/blog/${post.slug}`,
+      images: [
+        {
+          url: `https://www.osanchezseguros.com${post.image}`,
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
+      locale: "es_MX",
+      type: "article",
+    },
+    alternates: {
+      canonical: `https://www.osanchezseguros.com/blog/${post.slug}`,
+    },
+  };
+}
 
 export default async function BlogPostPage({
   params,
