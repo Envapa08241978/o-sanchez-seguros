@@ -59,6 +59,26 @@ export default function SegurosPage() {
         </div>
       </section>
 
+      {/* News Banner — Blog Interlink */}
+      <section className="bg-brand/5 border-b border-brand/10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <Link
+            href="/blog/aseguradora-publica-pensiones-mexico-2026"
+            className="flex items-center justify-center gap-3 text-sm group"
+          >
+            <span className="px-2 py-0.5 bg-accent text-white text-xs font-bold rounded-full">
+              Nuevo
+            </span>
+            <span className="text-brand group-hover:text-accent transition-colors">
+              📢 Aseguradora Pública para Pensiones 2026 — ¿Cómo te afecta?
+            </span>
+            <span className="text-accent font-bold group-hover:translate-x-1 transition-transform">
+              Leer →
+            </span>
+          </Link>
+        </div>
+      </section>
+
       {/* Products Grid */}
       <section className="section-padding bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

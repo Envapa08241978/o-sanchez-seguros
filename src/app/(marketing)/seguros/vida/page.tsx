@@ -113,6 +113,10 @@ const FAQS = [
     question: "¿Los seguros de vida son deducibles de impuestos?",
     answer: "Sí, en México existen planes diseñados específicamente para el retiro (como los PPR) que te permiten deducir aportaciones anuales de acuerdo con la Ley del ISR.",
   },
+  {
+    question: "¿La nueva aseguradora pública de pensiones reemplaza al seguro de vida privado?",
+    answer: "No. La propuesta de aseguradora pública (junio 2026) aplica exclusivamente a rentas vitalicias de pensionados del ISSSTE. Tu seguro de vida privado sigue siendo indispensable como protección complementaria. Lee nuestro análisis completo en el blog.",
+  },
 ];
 
 export default function VidaPage() {

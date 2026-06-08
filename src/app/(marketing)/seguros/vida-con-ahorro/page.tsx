@@ -177,6 +177,31 @@ export default function VidaAhorroPage() {
         </div>
       </section>
 
+      {/* Blog Callout — Interlink */}
+      <section className="py-8 bg-background">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <ScrollReveal>
+            <div className="flex items-start gap-4 p-6 bg-brand/5 rounded-2xl border border-brand/10">
+              <span className="text-2xl flex-shrink-0 mt-1">📢</span>
+              <div>
+                <p className="text-brand font-semibold mb-1 font-display">
+                  Noticia — Junio 2026
+                </p>
+                <p className="text-sm text-muted leading-relaxed">
+                  El gobierno anunció la creación de una aseguradora pública para pensiones. ¿Sabías que el Seguro de Vida con Ahorro sigue siendo tu mejor complemento privado para el retiro?{" "}
+                  <Link
+                    href="/blog/aseguradora-publica-pensiones-mexico-2026"
+                    className="text-accent font-bold hover:text-accent-dark transition-colors underline decoration-2 underline-offset-4"
+                  >
+                    Lee nuestro análisis completo →
+                  </Link>
+                </p>
+              </div>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="section-padding gradient-hero relative overflow-hidden">
         <div className="absolute inset-0 gradient-radial-gold opacity-30" />

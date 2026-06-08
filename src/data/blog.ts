@@ -1,5 +1,67 @@
 export const BLOG_POSTS = [
   {
+    slug: "aseguradora-publica-pensiones-mexico-2026",
+    title: "Aseguradora Pública para Pensiones en México 2026: Qué Es y Cómo Te Afecta",
+    excerpt: "El gobierno propuso crear una aseguradora pública para jubilados. Te explicamos qué significa, cómo funciona el sistema actual de pensiones y qué alternativas tienes para proteger tu retiro.",
+    content: `
+El **8 de junio de 2026**, la presidenta Claudia Sheinbaum, junto con el director del ISSSTE Martí Batres, anunció una propuesta que ha generado mucha conversación: la creación de una **aseguradora pública para pensiones** en México. ¿Qué significa esto para ti y tu familia? Aquí te lo explicamos de forma clara.
+
+### ¿Qué anunció el Gobierno?
+
+La propuesta tiene dos pilares principales:
+
+1. **Crear una Aseguradora Pública:** Una nueva institución 100% del gobierno, dedicada exclusivamente a pagar las pensiones mensuales de los jubilados del Estado. Operaría **sin fines de lucro**.
+2. **Fortalecer PENSIONISSSTE:** Potenciar la única Afore pública del país para que los trabajadores tengan la opción de mantener todo su proceso de retiro bajo gestión estatal.
+
+Actualmente, cuando un trabajador del ISSSTE se jubila, debe elegir una aseguradora **privada** (como GNP Pensiones, Banorte o SURA) para recibir su pensión mensual de por vida. La propuesta busca que exista también una **opción pública** para ese paso.
+
+### ¿Por qué se propone esto?
+
+La Coordinadora Nacional de Trabajadores de la Educación (CNTE) ha pedido eliminar la Ley del ISSSTE de 2007 y regresar al sistema anterior. Sin embargo, el gobierno reconoce que esto costaría **aproximadamente 7 billones de pesos** (equivalente al 20% del PIB), algo financieramente imposible.
+
+La aseguradora pública se presenta como una **alternativa viable**: un camino gradual para mejorar las condiciones de jubilación sin desmantelar el sistema actual.
+
+### ¿Cómo funciona hoy el sistema de pensiones?
+
+**Flujo actual (privado):**
+Trabajas → Ahorras en tu Afore → Te jubilas → Eliges una aseguradora privada → Recibes tu pensión mensual
+
+**Flujo propuesto (con opción pública):**
+Trabajas → Ahorras en PENSIONISSSTE → Te jubilas → Eliges la aseguradora pública → Recibes tu pensión mensual
+
+La diferencia clave es que ahora tendrías la **opción** de que todo el proceso sea gestionado por el gobierno, desde el ahorro hasta el cobro de tu pensión.
+
+### ¿A quién le afecta y a quién NO?
+
+Esto es importante: **la propuesta aplica únicamente al segmento de pensiones (rentas vitalicias) para trabajadores del Estado**. No impacta otros tipos de seguros:
+
+- ✅ **Afectado:** Pensiones / Rentas vitalicias del ISSSTE
+- ❌ **NO afectado:** [Gastos Médicos Mayores](/seguros/gastos-medicos) — tu GMM sigue igual
+- ❌ **NO afectado:** [Seguros de Auto](/seguros/auto) — sin relación
+- ❌ **NO afectado:** [Seguros Empresariales](/seguros/empresarial) — seguros de grupo no están impactados
+- ❌ **NO afectado:** [Seguros Fronterizos](/seguros/fronterizos) — completamente independiente
+- ⚠️ **Indirectamente:** [Seguros de Vida](/seguros/vida) — algunos productos con componente de ahorro podrían verse afectados en atractivo, pero siguen siendo complementarios
+
+### ¿Qué alternativas TIENES para proteger tu retiro HOY?
+
+Independientemente de lo que decida el gobierno, una cosa es clara: **la AFORE sola rara vez alcanza para mantener tu nivel de vida al jubilarte**. La tasa de reemplazo promedio en México es de apenas el 30-40% de tu último salario.
+
+Por eso, la estrategia recomendada por expertos financieros es la **combinación inteligente**:
+
+1. **Tu AFORE** es la base obligatoria. Si aún no lo haces, considera cambiarte a PENSIONISSSTE (la Afore con las comisiones más bajas).
+2. **Un [Seguro de Vida con Ahorro](/seguros/vida-con-ahorro)** es tu mejor complemento privado. Combina protección inmediata para tu familia + un fondo de inversión que crece con el tiempo. A diferencia de la AFORE, si llegas a faltar después de pagar solo la primera mensualidad, tu familia recibe la suma asegurada completa.
+
+Si quieres entender las diferencias a detalle, te recomendamos leer nuestro artículo: [Diferencias clave entre Seguro de Vida con Ahorro y AFORE](/blog/seguro-de-vida-ahorro-vs-afore).
+
+**No esperes a que el gobierno decida por ti.** Toma el control de tu futuro financiero hoy. [Contáctanos](/contacto) para una asesoría personalizada sin compromiso, o escríbenos directamente por [WhatsApp](https://wa.me/5216621822481).
+
+*Explora todo nuestro [catálogo completo de seguros](/seguros) para encontrar la protección que mejor se adapte a ti.*
+    `,
+    date: "8 de Junio, 2026",
+    category: "Noticias y Ahorro",
+    image: "/images/blog_aseguradora_publica.png",
+  },
+  {
     slug: "seguro-de-embarazo-hermosillo",
     title: "Seguro de Maternidad y Embarazo en Hermosillo: Todo lo que debes saber",
     excerpt: "Conoce las mejores opciones de seguros para mujeres embarazadas en Sonora. Asegura la salud de tu bebé y tu tranquilidad financiera antes, durante y después del parto.",
@@ -65,6 +127,10 @@ Es un instrumento privado donde aportas una cantidad fija.
 - **Desventaja:** Requiere compromiso de pago a largo plazo.
 
 Si eres el pilar de tu familia, el Seguro de Vida con Ahorro es indispensable porque blindas tu patrimonio pase lo que pase.
+
+---
+
+**Actualización — Junio 2026:** El gobierno acaba de anunciar la creación de una aseguradora pública para pensiones. ¿Cómo afecta esto a tu estrategia de retiro? [Lee nuestro análisis completo aquí](/blog/aseguradora-publica-pensiones-mexico-2026).
     `,
     date: "15 de Mayo, 2026",
     category: "Ahorro y Vida",
