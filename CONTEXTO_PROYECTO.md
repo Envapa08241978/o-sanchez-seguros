@@ -1226,4 +1226,42 @@ Realizar mantenimiento SEO enfocado en tráfico local (Local SEO), snippets enri
 | `50010ff` | feat(contact): add google maps iframe and update exact address |
 | `99f9835` | feat(footer): move google maps iframe to global footer and remove text link |
 
+## Sesión: Cambio de Correo Oficial, Google Maps Store Locator y Menú Móvil (16 junio 2026)
+
+### Objetivos
+1. Unificar el correo oficial de la agencia a `admon@osanchezseguros.com` en todas las referencias visibles y en los sistemas internos del sitio.
+2. Reemplazar el iframe antiguo y estático de Google Maps en el footer por el widget interactivo oficial de Google Maps Store Locator (Locator Plus) e incrustarlo en la página de inicio y contacto.
+3. Corregir el menú de navegación móvil para que no oculte los enlaces de "Blog" o "Contacto" debido a la falta de desplazamiento en pantallas pequeñas.
+
+### Cambios realizados
+
+#### 1. Unificación de Correo Oficial (`admon@osanchezseguros.com`)
+- **Configuración del sitio (`src/utils/constants.ts`):** Modificado `SITE_CONFIG.email` de `oscareduardosanchezaguirre@gmail.com` a `admon@osanchezseguros.com`. Esto actualizó de forma dinámica el Footer, la página de Contacto, y el Aviso de Privacidad.
+- **Sistema de alertas (`src/lib/email.ts`):** Cambiado el correo receptor (`to`) y el fallback del remitente (`SMTP_USER`) a `admon@osanchezseguros.com` para recibir todos los leads en la cuenta oficial.
+- **PDF de Cotizaciones (`src/app/admin/components/QuotePDFTemplate.tsx`):** Se corrigió la referencia del correo en el pie de página de `admin@osanchezseguros.com` a `admon@osanchezseguros.com`.
+
+#### 2. Integración de Google Maps Store Locator
+- **Componente Nuevo (`src/components/shared/GoogleMapLocator.tsx`):** Componente React cliente que carga de manera dinámica `@googlemaps/extended-component-library`.
+  - **Solución al conflicto de palabra reservada `key` en React:** React no renderiza el prop `key` en el DOM por ser palabra clave interna. Se resolvió aplicando `setAttribute("key", CONFIGURATION.mapsApiKey)` en `useEffect` sobre una referencia (`ref`) de `<gmpx-api-loader>`.
+  - **Ajuste de Zoom y Ubicación:** Configurado con zoom a nivel de calle (zoom 16) y centrado directamente en la oficina de Hermosillo, Sonora.
+  - **Estilización Corporativa:** Se adaptaron las variables del buscador (`--gmpx-*`) al color de la marca (Navy `#202F71` y acentos en Rojo `#D32020`) y tipografías (**Inter** y **Outfit**).
+- **Footer (`src/components/layout/Footer.tsx`):** Eliminado por completo el iframe global estático del mapa.
+- **Página de Inicio (`src/app/page.tsx`):** Se importó y colocó el nuevo componente `GoogleMapLocator` dentro de una nueva sección "Nuestra Oficina" al final de la página.
+- **Página de Contacto (`src/app/(marketing)/contacto/page.tsx`):** Se mantuvo el mapa interactivo nuevo en la sección inferior de la página de contacto.
+
+#### 3. Optimización de Menú Móvil (`src/components/layout/Header.tsx`)
+- **Problema:** Debido a la gran cantidad de enlaces y las subcategorías de seguros en el menú móvil, los links finales ("Blog", "Contacto" y el botón de CTA) quedaban fuera del área visible en pantallas de teléfonos de tamaño estándar y no se permitía scroll.
+- **Solución:** Agregadas las clases `max-h-[calc(100vh-4.5rem)]` y `overflow-y-auto` al contenedor del menú móvil para limitar su altura máxima a la pantalla y habilitar el desplazamiento interno.
+
+### Commits y despliegue
+- **Commit 1:** `2536a51` — feat: update official email address to admon@osanchezseguros.com
+- **Commit 2:** `2f0fabf` — feat: integrate Google Maps Store Locator widget on contact page
+- **Commit 3:** `f5217d6` — fix: resolve React key collision and script module issues for GoogleMapLocator
+- **Commit 4:** `4595a3c` — fix: make mobile navigation menu scrollable to prevent cutoff of blog and contact links
+- **Commit 5:** `fc73708` — feat: move Google Map Store Locator to homepage and remove old iframe map from footer
+- **Commit 6:** `f5217d6` (re-applied/pushed as `fc73708` + subsequent) — fix: resolve React key collision and script module issues for GoogleMapLocator
+- **Deploy:** Producción recompilada exitosamente y desplegada de manera manual en Vercel. La versión en vivo se encuentra en `https://www.osanchezseguros.com`.
+
+---
+
 *Este archivo debe mantenerse actualizado cada vez que se hagan cambios significativos al proyecto.*
