@@ -788,7 +788,7 @@ export default function QuotePDFTemplate({
           Asesor Certificado de Seguros
         </Text>
         <Text style={s.closingContactSub}>
-          Tel: 662 182 2481 · admin@osanchezseguros.com
+          Tel: 662 182 2481 · admon@osanchezseguros.com
         </Text>
         <Text style={s.closingContactSub}>
           www.osanchezseguros.com
