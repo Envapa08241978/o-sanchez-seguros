@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import ScrollReveal from "@/components/shared/ScrollReveal";
 import { SITE_CONFIG } from "@/utils/constants";
+import GoogleMapLocator from "@/components/shared/GoogleMapLocator";
 
 const INSURANCE_OPTIONS = [
   { value: "vida", label: "Seguros de Vida" },
@@ -411,7 +412,22 @@ export default function ContactoPage() {
           </div>
         </div>
       </section>
-
+      {/* Map Section */}
+      <section className="pb-20 bg-background">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <ScrollReveal>
+            <div className="text-center mb-10">
+              <h2 className="font-display text-2xl md:text-3xl font-bold text-brand mb-3">
+                Nuestra Oficina
+              </h2>
+              <p className="text-muted text-sm max-w-lg mx-auto">
+                Te esperamos en nuestra oficina en Hermosillo, Sonora. Visítanos o agenda una cita personalizada.
+              </p>
+            </div>
+            <GoogleMapLocator />
+          </ScrollReveal>
+        </div>
+      </section>
     </>
   );
 }
