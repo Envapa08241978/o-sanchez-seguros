@@ -2,6 +2,7 @@ import Link from "next/link";
 import ScrollReveal from "@/components/shared/ScrollReveal";
 import LeadForm from "@/components/shared/LeadForm";
 import { SITE_CONFIG, INSURANCE_PRODUCTS, INSURERS } from "@/utils/constants";
+import GoogleMapLocator from "@/components/shared/GoogleMapLocator";
 
 export default function HomePage() {
   return (
@@ -331,6 +332,25 @@ export default function HomePage() {
               </div>
             </ScrollReveal>
           </div>
+        </div>
+      </section>
+      {/* Map Section */}
+      <section className="py-20 bg-background border-t border-border">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <ScrollReveal>
+            <div className="text-center mb-10">
+              <span className="inline-block px-4 py-1.5 bg-brand/5 text-brand text-xs font-bold uppercase tracking-widest rounded-full mb-4">
+                Ubicación
+              </span>
+              <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-brand mb-3">
+                Nuestra Oficina
+              </h2>
+              <p className="text-muted text-sm max-w-lg mx-auto">
+                Te esperamos en nuestra oficina en Hermosillo, Sonora. Visítanos o agenda una cita personalizada.
+              </p>
+            </div>
+            <GoogleMapLocator />
+          </ScrollReveal>
         </div>
       </section>
     </>

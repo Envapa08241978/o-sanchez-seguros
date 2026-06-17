@@ -13,20 +13,6 @@ export default function Footer() {
 
   return (
     <footer className="bg-brand text-white">
-      {/* Global Map Section */}
-      <div className="w-full h-72 sm:h-80 relative">
-        <iframe 
-          src="https://maps.google.com/maps?q=OSanchez%20Seguros%20-%20Oficina%20Oscar%20Sanchez,%20Hermosillo&t=&z=16&ie=UTF8&iwloc=&output=embed" 
-          className="w-full h-full" 
-          style={{ border: 0 }} 
-          allowFullScreen={true} 
-          loading="lazy" 
-          referrerPolicy="no-referrer-when-downgrade"
-          title="Ubicación de O Sanchez Seguros en Google Maps"
-        />
-        <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_20px_rgba(0,0,0,0.2)]" />
-      </div>
-
       {/* Main Footer */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
