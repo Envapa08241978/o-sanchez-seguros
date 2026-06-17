@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Script from "next/script";
 
 // TypeScript declarations for Google Maps custom elements
 declare global {
@@ -54,10 +53,42 @@ const CONFIGURATION = {
 
 export default function GoogleMapLocator() {
   const locatorRef = useRef<any>(null);
+  const apiLoaderRef = useRef<any>(null);
   const [libraryLoaded, setLibraryLoaded] = useState(false);
 
   useEffect(() => {
-    // If the library is already loaded, configure the locator
+    // 1. Bypass React's reserved 'key' prop by setting the 'key' attribute dynamically
+    if (apiLoaderRef.current) {
+      apiLoaderRef.current.setAttribute("key", CONFIGURATION.mapsApiKey);
+    }
+
+    // 2. Load the Google Maps Extended Component Library dynamically as a module script
+    const scriptId = "google-maps-extended-components";
+    const existingScript = document.getElementById(scriptId);
+
+    const handleScriptLoad = () => {
+      if (typeof window !== "undefined" && (window as any).customElements) {
+        (window as any).customElements.whenDefined("gmpx-store-locator").then(() => {
+          setLibraryLoaded(true);
+        });
+      }
+    };
+
+    if (!existingScript) {
+      const script = document.createElement("script");
+      script.id = scriptId;
+      script.src = "https://ajax.googleapis.com/ajax/libs/@googlemaps/extended-component-library/0.6.11/index.min.js";
+      script.type = "module";
+      script.async = true;
+      script.onload = handleScriptLoad;
+      document.body.appendChild(script);
+    } else {
+      handleScriptLoad();
+    }
+  }, []);
+
+  useEffect(() => {
+    // 3. Configure the locator once the web components are defined
     if (libraryLoaded && locatorRef.current) {
       try {
         locatorRef.current.configureFromQuickBuilder(CONFIGURATION);
@@ -67,27 +98,10 @@ export default function GoogleMapLocator() {
     }
   }, [libraryLoaded]);
 
-  const handleScriptLoad = () => {
-    // Wait for the custom elements to be defined
-    if (typeof window !== "undefined" && (window as any).customElements) {
-      (window as any).customElements.whenDefined("gmpx-store-locator").then(() => {
-        setLibraryLoaded(true);
-      });
-    }
-  };
-
   return (
     <div className="w-full h-[500px] rounded-2xl overflow-hidden border border-border shadow-sm bg-surface">
-      {/* Load Google Maps Extended Component Library */}
-      <Script
-        src="https://ajax.googleapis.com/ajax/libs/@googlemaps/extended-component-library/0.6.11/index.min.js"
-        type="module"
-        onLoad={handleScriptLoad}
-        onReady={handleScriptLoad}
-      />
-
       <gmpx-api-loader
-        key={CONFIGURATION.mapsApiKey}
+        ref={apiLoaderRef}
         solution-channel="GMP_QB_locatorplus_v11_c"
       ></gmpx-api-loader>
       
@@ -101,13 +115,13 @@ export default function GoogleMapLocator() {
           "--gmpx-color-surface": "#ffffff",
           "--gmpx-color-on-surface": "#202F71",
           "--gmpx-color-on-surface-variant": "#6E6965",
-          "--gmpx-color-primary": "#D32020", // Accent red for active/primary elements
+          "--gmpx-color-primary": "#D32020", // Accent red
           "--gmpx-color-outline": "#E5E7EB",
           "--gmpx-fixed-panel-width-row-layout": "24em",
           "--gmpx-font-family-base": '"Inter", sans-serif',
           "--gmpx-font-family-headings": '"Outfit", sans-serif',
           "--gmpx-font-size-base": "0.875rem",
-          "--gmpx-hours-color-open: ": "#059669",
+          "--gmpx-hours-color-open": "#059669",
           "--gmpx-hours-color-closed": "#D32020",
         }}
       ></gmpx-store-locator>
