@@ -124,7 +124,7 @@ export default function Header() {
 
       {/* Mobile Menu */}
       {mobileOpen && (
-        <div className="lg:hidden border-t border-border bg-white animate-slide-down">
+        <div className="lg:hidden border-t border-border bg-white animate-slide-down max-h-[calc(100vh-4.5rem)] overflow-y-auto">
           <nav className="max-w-7xl mx-auto px-4 py-4 space-y-1" aria-label="Menú móvil">
             {NAVIGATION.main.map((item) =>
               item.children ? (
