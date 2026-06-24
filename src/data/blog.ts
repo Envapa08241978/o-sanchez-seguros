@@ -1,5 +1,44 @@
 export const BLOG_POSTS = [
   {
+    slug: "costo-parto-hospital-hermosillo-cima-san-jose",
+    title: "¿Cuánto cuesta un parto en Hermosillo? Precios de CIMA, San José y más (2026)",
+    excerpt: "Descubre el precio real de una cesárea o parto natural en los principales hospitales de Hermosillo como Hospital CIMA, San José y Clínica del Noroeste, y cómo pagarlo con un seguro de gastos médicos.",
+    content: `
+Planear la llegada de tu bebé a Hermosillo es una etapa increíble, pero también requiere mucha preparación financiera. Si te preguntas **"¿cuánto cuesta aliviarse en Hermosillo?"** o buscas **paquetes de maternidad**, aquí te presentamos un resumen de los costos aproximados en los principales hospitales privados de la ciudad para este 2026.
+
+### 1. Hospital San José (Centro de Alta Especialidad para la Mujer)
+El Hospital San José es uno de los más buscados por su infraestructura de vanguardia, como sus salas LPR (Labor, Parto y Recuperación) y cuidados intensivos neonatales. 
+Los **paquetes de maternidad en Hospital San José** suelen cubrir hospitalización, uso de quirófano y cuneros. 
+*Importante:* Generalmente, estos paquetes **no incluyen honorarios médicos** (ginecólogo, anestesiólogo, pediatra), los cuales se negocian por separado. Un paquete de cesárea total (incluyendo honorarios) puede rondar fácilmente entre los **$50,000 y $75,000 MXN** o más, dependiendo de las noches de estancia y las complicaciones.
+
+### 2. Hospital CIMA Hermosillo (Área OBSTETRIX)
+El Hospital CIMA cuenta con su área especializada OBSTETRIX. Sus paquetes son de los más completos y premium de Sonora.
+El **precio de cesárea en Hospital CIMA Hermosillo** puede superar los **$60,000 a $80,000 MXN** una vez sumados todos los honorarios médicos e insumos de primer nivel, aunque ofrecen opciones de financiamiento si reservas a partir del quinto mes.
+
+### 3. Clínica del Noroeste
+Es una excelente opción para muchas familias. Ofrecen paquetes "con" y "sin" honorarios médicos.
+- El **costo de un parto natural en Clínica del Noroeste** oscila desde los **$20,150 MXN** (sin honorarios) hasta los **$46,150 MXN** (ya con ginecólogo y anestesiólogo).
+- Para una **cesárea**, los costos inician en **$31,150 MXN** y pueden llegar a los **$57,150 MXN** con honorarios completos incluidos.
+
+### 4. Hospital San Diego de Alcalá y Hospital Licona
+Estas son excelentes alternativas con infraestructura sólida y precios frecuentemente más accesibles. El **paquete de parto en San Diego de Alcalá** o Licona puede ser muy competitivo, ubicando un parto natural alrededor de los **$25,000 a $35,000 MXN** incluyendo honorarios (dependiendo siempre del médico tratante).
+
+---
+
+### ¿Cómo cubrir este gasto sin descapitalizarte?
+La mejor estrategia financiera es contratar un **[Seguro de Gastos Médicos Mayores para embarazadas](/seguros/gastos-medicos/maternidad)**.
+
+**¿Por qué te conviene?**
+Si contratas tu póliza **antes de quedar embarazada** (cumpliendo el periodo de espera de 10 meses), el seguro te entregará una "Ayuda de Maternidad". 
+Aseguradoras como AXA, GNP o Monterrey ofrecen apoyos económicos directos de entre **$15,000 hasta $45,000 MXN** (según el plan que elijas), los cuales puedes usar en el hospital que tú decidas. Prácticamente el seguro termina pagándose solo con esta ayuda.
+
+Asegura hoy mismo el mejor recibimiento para tu bebé. Acércate a O Sanchez Seguros para encontrar los [mejores seguros para embarazadas en Hermosillo](/contacto) y conoce cuál se adapta mejor a tu presupuesto y al hospital de tu preferencia.
+`,
+    date: "23 de Junio, 2026",
+    category: "Maternidad",
+    image: "/images/maternity_hospital_cost.png",
+  },
+  {
     slug: "aseguradora-publica-pensiones-mexico-2026",
     title: "Aseguradora Pública para Pensiones en México 2026: Qué Es y Cómo Te Afecta",
     excerpt: "El gobierno propuso crear una aseguradora pública para jubilados. Te explicamos qué significa, cómo funciona el sistema actual de pensiones y qué alternativas tienes para proteger tu retiro.",
@@ -155,45 +194,6 @@ Para estar verdaderamente tranquilo, te sugerimos tramitar un **Seguro de Auto F
     date: "20 de Mayo, 2026",
     category: "Fronterizos",
     image: "/images/blog_fronterizo.png",
-  },
-  {
-    slug: "costo-parto-hospital-hermosillo-cima-san-jose",
-    title: "¿Cuánto cuesta un parto en Hermosillo? Precios de CIMA, San José y más (2026)",
-    excerpt: "Descubre el precio real de una cesárea o parto natural en los principales hospitales de Hermosillo como Hospital CIMA, San José y Clínica del Noroeste, y cómo pagarlo con un seguro de gastos médicos.",
-    content: `
-Planear la llegada de tu bebé a Hermosillo es una etapa increíble, pero también requiere mucha preparación financiera. Si te preguntas **"¿cuánto cuesta aliviarse en Hermosillo?"** o buscas **paquetes de maternidad**, aquí te presentamos un resumen de los costos aproximados en los principales hospitales privados de la ciudad para este 2026.
-
-### 1. Hospital San José (Centro de Alta Especialidad para la Mujer)
-El Hospital San José es uno de los más buscados por su infraestructura de vanguardia, como sus salas LPR (Labor, Parto y Recuperación) y cuidados intensivos neonatales. 
-Los **paquetes de maternidad en Hospital San José** suelen cubrir hospitalización, uso de quirófano y cuneros. 
-*Importante:* Generalmente, estos paquetes **no incluyen honorarios médicos** (ginecólogo, anestesiólogo, pediatra), los cuales se negocian por separado. Un paquete de cesárea total (incluyendo honorarios) puede rondar fácilmente entre los **$50,000 y $75,000 MXN** o más, dependiendo de las noches de estancia y las complicaciones.
-
-### 2. Hospital CIMA Hermosillo (Área OBSTETRIX)
-El Hospital CIMA cuenta con su área especializada OBSTETRIX. Sus paquetes son de los más completos y premium de Sonora.
-El **precio de cesárea en Hospital CIMA Hermosillo** puede superar los **$60,000 a $80,000 MXN** una vez sumados todos los honorarios médicos e insumos de primer nivel, aunque ofrecen opciones de financiamiento si reservas a partir del quinto mes.
-
-### 3. Clínica del Noroeste
-Es una excelente opción para muchas familias. Ofrecen paquetes "con" y "sin" honorarios médicos.
-- El **costo de un parto natural en Clínica del Noroeste** oscila desde los **$20,150 MXN** (sin honorarios) hasta los **$46,150 MXN** (ya con ginecólogo y anestesiólogo).
-- Para una **cesárea**, los costos inician en **$31,150 MXN** y pueden llegar a los **$57,150 MXN** con honorarios completos incluidos.
-
-### 4. Hospital San Diego de Alcalá y Hospital Licona
-Estas son excelentes alternativas con infraestructura sólida y precios frecuentemente más accesibles. El **paquete de parto en San Diego de Alcalá** o Licona puede ser muy competitivo, ubicando un parto natural alrededor de los **$25,000 a $35,000 MXN** incluyendo honorarios (dependiendo siempre del médico tratante).
-
----
-
-### ¿Cómo cubrir este gasto sin descapitalizarte?
-La mejor estrategia financiera es contratar un **[Seguro de Gastos Médicos Mayores para embarazadas](/seguros/gastos-medicos/maternidad)**.
-
-**¿Por qué te conviene?**
-Si contratas tu póliza **antes de quedar embarazada** (cumpliendo el periodo de espera de 10 meses), el seguro te entregará una "Ayuda de Maternidad". 
-Aseguradoras como AXA, GNP o Monterrey ofrecen apoyos económicos directos de entre **$15,000 hasta $45,000 MXN** (según el plan que elijas), los cuales puedes usar en el hospital que tú decidas. Prácticamente el seguro termina pagándose solo con esta ayuda.
-
-Asegura hoy mismo el mejor recibimiento para tu bebé. Acércate a O Sanchez Seguros para encontrar los [mejores seguros para embarazadas en Hermosillo](/contacto) y conoce cuál se adapta mejor a tu presupuesto y al hospital de tu preferencia.
-`,
-    date: "23 de Junio, 2026",
-    category: "Maternidad",
-    image: "/images/blog_maternidad.jpg",
   }
 ];
 
