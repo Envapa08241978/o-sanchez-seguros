@@ -26,21 +26,44 @@ const BENEFITS = [
   },
 ];
 
+const HOSPITALS = [
+  {
+    name: "Hospital San José",
+    desc: "Paquetes de maternidad en áreas LPR de alta especialidad.",
+  },
+  {
+    name: "Hospital CIMA",
+    desc: "Área OBSTETRIX de primer nivel para partos y cesáreas.",
+  },
+  {
+    name: "Clínica del Noroeste",
+    desc: "Excelentes costos de parto y atención de vanguardia.",
+  },
+  {
+    name: "San Diego de Alcalá",
+    desc: "Infraestructura sólida con precios accesibles.",
+  },
+  {
+    name: "Hospital Licona",
+    desc: "Excelente alternativa y calidez médica.",
+  }
+];
+
 const FAQS = [
   {
-    question: "¿Tienen un seguro para parto y cómo funciona?",
+    question: "¿Cuánto cuesta un parto en Hermosillo y qué hospitales cubre el seguro?",
     answer:
-      "El seguro con cobertura de maternidad (comúnmente buscado como seguro para parto) te brinda una ayuda económica significativa que puedes usar para los gastos de hospitalización. La regla más importante es el tiempo de espera: debes contratar la póliza y cumplir al menos 10 meses de antigüedad antes del nacimiento del bebé para que se efectúe el pago.",
+      "El costo de parto en Clínica del Noroeste, San Diego de Alcalá o Hospital Licona puede rondar entre $25,000 y $45,000 MXN. En opciones premium, el precio de cesárea en Hospital CIMA Hermosillo o San José puede superar los $60,000 a $80,000 MXN. Tu seguro de gastos médicos para embarazadas te da un apoyo económico (desde $35,000) que puedes usar en el hospital privado de tu elección.",
   },
   {
-    question: "¿Existen seguros para embarazadas si ya estoy gestando?",
+    question: "¿Tienen un seguro de maternidad si ya estoy embarazada?",
     answer:
-      "Para recibir el beneficio económico de maternidad, es necesario adquirir la póliza antes de quedar embarazada, ya que todas las aseguradoras piden un periodo de espera de 10 meses. Sin embargo, contáctanos para revisar opciones que protejan ante complicaciones mayores.",
+      "Para recibir la ayuda económica de maternidad, es necesario adquirir la póliza antes de quedar embarazada (requiere periodo de espera de 10 meses). Si ya estás embarazada, contáctanos de todos modos para revisar opciones de protección ante complicaciones mayores.",
   },
   {
-    question: "¿Qué monto me entregan por maternidad?",
+    question: "¿Qué seguros cubren parto o cesárea en Hermosillo?",
     answer:
-      "Dependiendo del plan y aseguradora que elijas con nosotros (AXA, GNP, etc.), la ayuda de maternidad extendida va desde los $35,000 hasta los $170,000 pesos.",
+      "Trabajamos con aseguradoras líderes (AXA, GNP, Monterrey) que ofrecen los mejores seguros para embarazadas en Hermosillo. La ayuda de maternidad va desde los $35,000 hasta los $170,000 pesos libres para pagar tu hospitalización.",
   },
 ];
 
@@ -54,6 +77,7 @@ export default function MaternidadPage() {
           { name: "Gastos Médicos Mayores", url: "https://www.osanchezseguros.com/seguros/gastos-medicos" },
           { name: "Maternidad", url: "https://www.osanchezseguros.com/seguros/gastos-medicos/maternidad" },
         ]}
+        faq={FAQS}
       />
       
       {/* Hero */}
@@ -90,8 +114,32 @@ export default function MaternidadPage() {
               <p className="text-amber-800/80 text-lg leading-relaxed">
                 Para garantizar que la aseguradora cubra tu parto o cesárea y entregue la ayuda de maternidad, 
                 <strong> el bebé debe nacer cuando la póliza tenga al menos 10 meses de antigüedad.</strong><br/><br/>
-                Es decir: debes adquirir la póliza, esperar un par de meses para "encargar", y así asegurar que el bebé nazca con cobertura total.
+                Es decir: debes adquirir la póliza, esperar un par de meses para &quot;encargar&quot;, y así asegurar que el bebé nazca con cobertura total.
               </p>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* Hospitales Section */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <ScrollReveal>
+            <div className="text-center mb-12">
+              <h2 className="font-display text-3xl font-extrabold text-brand mb-4">
+                Usa tu cobertura en los <span className="text-accent">Mejores Hospitales</span>
+              </h2>
+              <p className="text-lg text-muted max-w-2xl mx-auto">
+                La Ayuda de Maternidad se entrega en efectivo o por reembolso, dándote total libertad para elegir dónde quieres tener a tu bebé en Hermosillo.
+              </p>
+            </div>
+            <div className="flex flex-wrap justify-center gap-4">
+              {HOSPITALS.map((hospital, i) => (
+                <div key={i} className="bg-surface-elevated px-6 py-4 rounded-xl border border-border shadow-sm text-center w-full sm:w-[220px]">
+                  <h3 className="font-bold text-brand">{hospital.name}</h3>
+                  <p className="text-sm text-muted mt-2 leading-tight">{hospital.desc}</p>
+                </div>
+              ))}
             </div>
           </ScrollReveal>
         </div>
@@ -137,10 +185,10 @@ export default function MaternidadPage() {
               Lee nuestro nuevo artículo con toda la información sobre costos de parto, hospitales privados en Hermosillo y cómo elegir la mejor póliza.
             </p>
             <Link
-              href="/blog/seguro-de-embarazo-hermosillo"
+              href="/blog/costo-parto-hospital-hermosillo-cima-san-jose"
               className="inline-flex items-center text-accent font-bold hover:text-accent-dark transition-colors underline decoration-2 underline-offset-4"
             >
-              Leer la guía: Todo lo que debes saber sobre el seguro de embarazo en Hermosillo →
+              Leer la guía: ¿Cuánto cuesta un parto en Hermosillo? (Precios 2026) →
             </Link>
           </ScrollReveal>
         </div>

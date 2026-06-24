@@ -12,6 +12,15 @@ export const metadata: Metadata = {
     "ayuda de maternidad extendida",
     "seguro con pago de maternidad",
     "gastos medicos embarazo hermosillo",
+    "cuanto cuesta un parto en hermosillo 2026",
+    "precio cesarea hospital cima hermosillo",
+    "costo de parto clinica del noroeste",
+    "paquetes de maternidad hospital san jose hermosillo",
+    "paquetes de parto hospital san diego de alcala",
+    "seguro de gastos medicos para embarazadas hermosillo",
+    "seguro para cubrir cesarea hermosillo",
+    "mejores seguros para embarazadas hermosillo",
+    "hospital licona hermosillo paquetes de maternidad"
   ],
   alternates: {
     canonical: "https://www.osanchezseguros.com/seguros/gastos-medicos/maternidad",

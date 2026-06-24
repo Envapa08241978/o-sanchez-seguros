@@ -1264,4 +1264,23 @@ Realizar mantenimiento SEO enfocado en tráfico local (Local SEO), snippets enri
 
 ---
 
+## Sesión: Dominio del Nicho Maternidad y SEO Local (23 junio 2026)
+
+### Objetivos
+Ejecutar una estrategia de SEO local enfocada en el nicho de "Seguros de Embarazo y Maternidad" en Hermosillo, Sonora. Se atacaron las palabras clave informativas y de transacción mediante contenido hiperlocalizado.
+
+### Cambios realizados
+- **Nuevo Artículo de Blog:** Se agregó el artículo *"¿Cuánto cuesta un parto en Hermosillo? Precios de CIMA, San José y más (2026)"* en `src/data/blog.ts` apuntando a keywords de costo y hospitales.
+- **Optimización de Landing Page de Maternidad:**
+  - Se agregó una nueva sección de "Hospitales" en `src/app/(marketing)/seguros/gastos-medicos/maternidad/page.tsx` para inyectar keywords locales.
+  - Se optimizaron las FAQ y se pasaron al componente `<PageJsonLd faq={FAQS} />` para generar esquemas ricos (Rich Snippets).
+  - Se añadieron más de 10 long-tail keywords orientadas a Hermosillo en `src/app/(marketing)/seguros/gastos-medicos/maternidad/layout.tsx`.
+- **Correcciones menores:** Se corrigieron alertas de escape de caracteres en JSX detectadas por ESLint.
+
+### Commits y despliegue
+- **Commit:** `feat(seo): implement maternity local SEO and hospital pricing blog post`
+- **Deploy:** Automático vía Vercel desde push a `main`.
+
+---
+
 *Este archivo debe mantenerse actualizado cada vez que se hagan cambios significativos al proyecto.*
