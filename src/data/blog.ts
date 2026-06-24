@@ -23,6 +23,8 @@ Es una excelente opción para muchas familias. Ofrecen paquetes "con" y "sin" ho
 ### 4. Hospital San Diego de Alcalá y Hospital Licona
 Estas son excelentes alternativas con infraestructura sólida y precios frecuentemente más accesibles. El **paquete de parto en San Diego de Alcalá** o Licona puede ser muy competitivo, ubicando un parto natural alrededor de los **$25,000 a $35,000 MXN** incluyendo honorarios (dependiendo siempre del médico tratante).
 
+[CALCULADORA](#calculadora)
+
 ---
 
 ### ¿Cómo cubrir este gasto sin descapitalizarte?

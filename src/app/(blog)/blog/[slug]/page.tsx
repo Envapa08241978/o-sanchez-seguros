@@ -6,6 +6,7 @@ import ReactMarkdown from "react-markdown";
 import { getBlogPost } from "@/data/blog";
 import { PageJsonLd } from "@/components/shared/JsonLd";
 import ScrollReveal from "@/components/shared/ScrollReveal";
+import MaternityCalculator from "@/components/shared/MaternityCalculator";
 
 export async function generateMetadata(
   { params }: { params: Promise<{ slug: string }> },
@@ -106,6 +107,9 @@ export default async function BlogPostPage({
               <ReactMarkdown
                 components={{
                   a: ({ node, href, ...props }) => {
+                    if (href === "#calculadora") {
+                      return <MaternityCalculator />;
+                    }
                     const isExternal = href?.startsWith("http") || href?.startsWith("mailto") || href?.startsWith("tel");
                     return (
                       <a
