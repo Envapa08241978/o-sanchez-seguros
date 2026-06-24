@@ -121,7 +121,7 @@ export default function MaternityCalculator() {
           *Costos aproximados que pueden variar. La ayuda de maternidad depende del plan contratado (espera de 10 meses).
         </p>
         <a
-          href={SITE_CONFIG.whatsappUrl}
+          href={`https://wa.me/${SITE_CONFIG.whatsapp}?text=Hola,%20vi%20la%20calculadora%20de%20costos%20de%20parto%20y%20me%20interesa%20saber%20sobre%20seguros%20de%20embarazo.`}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center justify-center w-full sm:w-auto px-8 py-4 bg-accent text-white font-bold rounded-full hover:bg-accent-dark transition-all shadow-lg hover:shadow-xl hover:-translate-y-1"
