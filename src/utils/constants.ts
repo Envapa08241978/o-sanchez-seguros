@@ -10,7 +10,7 @@ export const SITE_CONFIG = {
   whatsappUrl: "https://wa.me/526621822481",
   email: "admon@osanchezseguros.com",
   address: "Blvd. Juan Navarrete 154-Int. 168U, Valle Grande, 83205 Hermosillo, Son.",
-  googleMapsUrl: "https://www.google.com/maps/place/OSanchez+Seguros+-+Oficina+Oscar+Sanchez/@29.0862245,-110.9775244,950m/data=!3m2!1e3!4b1!4m6!3m5!1s0x86ce857f14777283:0x9925c26431d0ec84!8m2!3d29.0862198!4d-110.9749495",
+  googleMapsUrl: "https://www.google.com/search?sca_esv=f528c0fe227ae87c&authuser=0&hl=en&gl=mx&output=search&q=OSanchez+Seguros+-+Oficina+Oscar+Sanchez&ludocid=11035440197529562244&lsig=AB86z5UTRmrnInhKdto8vAljzWUa&ved=1i%3A4%2Ct%3A109124%2Ce%3A3%2Cp%3AZUA7ap7ZE5bA0PEPnubDyQE%3A49",
   yearFounded: 2009,
   yearsOfExperience: 16,
   socialMedia: {
