@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ScrollReveal from "@/components/shared/ScrollReveal";
+import MaternityCalculator from "@/components/shared/MaternityCalculator";
 import { SITE_CONFIG } from "@/utils/constants";
 import { PageJsonLd } from "@/components/shared/JsonLd";
 
@@ -141,6 +142,15 @@ export default function MaternidadPage() {
                 </div>
               ))}
             </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* Calculadora Section */}
+      <section className="py-8 bg-purple-50/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <ScrollReveal>
+            <MaternityCalculator />
           </ScrollReveal>
         </div>
       </section>
