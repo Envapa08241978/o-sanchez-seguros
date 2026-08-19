@@ -1,130 +1,92 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-
-// TypeScript declarations for Google Maps custom elements
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      "gmpx-api-loader": any;
-      "gmpx-store-locator": any;
-    }
-  }
-  namespace React {
-    namespace JSX {
-      interface IntrinsicElements {
-        "gmpx-api-loader": any;
-        "gmpx-store-locator": any;
-      }
-    }
-  }
-}
-
-const CONFIGURATION = {
-  locations: [
-    {
-      title: "Blvd. Juan Navarrete 154",
-      address1: "Blvd. Juan Navarrete 154",
-      address2: "Valle Grande, 83205 Hermosillo, Son., Mexico",
-      coords: { lat: 29.086707341153247, lng: -110.97562005225372 },
-      placeId: "ChIJ5dH5hRWEzoYRUT8Dccuaq6g",
-    },
-  ],
-  mapOptions: {
-    center: { lat: 29.086707341153247, lng: -110.97562005225372 }, // Centered on Hermosillo office
-    fullscreenControl: true,
-    mapTypeControl: false,
-    streetViewControl: false,
-    zoom: 16, // Zoom level adjusted to show local neighborhood
-    zoomControl: true,
-    maxZoom: 19,
-    mapId: "",
-  },
-  mapsApiKey: "AIzaSyDAARaN3WWXoQGtZJKa_jm1FZu28xVwjUI",
-  capabilities: {
-    input: false,
-    autocomplete: false,
-    directions: false,
-    distanceMatrix: false,
-    details: false,
-    actions: false,
-  },
-};
+import { SITE_CONFIG } from "@/utils/constants";
 
 export default function GoogleMapLocator() {
-  const locatorRef = useRef<any>(null);
-  const apiLoaderRef = useRef<any>(null);
-  const [libraryLoaded, setLibraryLoaded] = useState(false);
-
-  useEffect(() => {
-    // 1. Bypass React's reserved 'key' prop by setting the 'key' attribute dynamically
-    if (apiLoaderRef.current) {
-      apiLoaderRef.current.setAttribute("key", CONFIGURATION.mapsApiKey);
-    }
-
-    // 2. Load the Google Maps Extended Component Library dynamically as a module script
-    const scriptId = "google-maps-extended-components";
-    const existingScript = document.getElementById(scriptId);
-
-    const handleScriptLoad = () => {
-      if (typeof window !== "undefined" && (window as any).customElements) {
-        (window as any).customElements.whenDefined("gmpx-store-locator").then(() => {
-          setLibraryLoaded(true);
-        });
-      }
-    };
-
-    if (!existingScript) {
-      const script = document.createElement("script");
-      script.id = scriptId;
-      script.src = "https://ajax.googleapis.com/ajax/libs/@googlemaps/extended-component-library/0.6.11/index.min.js";
-      script.type = "module";
-      script.async = true;
-      script.onload = handleScriptLoad;
-      document.body.appendChild(script);
-    } else {
-      handleScriptLoad();
-    }
-  }, []);
-
-  useEffect(() => {
-    // 3. Configure the locator once the web components are defined
-    if (libraryLoaded && locatorRef.current) {
-      try {
-        locatorRef.current.configureFromQuickBuilder(CONFIGURATION);
-      } catch (err) {
-        console.error("Error configuring gmpx-store-locator:", err);
-      }
-    }
-  }, [libraryLoaded]);
+  const mapEmbedUrl = `https://maps.google.com/maps?q=O%20Sanchez%20Seguros,%20Blvd.%20Juan%20Navarrete%20154,%20Hermosillo,%20Sonora&t=&z=16&ie=UTF8&iwloc=&output=embed`;
 
   return (
-    <div className="w-full h-[500px] rounded-2xl overflow-hidden border border-border shadow-sm bg-surface">
-      <gmpx-api-loader
-        ref={apiLoaderRef}
-        solution-channel="GMP_QB_locatorplus_v11_c"
-      ></gmpx-api-loader>
-      
-      <gmpx-store-locator
-        ref={locatorRef}
-        map-id="DEMO_MAP_ID"
-        style={{
-          width: "100%",
-          height: "100%",
-          display: "block",
-          "--gmpx-color-surface": "#ffffff",
-          "--gmpx-color-on-surface": "#202F71",
-          "--gmpx-color-on-surface-variant": "#6E6965",
-          "--gmpx-color-primary": "#D32020", // Accent red
-          "--gmpx-color-outline": "#E5E7EB",
-          "--gmpx-fixed-panel-width-row-layout": "24em",
-          "--gmpx-font-family-base": '"Inter", sans-serif',
-          "--gmpx-font-family-headings": '"Outfit", sans-serif',
-          "--gmpx-font-size-base": "0.875rem",
-          "--gmpx-hours-color-open": "#059669",
-          "--gmpx-hours-color-closed": "#D32020",
-        }}
-      ></gmpx-store-locator>
+    <div className="w-full bg-surface rounded-2xl border border-border shadow-md overflow-hidden grid grid-cols-1 lg:grid-cols-12 min-h-[480px]">
+      {/* Left Info Panel */}
+      <div className="lg:col-span-4 p-6 md:p-8 bg-[#182458] text-white flex flex-col justify-between">
+        <div>
+          <span className="inline-block px-3 py-1 bg-white/10 text-white/90 text-xs font-semibold rounded-full border border-white/20 mb-4">
+            📍 Oficina Principal
+          </span>
+
+          <h3 className="font-display text-2xl font-bold mb-3 text-white">
+            O Sanchez Seguros
+          </h3>
+
+          <p className="text-white/80 text-sm leading-relaxed mb-6">
+            Atención personalizada por el Agente Oscar Sánchez Aguirre y equipo especialista.
+          </p>
+
+          <div className="space-y-4 text-sm text-white/90">
+            <div className="flex items-start gap-3">
+              <svg className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              <div>
+                <strong className="block text-white font-medium">Dirección:</strong>
+                <span>{SITE_CONFIG.address}</span>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-3">
+              <svg className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <div>
+                <strong className="block text-white font-medium">Horario de Atención:</strong>
+                <span>{SITE_CONFIG.officeHours}</span>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-3">
+              <svg className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+              </svg>
+              <div>
+                <strong className="block text-white font-medium">Teléfono:</strong>
+                <a href={`tel:${SITE_CONFIG.whatsapp}`} className="hover:underline text-white">
+                  {SITE_CONFIG.phoneDisplay}
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-8 pt-6 border-t border-white/10">
+          <a
+            href={SITE_CONFIG.googleMapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 bg-accent hover:bg-accent-dark text-white font-bold text-sm rounded-xl transition-all duration-300 shadow-md hover:shadow-lg"
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+            Abrir en Google Maps
+          </a>
+        </div>
+      </div>
+
+      {/* Right Map Panel */}
+      <div className="lg:col-span-8 relative min-h-[350px] lg:min-h-full bg-slate-100">
+        <iframe
+          src={mapEmbedUrl}
+          width="100%"
+          height="100%"
+          style={{ border: 0, minHeight: "350px" }}
+          allowFullScreen
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+          title="Ubicación O Sanchez Seguros en Hermosillo"
+          className="w-full h-full"
+        />
+      </div>
     </div>
   );
 }
