@@ -1311,6 +1311,7 @@ Añadir el banner promocional "Hasta 12 Meses Sin Intereses" posicionado directa
 
 ### Commits y despliegue
 - **Commit:** `feat(banner): add 12 Meses Sin Intereses promo banner below menu`
+- **Commit:** `fix(maps): replace Google Maps store locator with reliable embed iframe and location panel`
 - **Deploy:** Automático vía Vercel desde push a `main`.
 
 ---
