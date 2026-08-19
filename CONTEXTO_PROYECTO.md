@@ -1277,10 +1277,43 @@ Ejecutar una estrategia de SEO local enfocada en el nicho de "Seguros de Embaraz
   - Se añadieron más de 10 long-tail keywords orientadas a Hermosillo en `src/app/(marketing)/seguros/gastos-medicos/maternidad/layout.tsx`.
 - **Correcciones menores:** Se corrigieron alertas de escape de caracteres en JSX detectadas por ESLint.
 
+- **Calculadora Interactiva de Costos de Parto:**
+  - Se desarrolló `MaternityCalculator.tsx` para estimar costos de parto/cesárea vs ayuda de maternidad del seguro.
+  - Se modificó `page.tsx` del blog para renderizar el componente reactivo usando Markdown (`[CALCULADORA](#calculadora)`).
+  - Se incrustó el componente en la Landing Page principal (`src/app/(marketing)/seguros/gastos-medicos/maternidad/page.tsx`) para incrementar el "engagement time" y SEO local.
+  - Se personalizó el enlace a WhatsApp del CTA para incluir un mensaje específico de la calculadora.
+- **Corrección de Links de Google Maps:**
+  - Se actualizó `SITE_CONFIG.googleMapsUrl` y la página de Testimonios para usar el enlace de búsqueda directa de Google (abre popup de reseñas) en lugar del mapa genérico.
+
 ### Commits y despliegue
-- **Commit:** `feat(seo): implement maternity local SEO and hospital pricing blog post`
+- **Commit:** `af1fb2a` — feat(blog): add interactive maternity cost calculator
+- **Commit:** `ee2ef43` — feat(seo): embed maternity calculator in landing page
+- **Commit:** `123baa2` — feat(seo): customize whatsapp message for maternity calculator
+- **Commit:** `ae5b5d7` — fix(links): update google maps review link to direct search popup
+- **Deploy:** Automático vía Vercel desde push a `main`.
+
+---
+
+## Sesión: Banner Promocional 12 Meses Sin Intereses (19 agosto 2026)
+
+### Objetivo
+Añadir el banner promocional "Hasta 12 Meses Sin Intereses" posicionado directamente debajo del menú principal de navegación.
+
+### Cambios realizados
+- **Componente nuevo (`src/components/shared/PromoBanner.tsx`):**
+  - Renderiza el banner promocional de 1600x369px con estilo adaptativo.
+  - Redirige al formulario de contacto `/contacto` al hacer clic.
+  - Se oculta automáticamente en rutas administrativas (`/admin`).
+- **Layout Global (`src/app/layout.tsx`):**
+  - Integrado `<PromoBanner />` al inicio del contenedor `<main>`, ubicándolo justo debajo de la barra fija de navegación.
+- **Assets (`public/`):**
+  - Añadida imagen `HASTA 12 MESES SIN NTERESES.jpeg` y optimizada en `public/images/hasta-12-meses-sin-intereses.jpeg`.
+
+### Commits y despliegue
+- **Commit:** `feat(banner): add 12 Meses Sin Intereses promo banner below menu`
 - **Deploy:** Automático vía Vercel desde push a `main`.
 
 ---
 
 *Este archivo debe mantenerse actualizado cada vez que se hagan cambios significativos al proyecto.*
+

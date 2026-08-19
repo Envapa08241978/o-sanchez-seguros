@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import WhatsAppButton from "@/components/shared/WhatsAppButton";
+import PromoBanner from "@/components/shared/PromoBanner";
 // import ChatWidget from "@/components/shared/ChatWidget"; // TEMPORALMENTE DESACTIVADO - trabajar localmente antes de activar
 import JsonLd from "@/components/shared/JsonLd";
 import { GoogleAnalytics } from "@next/third-parties/google";
@@ -108,7 +109,10 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <Header />
-        <main className="flex-1 pt-18 md:pt-20">{children}</main>
+        <main className="flex-1 pt-18 md:pt-20">
+          <PromoBanner />
+          {children}
+        </main>
         <Footer />
         <WhatsAppButton />
         {/* <ChatWidget /> TEMPORALMENTE DESACTIVADO */}
