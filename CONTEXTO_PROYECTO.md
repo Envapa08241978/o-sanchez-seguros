@@ -1,6 +1,6 @@
 # CONTEXTO COMPLETO DEL PROYECTO — O SANCHEZ SEGUROS
 
-> **Última actualización:** 8 de mayo de 2026  
+> **Última actualización:** 5 de octubre de 2026  
 > **Propósito:** Archivo de referencia para que cualquier agente de IA tenga contexto completo al trabajar en este proyecto.
 
 ---
@@ -1316,5 +1316,76 @@ Añadir el banner promocional "Hasta 12 Meses Sin Intereses" posicionado directa
 
 ---
 
+## Sesión: Análisis de Cotizadores en Línea, Ingeniería Inversa de AXA Vida y Propuesta Comercial (5 octubre 2026)
+
+### Objetivos de la sesión
+1. Analizar la arquitectura técnica, flujo y conexiones del cotizador de Gastos Médicos Mayores de la competencia: `https://ahorraseguros.mx/cotizador-seguros-gastos-medicos/`.
+2. Analizar el archivo confidencial `URL_Portal_Distribución.2 2.pdf` del Portal de Agentes de AXA México para determinar si es viable calcular en automático cotizaciones de Seguros de Vida y Vida con Ahorro dentro de `osanchezseguros.com` sin exponer las credenciales ni el acceso privado de Oscar.
+3. Evaluar requerimientos de licencias, Firebase y costos operativos.
+4. Generar materiales de venta y presentación ejecutiva (PowerPoint y PDF) para el cliente Oscar Sánchez, incluyendo un esquema de suscripción mensual de **$600.00 MXN** por la infraestructura de API.
+
+---
+
+### Hallazgos Técnicos y Análisis
+
+#### 1. Análisis de Ahorra Seguros (`ahorraseguros.mx`)
+* **Frontend:** Nuxt 3 (Vue 3 + Pinia + SSR/SPA) con Bootstrap 5.
+* **Flujo de 2 Fases:**
+  * Fase 1 (Perfil de Riesgo): Póliza (Individual/Familiar), Edad, Género, Código Postal y Cuestionario médico de preexistencias.
+  * Fase 2 (Lead Magnet): Para desbloquear los resultados, exige Nombre, Teléfono Celular y Correo.
+* **Backend y APIs Propietarias:** Conectado a servidores centrales de su broker (`lighten-load.core-persistance-service.com` y `core-blacklist-service.com`). Guarda el lead de inmediato y lo dispara a su Call Center para marcar en menos de 2 minutos, mientras muestra en pantalla tarifas estimadas basadas en tabuladores propios.
+* **Conclusión:** En México, las aseguradoras no tienen APIs públicas abiertas de GMM para agentes independientes; los comparadores operan como captadores masivos de prospectos con algoritmos de estimación interna.
+
+#### 2. Ingeniería Inversa del Motor de Vida de AXA México (`cotizadorvida.mx`)
+* **Fuente:** Del documento `URL_Portal_Distribución.2 2.pdf`, se extrajo el enlace oficial al **Cotizador Vida Individual (Nuevo)** (`https://www.cotizadorvida.mx/`).
+* **Descubrimiento Actuarial:** La aplicación consulta directamente la API oficial de tarificación actuarial: `https://api.cotizadorvida.mx`.
+  * Endpoints clave: `/find/getbasic`, `/find/garanteed`, `/find/kidsba`, `/find/prote-cancer`, `/banxico/udi`, `/banxico/usd`.
+* **Cifrado y Desencriptación de Tarifas:**
+  * Los factores devueltos por la API vienen cifrados con AES (OpenSSL EVP_BytesToKey con salting).
+  * El endpoint `/info/getCryptedPass` recibe `{ token: "hardcodedToken" }` y devuelve una cadena cifrada que, al desencriptarse con la frase semilla `axaenelmundo`, revela la **llave maestra de cálculo: `Axa2018`**.
+  * Cada factor de tarifa `Tarifa` se desencripta con AES-256-CBC usando dicha llave, produciendo el factor actuarial exacto por millar de suma asegurada (por ejemplo, para H38 No Fumador en VPL 10 años, el factor es exactamente `2.64`).
+* **Viabilidad de Integración:** Totalmente viable y 100% oficial. Las consultas pueden realizarse desde el servidor de Next.js (API route / Server Action) sin exponer ninguna clave ni login al usuario final.
+
+#### 3. Licencias y Costos Operativos
+* **Firebase:** Spark Plan (Gratuito) cubre hasta 20,000 escrituras y 50,000 lecturas diarias; no requiere pago.
+* **Bots/Servicios externos:** No se requiere pagar servicios de WhatsApp Business ni bots de pago; se utiliza la infraestructura nativa de Next.js, Nodemailer y enlaces directos `wa.me` / Web Share API.
+* **Blindaje:** Para garantizar disponibilidad 24/7, se planifica un caché/fallback local de tabuladores por si los servidores de AXA entran en mantenimiento.
+
+---
+
+### Materiales Comerciales Generados
+
+1. **Presentación de Diapositivas (.pptx):**  
+   * Archivo: `c:\Users\ENRIQ\O SANCHEZ SEGUROS\Propuesta_Cotizador_Digital_AXA_Oscar_Sanchez.pptx`
+   * Formato: PowerPoint de 6 diapositivas con tema *Corporate Blue*.
+   * Contenido: Situación actual vs. nueva propuesta, cómo funciona el motor, blindaje de seguridad, beneficios comerciales y próximos pasos.
+
+2. **Propuesta Formal Ejecutiva en PDF (2 páginas):**  
+   * Archivo: `c:\Users\ENRIQ\O SANCHEZ SEGUROS\Propuesta_Cotizador_Digital_O_Sanchez_Seguros.pdf`
+   * Diseño: Generado con ReportLab, paleta oficial de marca (Navy `#202F71`, Rojo `#D32020`), logotipo oficial y tipografía institucional.
+   * Contenido:
+     * Diagnóstico del cuello de botella actual (pérdida de prospectos en noches/fines de semana).
+     * Solución tecnológica: cotizaciones en menos de 2 segundos.
+     * Blindaje y seguridad de credenciales.
+     * Tabla comparativa de rendimiento.
+     * **Esquema de Inversión:** Implementación incluida en el proyecto integral y **Suscripción de Infraestructura de API & Conector Actuarial de $600.00 MXN mensuales**.
+     * Bloque formal de aceptación y firmas (Oscar Sánchez y Enrique Valenzuela).
+
+3. **Documento Markdown de Referencia:**  
+   * Archivo: `Propuesta_Estrategica_Cotizador_Oscar_Sanchez.md` (guardado en el directorio de artefactos de la sesión).
+
+---
+
+### Estado Actual del Proyecto
+* **Estatus:** En espera de que el cliente **Oscar Sánchez** revise y apruebe la propuesta formal en PDF.
+* **Próximos pasos una vez aprobado:**
+  1. Diseñar el componente interactivo del cotizador de Vida en Next.js (`LifeQuoter.tsx`).
+  2. Implementar la API route interna `/api/cotizador-vida` con conexión actuarial y desencriptación en servidor.
+  3. Probar la captura automática en Firestore y el envío pre-llenado a WhatsApp.
+  4. Desplegar en producción en `osanchezseguros.com`.
+
+---
+
 *Este archivo debe mantenerse actualizado cada vez que se hagan cambios significativos al proyecto.*
+
 
