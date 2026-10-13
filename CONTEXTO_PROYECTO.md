@@ -1453,7 +1453,13 @@ Añadir el banner promocional "Hasta 12 Meses Sin Intereses" posicionado directa
 #### 4. Nueva Página y Navegación
 * **Página dedicada:** `/cotizador` (`src/app/(marketing)/cotizador/page.tsx` y `layout.tsx`).
 * **Sitemap:** Agregada `/cotizador` con prioridad `0.95`.
-* **Navegación:** Enlace "Cotizador Online" en navbar (`constants.ts`), y botón "Cotizar en Línea 24/7" en el Hero de la portada y en el `PromoBanner`.
+* **Navegación:** Enlace "Cotizador Online" en navbar (`constants.ts`), y botón "Cotizar en Línea 24/7" en el Hero de la portada.
+* **Limpieza de Header:** Retiro del banner temporal obsoleto de agosto de 2026 (`PromoBanner.tsx` desvinculado de `layout.tsx`), restableciendo la vista limpia original del portal.
+
+#### 5. Verificación de Funcionamiento en Producción (100% Operativo)
+* **API End-to-End Test:** Probado exitosamente contra `https://www.osanchezseguros.com/api/cotizador`.
+* **Lead Capturado en Firestore:** Generó registro real con ID de prueba en Firestore (`leads`), historial (`history`) y notificación por correo a `admon@osanchezseguros.com`.
+* **Cálculo Actuarial:** Devuelve al instante los 3 planes de AXA Flex Plus con desglose anual y a 12 MSI, ajuste dinámico por código postal en cualquier estado de la República Mexicana, y enlaces pre-configurados de WhatsApp directo al asesor.
 
 ---
 
