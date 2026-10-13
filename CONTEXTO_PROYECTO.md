@@ -1442,9 +1442,9 @@ Añadir el banner promocional "Hasta 12 Meses Sin Intereses" posicionado directa
 #### 3. Componente Interactivo Stepper (`src/components/quoter/NationalQuoter.tsx`)
 * Stepper de 5 pasos con diseño premium, barra de progreso y microanimaciones.
 * Paso 1: Selección de integrantes con tarjetas visuales.
-* Paso 2: Sliders y selectores de edad y sexo con soporte para cónyuge e hijos.
+* Paso 2: Selectores de edad mediante input numérico directo y botones de incremento/decremento (`+` y `−`) para titular, cónyuge e hijos, eliminando barras deslizantes confusas.
 * Paso 3: Input de C.P. con autodetección en vivo del estado y hospitales de su región.
-* Paso 4: Lead gate obligatorio para capturar Nombre, WhatsApp y Email antes de ver precios.
+* Paso 4: Lead gate obligatorio para capturar Nombre, WhatsApp y Email con **Verificación de Seguridad Anti-Robots (Captcha Matemático dinámico con recarga y campo Honeypot invisible)** validado en cliente y servidor (`/api/cotizador`).
 * Paso 5: Pantalla de resultados interactiva:
   * Switch entre pago Anual y "Hasta 12 Meses Sin Intereses".
   * Botones para cambiar el deducible y recalcular los 3 planes en tiempo real.

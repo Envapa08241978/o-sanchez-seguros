@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import {
   getStateFromZipCode,
@@ -29,6 +29,25 @@ export default function NationalQuoter() {
   const [phone, setPhone] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [privacyConsent, setPrivacyConsent] = useState<boolean>(true);
+
+  // Captcha & Anti-Robots
+  const [captchaChallenge, setCaptchaChallenge] = useState<{ num1: number; num2: number }>({
+    num1: 4,
+    num2: 3,
+  });
+  const [captchaInput, setCaptchaInput] = useState<string>("");
+  const [honeypot, setHoneypot] = useState<string>("");
+
+  const generateNewCaptcha = () => {
+    const n1 = Math.floor(Math.random() * 8) + 2; // 2 a 9
+    const n2 = Math.floor(Math.random() * 8) + 1; // 1 a 8
+    setCaptchaChallenge({ num1: n1, num2: n2 });
+    setCaptchaInput("");
+  };
+
+  useEffect(() => {
+    generateNewCaptcha();
+  }, []);
 
   // Status
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -87,6 +106,19 @@ export default function NationalQuoter() {
       return;
     }
 
+    if (honeypot.trim() !== "") {
+      setErrorMessage("Detección de bot activada.");
+      return;
+    }
+
+    const expectedCaptcha = captchaChallenge.num1 + captchaChallenge.num2;
+    if (!captchaInput.trim() || parseInt(captchaInput, 10) !== expectedCaptcha) {
+      setErrorMessage(
+        `Por favor resuelve la verificación de seguridad (${captchaChallenge.num1} + ${captchaChallenge.num2}) para continuar.`
+      );
+      return;
+    }
+
     setIsLoading(true);
     setErrorMessage("");
 
@@ -103,6 +135,9 @@ export default function NationalQuoter() {
         childrenAges: target === "familia" ? childrenAges : undefined,
         zipCode,
         deductible: selectedDeductible,
+        botField: honeypot.trim() || undefined,
+        captchaAnswer: parseInt(captchaInput, 10),
+        captchaQuestion: `${captchaChallenge.num1} + ${captchaChallenge.num2}`,
       };
 
       const res = await fetch("/api/cotizador", {
@@ -289,36 +324,62 @@ Me gustaría revisar los detalles y validar mi propuesta para contratación.`;
           <div className="max-w-xl mx-auto space-y-6 mb-8">
             {/* Titular */}
             <div className="bg-background rounded-2xl p-5 border border-border">
-              <label className="block text-xs font-bold text-brand uppercase tracking-wider mb-2">
+              <label className="block text-xs font-bold text-brand uppercase tracking-wider mb-3">
                 Titular de la Póliza
               </label>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 items-center">
                 <div>
-                  <label className="block text-xs text-muted mb-1">Edad ({titularAge} años)</label>
-                  <input
-                    type="range"
-                    min={18}
-                    max={75}
-                    value={titularAge}
-                    onChange={(e) => setTitularAge(parseInt(e.target.value, 10))}
-                    className="w-full accent-accent cursor-pointer"
-                  />
-                  <div className="flex justify-between text-[11px] text-muted mt-1">
-                    <span>18 años</span>
-                    <span className="font-bold text-brand">{titularAge} años</span>
-                    <span>75 años</span>
+                  <label className="block text-xs font-semibold text-brand mb-1.5">
+                    Edad del Titular
+                  </label>
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setTitularAge((prev) => Math.max(18, (prev || 18) - 1))}
+                      className="w-12 h-12 rounded-xl bg-white border-2 border-border hover:border-brand hover:bg-gray-50 flex items-center justify-center text-2xl font-bold text-brand shadow-sm transition-all active:scale-95 shrink-0 select-none"
+                      aria-label="Disminuir edad del titular"
+                    >
+                      −
+                    </button>
+                    <div className="relative flex-1">
+                      <input
+                        type="number"
+                        min={18}
+                        max={85}
+                        value={titularAge === 0 ? "" : titularAge}
+                        onChange={(e) => {
+                          const val = e.target.value === "" ? 0 : parseInt(e.target.value, 10);
+                          if (!isNaN(val)) setTitularAge(Math.min(99, Math.max(0, val)));
+                        }}
+                        onBlur={() => {
+                          if (!titularAge || titularAge < 18) setTitularAge(18);
+                          else if (titularAge > 85) setTitularAge(85);
+                        }}
+                        placeholder="18"
+                        className="w-full h-12 text-center text-2xl font-extrabold text-brand bg-white border-2 border-border focus:border-brand rounded-xl focus:outline-none shadow-inner"
+                      />
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setTitularAge((prev) => Math.min(85, (prev || 18) + 1))}
+                      className="w-12 h-12 rounded-xl bg-white border-2 border-border hover:border-brand hover:bg-gray-50 flex items-center justify-center text-2xl font-bold text-brand shadow-sm transition-all active:scale-95 shrink-0 select-none"
+                      aria-label="Aumentar edad del titular"
+                    >
+                      +
+                    </button>
                   </div>
+                  <span className="block text-[11px] text-muted text-center mt-1">Escribe tu edad o usa los botones (18 a 85)</span>
                 </div>
 
                 <div>
-                  <label className="block text-xs text-muted mb-1">Sexo</label>
+                  <label className="block text-xs font-semibold text-brand mb-1.5">Sexo</label>
                   <div className="flex gap-2">
                     <button
                       type="button"
                       onClick={() => setTitularGender("H")}
-                      className={`flex-1 py-2 px-3 rounded-xl border text-sm font-semibold transition-all ${
+                      className={`flex-1 h-12 px-3 rounded-xl border text-sm font-semibold transition-all flex items-center justify-center gap-1.5 ${
                         titularGender === "H"
-                          ? "bg-brand text-white border-brand"
+                          ? "bg-brand text-white border-brand shadow-md"
                           : "bg-white text-brand border-border hover:bg-gray-50"
                       }`}
                     >
@@ -327,9 +388,9 @@ Me gustaría revisar los detalles y validar mi propuesta para contratación.`;
                     <button
                       type="button"
                       onClick={() => setTitularGender("M")}
-                      className={`flex-1 py-2 px-3 rounded-xl border text-sm font-semibold transition-all ${
+                      className={`flex-1 h-12 px-3 rounded-xl border text-sm font-semibold transition-all flex items-center justify-center gap-1.5 ${
                         titularGender === "M"
-                          ? "bg-brand text-white border-brand"
+                          ? "bg-brand text-white border-brand shadow-md"
                           : "bg-white text-brand border-border hover:bg-gray-50"
                       }`}
                     >
@@ -343,36 +404,62 @@ Me gustaría revisar los detalles y validar mi propuesta para contratación.`;
             {/* Pareja (si aplica) */}
             {(target === "pareja" || target === "familia") && (
               <div className="bg-background rounded-2xl p-5 border border-border">
-                <label className="block text-xs font-bold text-brand uppercase tracking-wider mb-2">
+                <label className="block text-xs font-bold text-brand uppercase tracking-wider mb-3">
                   Cónyuge / Pareja
                 </label>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 items-center">
                   <div>
-                    <label className="block text-xs text-muted mb-1">Edad ({partnerAge} años)</label>
-                    <input
-                      type="range"
-                      min={18}
-                      max={75}
-                      value={partnerAge}
-                      onChange={(e) => setPartnerAge(parseInt(e.target.value, 10))}
-                      className="w-full accent-accent cursor-pointer"
-                    />
-                    <div className="flex justify-between text-[11px] text-muted mt-1">
-                      <span>18 años</span>
-                      <span className="font-bold text-brand">{partnerAge} años</span>
-                      <span>75 años</span>
+                    <label className="block text-xs font-semibold text-brand mb-1.5">
+                      Edad de la Pareja
+                    </label>
+                    <div className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setPartnerAge((prev) => Math.max(18, (prev || 18) - 1))}
+                        className="w-12 h-12 rounded-xl bg-white border-2 border-border hover:border-brand hover:bg-gray-50 flex items-center justify-center text-2xl font-bold text-brand shadow-sm transition-all active:scale-95 shrink-0 select-none"
+                        aria-label="Disminuir edad de la pareja"
+                      >
+                        −
+                      </button>
+                      <div className="relative flex-1">
+                        <input
+                          type="number"
+                          min={18}
+                          max={85}
+                          value={partnerAge === 0 ? "" : partnerAge}
+                          onChange={(e) => {
+                            const val = e.target.value === "" ? 0 : parseInt(e.target.value, 10);
+                            if (!isNaN(val)) setPartnerAge(Math.min(99, Math.max(0, val)));
+                          }}
+                          onBlur={() => {
+                            if (!partnerAge || partnerAge < 18) setPartnerAge(18);
+                            else if (partnerAge > 85) setPartnerAge(85);
+                          }}
+                          placeholder="18"
+                          className="w-full h-12 text-center text-2xl font-extrabold text-brand bg-white border-2 border-border focus:border-brand rounded-xl focus:outline-none shadow-inner"
+                        />
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => setPartnerAge((prev) => Math.min(85, (prev || 18) + 1))}
+                        className="w-12 h-12 rounded-xl bg-white border-2 border-border hover:border-brand hover:bg-gray-50 flex items-center justify-center text-2xl font-bold text-brand shadow-sm transition-all active:scale-95 shrink-0 select-none"
+                        aria-label="Aumentar edad de la pareja"
+                      >
+                        +
+                      </button>
                     </div>
+                    <span className="block text-[11px] text-muted text-center mt-1">Escribe su edad o usa los botones (18 a 85)</span>
                   </div>
 
                   <div>
-                    <label className="block text-xs text-muted mb-1">Sexo</label>
+                    <label className="block text-xs font-semibold text-brand mb-1.5">Sexo</label>
                     <div className="flex gap-2">
                       <button
                         type="button"
                         onClick={() => setPartnerGender("H")}
-                        className={`flex-1 py-2 px-3 rounded-xl border text-sm font-semibold transition-all ${
+                        className={`flex-1 h-12 px-3 rounded-xl border text-sm font-semibold transition-all flex items-center justify-center gap-1.5 ${
                           partnerGender === "H"
-                            ? "bg-brand text-white border-brand"
+                            ? "bg-brand text-white border-brand shadow-md"
                             : "bg-white text-brand border-border hover:bg-gray-50"
                         }`}
                       >
@@ -381,9 +468,9 @@ Me gustaría revisar los detalles y validar mi propuesta para contratación.`;
                       <button
                         type="button"
                         onClick={() => setPartnerGender("M")}
-                        className={`flex-1 py-2 px-3 rounded-xl border text-sm font-semibold transition-all ${
+                        className={`flex-1 h-12 px-3 rounded-xl border text-sm font-semibold transition-all flex items-center justify-center gap-1.5 ${
                           partnerGender === "M"
-                            ? "bg-brand text-white border-brand"
+                            ? "bg-brand text-white border-brand shadow-md"
                             : "bg-white text-brand border-border hover:bg-gray-50"
                         }`}
                       >
@@ -418,21 +505,40 @@ Me gustaría revisar los detalles y validar mi propuesta para contratación.`;
                 ) : (
                   <div className="space-y-3">
                     {childrenAges.map((age, idx) => (
-                      <div key={idx} className="flex items-center gap-3 bg-white p-3 rounded-xl border border-border">
-                        <span className="text-xs font-bold text-brand w-16">Hijo #{idx + 1}:</span>
-                        <input
-                          type="number"
-                          min={0}
-                          max={25}
-                          value={age}
-                          onChange={(e) => handleChildAgeChange(idx, parseInt(e.target.value, 10) || 0)}
-                          className="w-20 px-2 py-1 text-sm border border-border rounded-lg text-center font-bold text-brand"
-                        />
-                        <span className="text-xs text-muted">años</span>
+                      <div key={idx} className="flex items-center justify-between gap-3 bg-white p-3 rounded-xl border border-border">
+                        <span className="text-xs font-bold text-brand w-20">Hijo #{idx + 1}:</span>
+                        <div className="flex items-center gap-1.5">
+                          <button
+                            type="button"
+                            onClick={() => handleChildAgeChange(idx, Math.max(0, age - 1))}
+                            className="w-9 h-9 rounded-lg bg-gray-100 hover:bg-gray-200 border border-border font-bold text-brand flex items-center justify-center text-lg active:scale-95 select-none"
+                            aria-label={`Disminuir edad del hijo ${idx + 1}`}
+                          >
+                            −
+                          </button>
+                          <input
+                            type="number"
+                            min={0}
+                            max={25}
+                            value={age === 0 ? "" : age}
+                            onChange={(e) => handleChildAgeChange(idx, e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0)}
+                            className="w-16 h-9 text-center font-bold text-brand border-2 border-border focus:border-brand rounded-lg text-base focus:outline-none"
+                            placeholder="0"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => handleChildAgeChange(idx, Math.min(25, age + 1))}
+                            className="w-9 h-9 rounded-lg bg-gray-100 hover:bg-gray-200 border border-border font-bold text-brand flex items-center justify-center text-lg active:scale-95 select-none"
+                            aria-label={`Aumentar edad del hijo ${idx + 1}`}
+                          >
+                            +
+                          </button>
+                          <span className="text-xs text-muted ml-1">años</span>
+                        </div>
                         <button
                           type="button"
                           onClick={() => handleRemoveChild(idx)}
-                          className="ml-auto text-xs text-red-500 hover:text-red-700 font-bold px-2 py-1"
+                          className="text-xs text-red-500 hover:text-red-700 font-bold px-2 py-1"
                         >
                           ✕ Quitar
                         </button>
@@ -603,6 +709,70 @@ Me gustaría revisar los detalles y validar mi propuesta para contratación.`;
                 className="w-full px-4 py-3 bg-background border border-border focus:border-brand rounded-xl focus:outline-none text-brand text-sm"
               />
             </div>
+
+            {/* Verificación de Seguridad Anti-Robots (Captcha) */}
+            <div className="p-4 bg-background border-2 border-border rounded-2xl">
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-2">
+                  <span className="text-base">🛡️</span>
+                  <span className="text-xs font-bold text-brand uppercase tracking-wider">
+                    Verificación de Seguridad
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  onClick={generateNewCaptcha}
+                  className="text-xs text-accent hover:underline flex items-center gap-1 font-semibold transition-colors"
+                  title="Generar nueva operación matemática"
+                >
+                  🔄 Cambiar suma
+                </button>
+              </div>
+              <p className="text-xs text-muted mb-3">
+                Para evitar robots automatizados, resuelve esta sencilla suma:
+              </p>
+              <div className="flex items-center gap-3">
+                <div className="px-4 py-2 bg-brand text-white font-mono font-extrabold text-base rounded-xl tracking-wider select-none shadow-sm shrink-0">
+                  ¿Cuánto es {captchaChallenge.num1} + {captchaChallenge.num2}?
+                </div>
+                <div className="relative flex-1 max-w-[130px]">
+                  <input
+                    type="number"
+                    required
+                    value={captchaInput}
+                    onChange={(e) => {
+                      setCaptchaInput(e.target.value);
+                      if (errorMessage) setErrorMessage("");
+                    }}
+                    placeholder="Respuesta"
+                    className={`w-full py-2 px-3 text-center text-lg font-bold text-brand bg-white border-2 rounded-xl focus:outline-none transition-all ${
+                      captchaInput !== "" &&
+                      parseInt(captchaInput, 10) === captchaChallenge.num1 + captchaChallenge.num2
+                        ? "border-green-500 bg-green-50/50"
+                        : "border-border focus:border-brand"
+                    }`}
+                  />
+                </div>
+                {captchaInput !== "" &&
+                  parseInt(captchaInput, 10) === captchaChallenge.num1 + captchaChallenge.num2 && (
+                    <span className="text-green-600 font-bold text-sm shrink-0 flex items-center gap-1">
+                      ✓ Correcto
+                    </span>
+                  )}
+              </div>
+            </div>
+
+            {/* Honeypot invisible para atrapar bots */}
+            <input
+              type="text"
+              name="botValidationField"
+              tabIndex={-1}
+              autoComplete="off"
+              value={honeypot}
+              onChange={(e) => setHoneypot(e.target.value)}
+              className="hidden pointer-events-none opacity-0 h-0 w-0 absolute"
+              aria-hidden="true"
+            />
 
             <div className="pt-2">
               <label className="flex items-start gap-2.5 cursor-pointer text-xs text-muted">

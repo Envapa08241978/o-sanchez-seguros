@@ -18,12 +18,36 @@ const quoterRequestSchema = z.object({
   childrenAges: z.array(z.number().min(0).max(30)).optional(),
   zipCode: z.string().min(4).max(10),
   deductible: z.number().default(25000),
+  botField: z.string().optional(),
+  captchaAnswer: z.number().optional(),
+  captchaQuestion: z.string().optional(),
 });
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
     const validatedData = quoterRequestSchema.parse(body);
+
+    // Validación Anti-Robots (Honeypot + Captcha)
+    if (validatedData.botField && validatedData.botField.trim() !== "") {
+      return NextResponse.json(
+        { success: false, error: "Detección de bot activada." },
+        { status: 400 }
+      );
+    }
+
+    if (validatedData.captchaQuestion && validatedData.captchaAnswer !== undefined) {
+      const parts = validatedData.captchaQuestion.split("+").map((s) => parseInt(s.trim(), 10));
+      if (parts.length === 2 && !isNaN(parts[0]) && !isNaN(parts[1])) {
+        const expected = parts[0] + parts[1];
+        if (validatedData.captchaAnswer !== expected) {
+          return NextResponse.json(
+            { success: false, error: "Respuesta de verificación de seguridad incorrecta." },
+            { status: 400 }
+          );
+        }
+      }
+    }
 
     // 1. Calcular cotización actuarial nacional
     const calculation = calculateNationalQuote({
