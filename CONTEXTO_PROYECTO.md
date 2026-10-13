@@ -1386,6 +1386,77 @@ Añadir el banner promocional "Hasta 12 Meses Sin Intereses" posicionado directa
 
 ---
 
+## Sesión: Análisis de Kalmy.mx, Módulo COTAXA004 e Implementación del Cotizador Nacional (12 octubre 2026)
+
+### Objetivos de la sesión
+1. Analizar integralmente la plataforma competidora **`https://kalmy.mx`** y su cotizador **`https://cotiza.kalmy.mx`** (arquitectura de 5 pasos, APIs, backend AWS Lambda y convenio con Mapfre).
+2. Investigar el portal oficial de cotización de salud de AXA México compartido por el cliente (`Plataforma Operativa Salud` en `axasalud-ext.visualtime.cl` vía `identityserver.axa.com.mx`).
+3. Diseñar e implementar un **Cotizador Digital Nacional de Gastos Médicos Mayores (GMM)** en `osanchezseguros.com` optimizado para vender pólizas en **toda la República Mexicana**.
+
+---
+
+### Hallazgos Técnicos y Análisis
+
+#### 1. Ingeniería Inversa de Kalmy (`cotiza.kalmy.mx`)
+* **Frontend:** Next.js (App Router) en Vercel con Tailwind CSS.
+* **Flujo Stepper:** 
+  * Paso 1: ¿A quién proteges? (`solo`, `pareja`, `familia`, `padres`).
+  * Paso 2: Género y Edad.
+  * Paso 3: Código Postal.
+  * Paso 4: Cuestionario de salud.
+  * Paso 5: Lead Gate (Nombre, Celular/WhatsApp, Email).
+  * Paso 6/7: Comparativa de planes de aseguradoras con deducibles y coberturas.
+* **Backend:** Llama a su API interna `POST /api/quotes` que consulta un motor en **AWS Lambda** (`lambdaSuggestedInsurancePlans.quotes`), calculando tarifas por edad y zona médica en milisegundos.
+* **Integración B2B Mapfre:** Cuentan con WebServices para validación de emisión directa con Mapfre (`/api/quotes/emitt-validation`), mientras que para el resto de aseguradoras el lead se transfiere a un asesor comercial.
+
+#### 2. Auditoría del Portal de Agentes de AXA (`COTAXA004`)
+* **Portal:** `axasalud-ext.visualtime.cl/fasi` (VisualTime FASI por In Motion).
+* **Módulo Oficial de Salud:** `COTAXA004Popup.html` y `COTAXA004.js` (*Cotizador Gastos Médicos Mayores - Oferta de Planes*).
+* **Autenticación:** Servidor corporativo `identityserver.axa.com.mx` con protocolo OAuth 2.0 PKCE y **Captcha anti-robots**.
+* **Decisión de Seguridad:** Se descartó el uso de bots de auto-login con credenciales personales de Oscar en producción, ya que violaría los términos de la aseguradora y provocaría el bloqueo de su cuenta de agente (`AGT00647196`).
+* **Aprovechamiento Técnico:** Se replicó la lógica actuarial y la estructura de los 3 planes de AXA Flex Plus (*Esencial, Confort y Diamante Elite*) con sus gamas hospitalarias, deducibles y tabuladores.
+
+---
+
+### Implementación Realizada en `osanchezseguros.com`
+
+#### 1. Motor Actuarial y Geográfico Nacional (`src/lib/calculators/nationalQuoterEngine.ts`)
+* **Mapeo de los 32 Estados de México por Código Postal:** Detecta en tiempo real la entidad federativa y la clasifica en 4 zonas de costo hospitalario:
+  * Zona 1 (Metropolitana Top): CDMX y Estado de México (Factor 1.25x / 1.22x).
+  * Zona 2 (Noreste y Occidente): Nuevo León (Monterrey), Jalisco (Guadalajara), Querétaro, Puebla.
+  * Zona 3 (Noroeste y Centros Turísticos): Sonora (Hermosillo), Baja California, Sinaloa, Chihuahua, Quintana Roo, Yucatán.
+  * Zona 4 (República Mexicana Resto): Veracruz, Tabasco, Chiapas, Oaxaca, Michoacán, etc.
+* **Cálculo Actuarial por Integrante:** Curva de edad por rangos (0-17, 18-29, 30-39, etc.), factor de género, factor de deducible ($15k, $25k, $35k, $50k) y descuento por paquete familiar (hasta 12%).
+* **3 Planes Oficiales AXA Flex Plus:**
+  1. *Flex Esencial:* Red media regional.
+  2. *Flex Confort (Recomendado):* Red amplia en su estado con hospitales privados líderes.
+  3. *Flex Diamante Elite (VIP Nacional/Internacional):* Hospitales ABC, Médica Sur, Ángeles, CIMA Hermosillo, San José, Puerta de Hierro, Zambrano Hellion.
+
+#### 2. API Route de Cotización (`src/app/api/cotizador/route.ts`)
+* Valida parámetros con Zod.
+* Ejecuta el cálculo actuarial nacional en milisegundos.
+* Registra el lead en Firestore en la colección `leads` con `source: "Cotizador Web Nacional"`, ciudad, estado, C.P., estatus `new`, prioridad `hot` y score 85.
+* Auto-agrega registro al historial del CRM (`leads/{id}/history`).
+* Dispara alerta por correo electrónico a `admon@osanchezseguros.com` con el desglose completo y botón directo para abrir conversación en WhatsApp.
+
+#### 3. Componente Interactivo Stepper (`src/components/quoter/NationalQuoter.tsx`)
+* Stepper de 5 pasos con diseño premium, barra de progreso y microanimaciones.
+* Paso 1: Selección de integrantes con tarjetas visuales.
+* Paso 2: Sliders y selectores de edad y sexo con soporte para cónyuge e hijos.
+* Paso 3: Input de C.P. con autodetección en vivo del estado y hospitales de su región.
+* Paso 4: Lead gate obligatorio para capturar Nombre, WhatsApp y Email antes de ver precios.
+* Paso 5: Pantalla de resultados interactiva:
+  * Switch entre pago Anual y "Hasta 12 Meses Sin Intereses".
+  * Botones para cambiar el deducible y recalcular los 3 planes en tiempo real.
+  * Botón verde por cada plan que abre WhatsApp directo con Oscar Sánchez (`526621822481`) con mensaje contextualizado.
+
+#### 4. Nueva Página y Navegación
+* **Página dedicada:** `/cotizador` (`src/app/(marketing)/cotizador/page.tsx` y `layout.tsx`).
+* **Sitemap:** Agregada `/cotizador` con prioridad `0.95`.
+* **Navegación:** Enlace "Cotizador Online" en navbar (`constants.ts`), y botón "Cotizar en Línea 24/7" en el Hero de la portada y en el `PromoBanner`.
+
+---
+
 *Este archivo debe mantenerse actualizado cada vez que se hagan cambios significativos al proyecto.*
 
 

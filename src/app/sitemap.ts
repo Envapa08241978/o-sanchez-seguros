@@ -6,12 +6,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
 
   return [
-    // === Homepage ===
+    // === Homepage & Cotizador ===
     {
       url: baseUrl,
       lastModified: now,
       changeFrequency: "weekly",
       priority: 1.0,
+    },
+    {
+      url: `${baseUrl}/cotizador`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.95,
     },
 
     // === Páginas de Seguros ===

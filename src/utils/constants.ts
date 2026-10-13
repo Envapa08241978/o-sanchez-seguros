@@ -155,6 +155,7 @@ export const NAVIGATION: { main: NavItem[]; legal: NavItem[] } = {
         icon: p.icon,
       })),
     },
+    { label: "Cotizador Online", href: "/cotizador" },
     { label: "Red Hospitalaria", href: "/red-hospitalaria" },
     { label: "Nosotros", href: "/nosotros" },
     { label: "Testimonios", href: "/testimonios" },

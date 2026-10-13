@@ -94,7 +94,7 @@ export default function Header() {
           {/* CTA + Mobile Toggle */}
           <div className="flex items-center gap-3">
             <Link
-              href="/contacto"
+              href="/cotizador"
               className="hidden md:inline-flex items-center gap-2 px-5 py-2.5 bg-accent text-white text-sm font-semibold rounded-full hover:bg-accent-dark transition-all duration-200 shadow-md hover:shadow-lg hover:-translate-y-0.5"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -159,7 +159,7 @@ export default function Header() {
             )}
             <div className="pt-3 border-t border-border">
               <Link
-                href="/contacto"
+                href="/cotizador"
                 className="flex items-center justify-center gap-2 w-full px-5 py-3 bg-accent text-white text-sm font-semibold rounded-xl hover:bg-accent-dark transition-colors"
                 onClick={() => setMobileOpen(false)}
               >

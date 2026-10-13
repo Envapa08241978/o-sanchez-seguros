@@ -14,7 +14,7 @@ export default function PromoBanner() {
     <div className="w-full bg-[#182458] border-b border-white/10 shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 md:py-3 flex justify-center items-center">
         <Link
-          href="/contacto"
+          href="/cotizador"
           aria-label="Promoción hasta 12 meses sin intereses - Cotizar ahora"
           className="block w-full max-w-5xl overflow-hidden rounded-xl shadow-lg hover:shadow-2xl hover:scale-[1.005] transition-all duration-300 group relative"
         >
