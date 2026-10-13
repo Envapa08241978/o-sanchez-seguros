@@ -1461,6 +1461,17 @@ Añadir el banner promocional "Hasta 12 Meses Sin Intereses" posicionado directa
 * **Lead Capturado en Firestore:** Generó registro real con ID de prueba en Firestore (`leads`), historial (`history`) y notificación por correo a `admon@osanchezseguros.com`.
 * **Cálculo Actuarial:** Devuelve al instante los 3 planes de AXA Flex Plus con desglose anual y a 12 MSI, ajuste dinámico por código postal en cualquier estado de la República Mexicana, y enlaces pre-configurados de WhatsApp directo al asesor.
 
+#### 6. Presentación Ejecutiva Generada para Oscar Sánchez (.pdf)
+* **Archivo generado:** `c:\Users\ENRIQ\O SANCHEZ SEGUROS\Presentacion_Cotizador_Nacional_Oscar_Sanchez.pdf`
+* **Formato:** Documento landscape corporativo de 6 diapositivas de alta resolución, diseñado con ReportLab.
+* **Contenido clave cubierto:**
+  1. Portada ejecutiva con identificación de agente y alcance nacional.
+  2. Resumen de mejoras (retiro del banner, nuevos controles de edad `+`/`−`, captcha anti-robots, cobertura en 32 estados).
+  3. Guía paso a paso de cómo cotiza el prospecto y cierre inmediato por WhatsApp.
+  4. Instrucciones y credenciales para el panel de control CRM (`https://www.osanchezseguros.com/admin` con contraseña `AdminSanchez123`).
+  5. Blindaje de ciberseguridad explicando por qué sus contraseñas personales de agente jamás se subieron a internet y su cédula CNSF está 100% protegida.
+  6. Estrategia comercial y recomendaciones para acelerar cierres de venta.
+
 ---
 
 *Este archivo debe mantenerse actualizado cada vez que se hagan cambios significativos al proyecto.*
