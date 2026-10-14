@@ -16,8 +16,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       url: `${baseUrl}/cotizador`,
       lastModified: now,
-      changeFrequency: "weekly",
-      priority: 0.95,
+      changeFrequency: "daily",
+      priority: 1.0,
     },
 
     // === Páginas de Seguros ===

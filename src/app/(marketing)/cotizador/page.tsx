@@ -1,5 +1,5 @@
 import NationalQuoter from "@/components/quoter/NationalQuoter";
-import JsonLd from "@/components/shared/JsonLd";
+import { PageJsonLd } from "@/components/shared/JsonLd";
 
 const COTIZADOR_FAQS = [
   {
@@ -27,6 +27,40 @@ const COTIZADOR_FAQS = [
 export default function CotizadorPage() {
   return (
     <div className="min-h-screen bg-background">
+      {/* Schemas SEO para Google (FAQPage + Breadcrumbs + WebApplication) */}
+      <PageJsonLd
+        breadcrumbs={[
+          { name: "Inicio", url: "https://www.osanchezseguros.com" },
+          { name: "Cotizador Online", url: "https://www.osanchezseguros.com/cotizador" },
+        ]}
+        faq={COTIZADOR_FAQS}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            name: "Cotizador Digital de Gastos Médicos Mayores | OSanchez Seguros",
+            url: "https://www.osanchezseguros.com/cotizador",
+            applicationCategory: "FinanceApplication",
+            operatingSystem: "All",
+            browserRequirements: "Requires JavaScript. Requires HTML5.",
+            offers: {
+              "@type": "Offer",
+              price: "0",
+              priceCurrency: "MXN",
+            },
+            description:
+              "Calcula en menos de 2 minutos tu presupuesto personalizado de Gastos Médicos Mayores con tabuladores de AXA Seguros y la mejor red hospitalaria privada de México.",
+            provider: {
+              "@type": "InsuranceAgency",
+              name: "OSanchez Seguros",
+              url: "https://www.osanchezseguros.com",
+            },
+          }),
+        }}
+      />
       {/* Hero Header */}
       <section className="relative gradient-hero py-16 sm:py-20 text-white overflow-hidden">
         <div className="absolute inset-0 gradient-radial-gold opacity-40 pointer-events-none" />
