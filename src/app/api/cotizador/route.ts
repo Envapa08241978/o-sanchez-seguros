@@ -17,7 +17,7 @@ const quoterRequestSchema = z.object({
   partnerGender: z.enum(["H", "M"]).optional(),
   childrenAges: z.array(z.number().min(0).max(30)).optional(),
   zipCode: z.string().min(4).max(10),
-  deductible: z.number().default(25000),
+  deductible: z.number().default(27500),
   botField: z.string().optional(),
   captchaAnswer: z.number().optional(),
   captchaQuestion: z.string().optional(),
@@ -77,7 +77,7 @@ export async function POST(req: Request) {
       state: calculation.state.name,
       zipCode: validatedData.zipCode,
       privacyConsent: true,
-      notes: `Cotización GMM en línea para ${calculation.membersSummary}. Estado: ${calculation.state.name} (${calculation.state.zoneName}). Plan Confort estimado: $${calculation.plans[1].annualTotal.toLocaleString("es-MX")} MXN/año ($${calculation.plans[1].monthly12MSI.toLocaleString("es-MX")} MSI). Deducible seleccionado: $${validatedData.deductible.toLocaleString("es-MX")}.`,
+      notes: `Cotización GMM en línea para ${calculation.membersSummary}. Estado: ${calculation.state.name} (${calculation.state.zoneName}). Plan Confort estimado: $${calculation.plans[1].annualTotal.toLocaleString("es-MX")} MXN/año ($${calculation.plans[1].monthlyPayment.toLocaleString("es-MX")}/mes mensualidad financiada 9%). Deducible seleccionado: $${validatedData.deductible.toLocaleString("es-MX")}. Opciones de 3, 5 y 6 MSI.`,
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
       privacyConsentDate: serverTimestamp(),
@@ -112,9 +112,9 @@ export async function POST(req: Request) {
 
           <h3 style="font-size: 15px; color: #202F71; border-bottom: 2px solid #f1f5f9; padding-bottom: 6px;">Presupuestos Estimados Mostrados en Pantalla:</h3>
           <ul style="font-size: 13px; line-height: 1.6; color: #475569;">
-            <li><strong>Flex Esencial:</strong> $${calculation.plans[0].annualTotal.toLocaleString("es-MX")} MXN/año ($${calculation.plans[0].monthly12MSI.toLocaleString("es-MX")}/mes 12 MSI)</li>
-            <li><strong>Flex Confort (Recomendado):</strong> $${calculation.plans[1].annualTotal.toLocaleString("es-MX")} MXN/año ($${calculation.plans[1].monthly12MSI.toLocaleString("es-MX")}/mes 12 MSI)</li>
-            <li><strong>Flex Diamante Elite VIP:</strong> $${calculation.plans[2].annualTotal.toLocaleString("es-MX")} MXN/año ($${calculation.plans[2].monthly12MSI.toLocaleString("es-MX")}/mes 12 MSI)</li>
+            <li><strong>Flex Esencial (${calculation.plans[0].hospitalLevel}):</strong> $${calculation.plans[0].annualTotal.toLocaleString("es-MX")} MXN/año ($${calculation.plans[0].monthlyPayment.toLocaleString("es-MX")}/mes mensualidad con factor 9%)</li>
+            <li><strong>Flex Confort (${calculation.plans[1].hospitalLevel} - Recomendado):</strong> $${calculation.plans[1].annualTotal.toLocaleString("es-MX")} MXN/año ($${calculation.plans[1].monthlyPayment.toLocaleString("es-MX")}/mes mensualidad con factor 9%)</li>
+            <li><strong>Flex Diamante Elite VIP (${calculation.plans[2].hospitalLevel}):</strong> $${calculation.plans[2].annualTotal.toLocaleString("es-MX")} MXN/año ($${calculation.plans[2].monthlyPayment.toLocaleString("es-MX")}/mes mensualidad con factor 9%)</li>
           </ul>
 
           <div style="margin-top: 24px; text-align: center;">

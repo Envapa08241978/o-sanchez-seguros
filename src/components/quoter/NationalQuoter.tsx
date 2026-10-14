@@ -21,8 +21,8 @@ export default function NationalQuoter() {
   const [partnerGender, setPartnerGender] = useState<"H" | "M">("M");
   const [childrenAges, setChildrenAges] = useState<number[]>([5]);
   const [zipCode, setZipCode] = useState<string>("83205"); // Hermosillo por defecto, editable
-  const [selectedDeductible, setSelectedDeductible] = useState<number>(25000);
-  const [paymentMode, setPaymentMode] = useState<"monthly" | "annual">("monthly");
+  const [selectedDeductible, setSelectedDeductible] = useState<number>(27500);
+  const [paymentMode, setPaymentMode] = useState<"annual" | "monthly">("annual");
 
   // Lead Gate inputs
   const [fullName, setFullName] = useState<string>("");
@@ -166,19 +166,20 @@ export default function NationalQuoter() {
     const cleanPhone = SITE_CONFIG.whatsapp;
     const priceText =
       paymentMode === "monthly"
-        ? `$${plan.monthly12MSI.toLocaleString("es-MX")} MXN/mes (12 MSI)`
-        : `$${plan.annualTotal.toLocaleString("es-MX")} MXN/año`;
+        ? `$${plan.monthlyPayment.toLocaleString("es-MX")} MXN/mes (+9% financiamiento)`
+        : `$${plan.annualTotal.toLocaleString("es-MX")} MXN/año (Pago Anual)`;
 
     const text = `Hola Oscar, coticé en línea en *osanchezseguros.com* para *${detectedState.name}* (C.P. ${zipCode}):
 
 🛡️ *Plan de Interés:* ${plan.name}
+🏥 *Red Médica:* ${plan.hospitalLevel}
 💰 *Presupuesto Estimado:* ${priceText}
-🏥 *Deducible:* $${selectedDeductible.toLocaleString("es-MX")} MXN
+💳 *Deducible:* $${selectedDeductible.toLocaleString("es-MX")} MXN
 👤 *Prospecto:* ${fullName}
 📞 *Teléfono:* ${phone}
 👥 *Integrantes:* ${calculationResult?.membersSummary || "1 persona"}
 
-Me gustaría revisar los detalles y validar mi propuesta para contratación.`;
+Me gustaría revisar los detalles, opciones de 3, 5 y 6 MSI y validar mi propuesta para contratación.`;
 
     return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(text)}`;
   };
@@ -848,19 +849,8 @@ Me gustaría revisar los detalles y validar mi propuesta para contratación.`;
                 </p>
               </div>
 
-              {/* Selector de Forma de Pago */}
+              {/* Selector de Forma de Pago: Primero Pago Anual y enseguida Pago Mensual */}
               <div className="flex items-center bg-background p-1.5 rounded-2xl border border-border self-start md:self-auto">
-                <button
-                  type="button"
-                  onClick={() => setPaymentMode("monthly")}
-                  className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
-                    paymentMode === "monthly"
-                      ? "bg-brand text-white shadow-md"
-                      : "text-muted hover:text-brand"
-                  }`}
-                >
-                  Hasta 12 MSI 💳
-                </button>
                 <button
                   type="button"
                   onClick={() => setPaymentMode("annual")}
@@ -872,6 +862,17 @@ Me gustaría revisar los detalles y validar mi propuesta para contratación.`;
                 >
                   Pago Anual
                 </button>
+                <button
+                  type="button"
+                  onClick={() => setPaymentMode("monthly")}
+                  className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+                    paymentMode === "monthly"
+                      ? "bg-brand text-white shadow-md"
+                      : "text-muted hover:text-brand"
+                  }`}
+                >
+                  Pago Mensual
+                </button>
               </div>
             </div>
 
@@ -880,7 +881,7 @@ Me gustaría revisar los detalles y validar mi propuesta para contratación.`;
               <span className="text-xs font-bold text-brand uppercase tracking-wider">
                 Ajustar Deducible:
               </span>
-              {[15000, 25000, 35000, 50000].map((ded) => (
+              {[20500, 27500, 39500, 56500].map((ded) => (
                 <button
                   key={ded}
                   type="button"
@@ -943,17 +944,21 @@ Me gustaría revisar los detalles y validar mi propuesta para contratación.`;
                     {/* Precio */}
                     <div className="bg-background rounded-2xl p-4 text-center my-4 border border-border">
                       <span className="text-[11px] font-bold text-muted uppercase block">
-                        {paymentMode === "monthly" ? "Desde (12 Meses Sin Intereses)" : "Costo Anual Total"}
+                        {paymentMode === "monthly" ? "Pago Mensual (+9% financiamiento)" : "Costo Anual Total"}
                       </span>
                       <div className="font-display text-3xl font-extrabold text-brand mt-1">
-                        ${(paymentMode === "monthly" ? plan.monthly12MSI : plan.annualTotal).toLocaleString("es-MX")}
+                        ${(paymentMode === "monthly" ? plan.monthlyPayment : plan.annualTotal).toLocaleString("es-MX")}
                         <span className="text-sm font-semibold text-muted">
                           {paymentMode === "monthly" ? " MXN/mes" : " MXN"}
                         </span>
                       </div>
-                      {paymentMode === "monthly" && (
+                      {paymentMode === "monthly" ? (
                         <span className="text-[11px] text-muted block mt-1">
-                          Equivalente a ${plan.annualTotal.toLocaleString("es-MX")} MXN anual
+                          Factor de incremento de 9% sobre pago anual entre 12
+                        </span>
+                      ) : (
+                        <span className="text-[11px] text-emerald-600 font-semibold block mt-1">
+                          ✓ Pago de contado o a 3, 5 y 6 MSI con tarjetas participantes
                         </span>
                       )}
                     </div>
@@ -975,7 +980,7 @@ Me gustaría revisar los detalles y validar mi propuesta para contratación.`;
                         <strong className="text-brand font-bold">10% (Tope $64,000)</strong>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-muted">Gama Hospitalaria:</span>
+                        <span className="text-muted">Red Médica:</span>
                         <strong className="text-brand font-bold">{plan.hospitalLevel}</strong>
                       </div>
                     </div>

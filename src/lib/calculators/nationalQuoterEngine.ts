@@ -12,7 +12,7 @@ export interface QuoterProfile {
   partnerGender?: "H" | "M";
   childrenAges?: number[];
   zipCode: string;
-  deductible: number; // e.g. 15000, 25000, 35000, 50000
+  deductible: number; // e.g. 20500, 27500, 39500, 56500
 }
 
 export interface StateInfo {
@@ -38,6 +38,7 @@ export interface CalculatedPlan {
   insuredSum: string;
   annualTotal: number;
   monthly12MSI: number;
+  monthlyPayment: number;
   savingsVsIndividual: number;
   highlights: string[];
 }
@@ -298,13 +299,13 @@ function calculateIndividualBasePremium(age: number, gender: "H" | "M"): number 
 // Multiplicador de deducible (a mayor deducible, menor prima)
 function getDeductibleMultiplier(deductible: number): number {
   switch (deductible) {
-    case 15000:
-      return 1.18;
-    case 25000:
+    case 20500:
+      return 1.15;
+    case 27500:
       return 1.00; // Estándar AXA Flex Plus
-    case 35000:
+    case 39500:
       return 0.88;
-    case 50000:
+    case 56500:
       return 0.76;
     default:
       return 1.00;
@@ -314,7 +315,7 @@ function getDeductibleMultiplier(deductible: number): number {
 // Función principal de cálculo de cotización nacional
 export function calculateNationalQuote(profile: QuoterProfile): QuoteCalculationResult {
   const state = getStateFromZipCode(profile.zipCode);
-  const deductibleMult = getDeductibleMultiplier(profile.deductible || 25000);
+  const deductibleMult = getDeductibleMultiplier(profile.deductible || 27500);
 
   // Recopilar integrantes
   const members: { age: number; gender: "H" | "M"; label: string }[] = [];
@@ -334,6 +335,9 @@ export function calculateNationalQuote(profile: QuoterProfile): QuoteCalculation
     });
   }
 
+  // Evaluar si hay personas de sexo femenino en la póliza para habilitar ayuda de maternidad
+  const hasFemaleMember = members.some((m) => m.gender === "M");
+
   // Descuento por volumen familiar (estándar AXA: descuento por póliza colectiva/familiar)
   let familyDiscount = 1.0;
   if (members.length === 2) familyDiscount = 0.94; // 6% desc.
@@ -349,7 +353,7 @@ export function calculateNationalQuote(profile: QuoterProfile): QuoteCalculation
   const adjustedBase = totalBase * state.zoneMultiplier * deductibleMult * familyDiscount;
 
   // Generación de los 3 niveles oficiales de AXA Flex Plus
-  // Nivel 1: Flex Esencial (Red Media)
+  // Nivel 1: Flex Esencial (Red Médica Limitada)
   const esencialAnnual = Math.round(adjustedBase * 0.82);
   const planEsencial: CalculatedPlan = {
     id: "axa-flex-esencial",
@@ -357,7 +361,7 @@ export function calculateNationalQuote(profile: QuoterProfile): QuoteCalculation
     insurer: "AXA Seguros",
     tagline: "Protección médica sólida al menor costo anual.",
     badge: "Más Accesible",
-    hospitalLevel: "Red Media y Regional",
+    hospitalLevel: "Red Médica Limitada",
     hospitalsIncluded: [
       `Hospitales de red general en ${state.name}`,
       "Atención de urgencias médicas 24/7 a nivel nacional",
@@ -366,15 +370,16 @@ export function calculateNationalQuote(profile: QuoterProfile): QuoteCalculation
     deductible: profile.deductible,
     coinsurance: "10%",
     coinsuranceMax: 64000,
-    insuredSum: "$180,000,000 MXN",
+    insuredSum: "$96,500,000 MXN",
     annualTotal: esencialAnnual,
     monthly12MSI: Math.round(esencialAnnual / 12),
+    monthlyPayment: Math.round((esencialAnnual * 1.09) / 12),
     savingsVsIndividual: Math.round(totalBase * 0.18),
     highlights: [
-      "Suma Asegurada de hasta $180 MDP",
+      "Suma Asegurada de hasta $96,500,000 MXN",
       "Cobertura nacional contra accidentes y enfermedades",
       "Asistencia médica telefónica 24 horas",
-      "12 Meses Sin Intereses con bancos participantes",
+      "3, 5 y 6 Meses Sin Intereses con tarjetas participantes",
     ],
   };
 
@@ -387,7 +392,7 @@ export function calculateNationalQuote(profile: QuoterProfile): QuoteCalculation
     tagline: "El equilibrio perfecto: amplia gama hospitalaria y precio óptimo.",
     badge: "Opción Más Elegida",
     isRecommended: true,
-    hospitalLevel: "Red Amplia Nacional",
+    hospitalLevel: "Red Médica Amplia",
     hospitalsIncluded: [
       ...state.topHospitals.slice(0, 2),
       `Hospitales privados de alta especialidad en ${state.name}`,
@@ -396,13 +401,14 @@ export function calculateNationalQuote(profile: QuoterProfile): QuoteCalculation
     deductible: profile.deductible,
     coinsurance: "10%",
     coinsuranceMax: 64000,
-    insuredSum: "$180,000,000 MXN",
+    insuredSum: "$96,500,000 MXN",
     annualTotal: confortAnnual,
     monthly12MSI: Math.round(confortAnnual / 12),
+    monthlyPayment: Math.round((confortAnnual * 1.09) / 12),
     savingsVsIndividual: Math.round(totalBase * 0.12),
     highlights: [
       "Cobertura en los hospitales privados de prestigio de tu estado",
-      "Ayuda de maternidad de hasta $45,000 MXN",
+      ...(hasFemaleMember ? ["Ayuda económica por maternidad hasta $68,000 MXN"] : []),
       "Cero Deducible por accidente personal",
       "Acompañamiento VIP en siniestros por Oscar Sánchez",
     ],
@@ -416,7 +422,7 @@ export function calculateNationalQuote(profile: QuoterProfile): QuoteCalculation
     insurer: "AXA Seguros",
     tagline: "Acceso ilimitado a los mejores hospitales de México y el extranjero.",
     badge: "Máxima Cobertura VIP",
-    hospitalLevel: "Gama Diamante Elite (Nacional e Internacional)",
+    hospitalLevel: "Red Médica Elite",
     hospitalsIncluded: [
       "Hospitales Ángeles, ABC Santa Fe/Observatorio, Médica Sur (CDMX)",
       "Hospital Zambrano Hellion / TecSalud (Monterrey)",
@@ -427,9 +433,10 @@ export function calculateNationalQuote(profile: QuoterProfile): QuoteCalculation
     deductible: profile.deductible,
     coinsurance: "10%",
     coinsuranceMax: 64000,
-    insuredSum: "$180,000,000 MXN",
+    insuredSum: "$96,500,000 MXN",
     annualTotal: diamanteAnnual,
     monthly12MSI: Math.round(diamanteAnnual / 12),
+    monthlyPayment: Math.round((diamanteAnnual * 1.09) / 12),
     savingsVsIndividual: 0,
     highlights: [
       "Libertad total de elegir cualquier hospital privado de México",

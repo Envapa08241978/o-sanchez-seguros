@@ -13,14 +13,14 @@ const COTIZADOR_FAQS = [
       "Las cifras corresponden a los tabuladores paramétricos de AXA Flex Plus con las opciones oficiales de Gama Hospitalaria (Esencial, Confort y Diamante Elite) con deducibles estándar. Al comunicarte con Oscar Sánchez, se validan los cuestionarios de salud definitivos para la emisión formal.",
   },
   {
-    question: "¿Puedo pagar a 12 Meses Sin Intereses?",
+    question: "¿Puedo pagar a Meses Sin Intereses?",
     answer:
-      "Sí, con O Sanchez Seguros puedes diferir el pago de tu póliza de Gastos Médicos Mayores hasta a 12 Meses Sin Intereses con tarjetas de crédito participantes de los principales bancos de México.",
+      "Sí, con O Sanchez Seguros puedes diferir el pago de tu póliza de Gastos Médicos Mayores a 3, 5 y 6 Meses Sin Intereses con tarjetas de crédito participantes de los principales bancos de México.",
   },
   {
     question: "¿Qué pasa después de completar mi cotización en línea?",
     answer:
-      "Al presionar el botón de WhatsApp, se abre un enlace directo con Oscar Sánchez (agente certificado CNSF) con el desglose exacto de tu cotización ya prellenado. Te ayudaremos a resolver dudas, ajustar coberturas especiales (maternidad, enfermedades catastróficas) y formalizar tu trámite de forma 100% digital sin salir de casa.",
+      "Al presionar el botón de WhatsApp, se abre un enlace directo con Oscar Sánchez (agente certificado CNSF y AMASFAC) con el desglose exacto de tu cotización ya prellenado. Te ayudaremos a resolver dudas, ajustar coberturas especiales (maternidad, enfermedades catastróficas) y formalizar tu trámite de forma 100% digital sin salir de casa.",
   },
 ];
 
@@ -32,7 +32,7 @@ export default function CotizadorPage() {
         <div className="absolute inset-0 gradient-radial-gold opacity-40 pointer-events-none" />
         <div className="relative max-w-5xl mx-auto px-4 sm:px-6 text-center">
           <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 backdrop-blur-md rounded-full text-xs font-bold uppercase tracking-wider text-white border border-white/20 mb-6">
-            🇲🇽 Cobertura en Toda la República Mexicana · Agente Certificado CNSF
+            🇲🇽 Cobertura en Toda la República Mexicana · Agente Certificado CNSF y AMASFAC
           </span>
 
           <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
@@ -48,7 +48,7 @@ export default function CotizadorPage() {
               <span className="text-accent font-bold">✓</span> Cálculo Actuarial Instantáneo
             </span>
             <span className="flex items-center gap-1.5">
-              <span className="text-accent font-bold">✓</span> Hasta 12 Meses Sin Intereses
+              <span className="text-accent font-bold">✓</span> 3, 5 y 6 Meses Sin Intereses con tarjetas participantes
             </span>
             <span className="flex items-center gap-1.5">
               <span className="text-accent font-bold">✓</span> Asesoría Directa 1-a-1 por WhatsApp
