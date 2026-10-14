@@ -10,12 +10,12 @@ const COTIZADOR_FAQS = [
   {
     question: "¿Los precios calculados son oficiales de AXA Seguros?",
     answer:
-      "Las cifras corresponden a los tabuladores paramétricos de AXA Flex Plus con tarifas cercanas a las oficiales para mostrar planes en 3 niveles: Limitado - Amplio y Elite con diferentes deducibles elegibles. Al comunicarte a Sánchez Seguros, se validaran requisitos de salud para el tramite de la emisión formal.",
+      "Las cifras corresponden a los tabuladores paramétricos de AXA Flex Plus con tarifas cercanas a las oficiales para mostrar planes en 3 niveles: Limitado - Amplio y Elite con diferentes deducibles elegibles. Al comunicarte a OSanchez Seguros, se validaran requisitos de salud para el tramite de la emisión formal.",
   },
   {
     question: "¿Puedo pagar a Meses Sin Intereses?",
     answer:
-      "Sí, en Sánchez Seguros tenemos promociones cada mes, consulta con tu ejecutivo las tarjetas y msi disponibles al armar el plan, así podrás diferir el pago de tu póliza de Gastos Médicos Mayores a 3 y 6 Meses Sin Intereses con bancos de México.",
+      "Sí, en OSanchez Seguros tenemos promociones cada mes, consulta con tu ejecutivo las tarjetas y msi disponibles al armar el plan, así podrás diferir el pago de tu póliza de Gastos Médicos Mayores a 3 y 6 Meses Sin Intereses con bancos de México.",
   },
   {
     question: "¿Qué pasa después de completar mi cotización en línea?",
