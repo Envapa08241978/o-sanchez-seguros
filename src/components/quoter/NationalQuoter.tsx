@@ -918,9 +918,9 @@ Me gustaría revisar los detalles, opciones de 3, 5 y 6 MSI y validar mi propues
                 >
                   {/* Badge */}
                   {plan.badge && (
-                    <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
+                    <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 z-10 w-max">
                       <span
-                        className={`px-3.5 py-1 rounded-full text-[11px] font-black uppercase tracking-wider shadow-sm text-white ${
+                        className={`inline-block whitespace-nowrap px-4 py-1 rounded-full text-[11px] font-black uppercase tracking-wider shadow-md text-white ${
                           isRec ? "bg-accent" : "bg-brand"
                         }`}
                       >
