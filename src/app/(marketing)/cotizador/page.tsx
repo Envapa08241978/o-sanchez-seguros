@@ -5,22 +5,22 @@ const COTIZADOR_FAQS = [
   {
     question: "¿Este cotizador tiene cobertura en toda la República Mexicana?",
     answer:
-      "Sí. El cotizador calcula las tarifas actuariales oficiales ajustadas a tu estado y municipio (desde Sonora, Sinaloa y Baja California hasta CDMX, Nuevo León, Jalisco y toda la República). Al emitir tu póliza, cuentas con atención médica en los hospitales privados de prestigio de tu localidad y a nivel nacional.",
+      "Sí. El cotizador calcula las tarifas de acuerdo a edad, sexo, estado y municipio Mexicano. (También puedes elegir cobertura mundial ) Al emitir tu póliza, cuentas con atención médica en hospitales y clínicas privadas de prestigio de tu localidad y nivel nacional según el plan elegido.",
   },
   {
     question: "¿Los precios calculados son oficiales de AXA Seguros?",
     answer:
-      "Las cifras corresponden a los tabuladores paramétricos de AXA Flex Plus con las opciones oficiales de Gama Hospitalaria (Esencial, Confort y Diamante Elite) con deducibles estándar. Al comunicarte con Oscar Sánchez, se validan los cuestionarios de salud definitivos para la emisión formal.",
+      "Las cifras corresponden a los tabuladores paramétricos de AXA Flex Plus con tarifas cercanas a las oficiales para mostrar planes en 3 niveles: Limitado - Amplio y Elite con diferentes deducibles elegibles. Al comunicarte a Sánchez Seguros, se validaran requisitos de salud para el tramite de la emisión formal.",
   },
   {
     question: "¿Puedo pagar a Meses Sin Intereses?",
     answer:
-      "Sí, con O Sanchez Seguros puedes diferir el pago de tu póliza de Gastos Médicos Mayores a 3, 5 y 6 Meses Sin Intereses con tarjetas de crédito participantes de los principales bancos de México.",
+      "Sí, en Sánchez Seguros tenemos promociones cada mes, consulta con tu ejecutivo las tarjetas y msi disponibles al armar el plan, así podrás diferir el pago de tu póliza de Gastos Médicos Mayores a 3 y 6 Meses Sin Intereses con bancos de México.",
   },
   {
     question: "¿Qué pasa después de completar mi cotización en línea?",
     answer:
-      "Al presionar el botón de WhatsApp, se abre un enlace directo con Oscar Sánchez (agente certificado CNSF y AMASFAC) con el desglose exacto de tu cotización ya prellenado. Te ayudaremos a resolver dudas, ajustar coberturas especiales (maternidad, enfermedades catastróficas) y formalizar tu trámite de forma 100% digital sin salir de casa.",
+      "Al presionar el botón de WhatsApp, se abre un enlace directo con OSánchez (agente certificado CNSF) con el desglose exacto de tu cotización ya prellenado, terminaremos el llenado de la solicitud requerida y documentos necesarios. Te ayudaremos a resolver dudas, ajustar coberturas especiales ( deducible, coaseguro, consultas, maternidad, emergencias y atención en el extranjero, etc. ) para formalizar tu trámite de forma 100% digital sin salir de casa.",
   },
 ];
 

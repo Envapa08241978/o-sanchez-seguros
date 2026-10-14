@@ -1045,7 +1045,7 @@ Me gustaría revisar los detalles, opciones de 3, 5 y 6 MSI y validar mi propues
                 rel="noopener noreferrer"
                 className="px-6 py-3 bg-accent text-white font-bold rounded-full hover:bg-accent-dark transition-all text-xs sm:text-sm text-center shadow-lg"
               >
-                Hablar con Oscar Sánchez
+                Hablar con Ejecutivo OSanchez Seguros
               </a>
               <button
                 type="button"
