@@ -268,29 +268,28 @@ export function getStateFromZipCode(zip: string): StateInfo {
 }
 
 // Cálculo actuarial base de prima anual por persona en AXA Flex Plus
+// Calibrado con cotizaciones oficiales de AXA México 2026 proporcionadas por Oscar Sánchez
 function calculateIndividualBasePremium(age: number, gender: "H" | "M"): number {
-  let base = 14500;
+  let base = 11465;
 
-  if (age <= 9) base = 16800;
-  else if (age <= 17) base = 13500;
-  else if (age <= 24) base = 14200;
-  else if (age <= 29) base = 16500;
-  else if (age <= 34) base = 19800;
-  else if (age <= 39) base = 24200;
-  else if (age <= 44) base = 31500;
-  else if (age <= 49) base = 41200;
-  else if (age <= 54) base = 56000;
-  else if (age <= 59) base = 74500;
-  else if (age <= 64) base = 98000;
-  else base = 132000;
+  if (age <= 9) base = 11800;
+  else if (age <= 17) base = 10500;
+  else if (age <= 22) base = 13650; // 18 años: Diamante ~$17,470 (AXA: $17,464.75)
+  else if (age <= 29) base = 12860; // 25 años: Diamante ~$16,460 (AXA: $16,466.68)
+  else if (age <= 39) base = 11465; // 35 años: Confort ~$11,465 (AXA: $11,465.79)
+  else if (age <= 44) base = 13800; // 40-44 años
+  else if (age <= 49) base = 16810; // 45 años: Confort ~$16,810 (AXA: $16,811.69)
+  else if (age <= 54) base = 42000; // 50 años: Diamante ~$53,760 (AXA: $53,768.00)
+  else if (age <= 59) base = 58000; // 55-59 años: Diamante ~$74,240
+  else if (age <= 64) base = 78000; // 60-64 años: Diamante ~$99,840
+  else base = 108000;               // 65+ años: Diamante ~$138,240
 
-  // Factor de género (en edad reproductiva la tarifa femenina es ligeramente mayor por maternidad y ginecología)
+  // Factor de género
   let genderFactor = 1.0;
   if (gender === "M") {
-    if (age >= 18 && age <= 45) genderFactor = 1.18;
-    else if (age > 45) genderFactor = 0.95;
-  } else {
-    if (age >= 50) genderFactor = 1.08;
+    // Para mujeres en edad reproductiva se considera el factor de maternidad y prevención ginecológica
+    if (age >= 20 && age <= 42) genderFactor = 1.12;
+    else if (age > 45) genderFactor = 0.94;
   }
 
   return base * genderFactor;
@@ -415,7 +414,7 @@ export function calculateNationalQuote(profile: QuoterProfile): QuoteCalculation
   };
 
   // Nivel 3: Flex Diamante Elite (Gama Máxima VIP Nacional e Internacional)
-  const diamanteAnnual = Math.round(adjustedBase * 1.25);
+  const diamanteAnnual = Math.round(adjustedBase * 1.28);
   const planDiamante: CalculatedPlan = {
     id: "axa-flex-diamante",
     name: "AXA Flex Plus Diamante Elite",
