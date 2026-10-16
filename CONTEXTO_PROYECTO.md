@@ -1492,6 +1492,43 @@ Añadir el banner promocional "Hasta 12 Meses Sin Intereses" posicionado directa
 
 ---
 
+## Sesión: Calibración Actuarial de Tarifas con Cotizaciones Oficiales de AXA (16 octubre 2026)
+
+### Objetivos de la sesión
+1. Atender la retroalimentación directa del cliente Oscar Sánchez, quien reportó por WhatsApp que el cotizador arrojaba precios muy elevados en comparación con los costos reales de emisión de pólizas de AXA Flex Plus.
+2. Analizar las 5 cotizaciones oficiales en PDF proporcionadas por Oscar (18, 25, 35, 45 y 50 años) con desgloses de Prima Básica, Adicionales, Derechos de Póliza e IVA.
+3. Recalibrar la función actuarial `calculateIndividualBasePremium` y el multiplicador de Diamante Elite en `src/lib/calculators/nationalQuoterEngine.ts`.
+4. Evaluar la conveniencia técnica y de seguridad de conectar bots automáticos con las credenciales de agente de Oscar en el portal de AXA.
+5. Compilar, versionar y verificar en producción el cotizador en vivo.
+
+### Hallazgos y Diagnóstico
+* **Causa del desfasamiento:** La curva anterior aplicaba incrementos muy agresivos entre los 25 y los 49 años (asignaba primas base de $24,200 a los 35 años y $41,200 a los 45 años, cuando en la realidad de AXA en Sonora la prima total con IVA es de $11,465 y $16,810 respectivamente).
+* **Proporción de Gamas AXA:** La Gama Diamante Elite (Tabulador Roble y hospitales de alta especialidad) mantiene una relación constante de **`1.28x`** frente a la Gama Confort / Esmeralda (Tabulador Caoba), mientras que Flex Esencial representa **`0.82x`**.
+* **Financiamiento Mensual:** El factor de financiamiento (+9% anual / 12) da como resultado mensualidades prácticamente idénticas al promedio del desglose mensual emitido en los recibos de AXA.
+
+### Resultados de la Calibración
+| Perfil Cotizado | Cotizador Anterior | Cotización Oficial AXA (Oscar) | Cotizador Nuevo Calibrado | Precisión |
+|---|---|---|---|---|
+| Hombre 18 años (Diamante) | $17,750 MXN | $17,464.75 MXN | $17,472 MXN | 99.96% |
+| Hombre 25 años (Diamante) | $20,625 MXN | $16,466.68 MXN | $16,461 MXN | 99.97% |
+| Hombre 35 años (Confort) | $24,200 MXN | $11,465.79 MXN | $11,465 MXN | 99.99% |
+| Hombre 45 años (Confort) | $41,200 MXN | $16,811.69 MXN | $16,810 MXN | 99.99% |
+| Hombre 50 años (Diamante) | $75,600 MXN | $53,768.00 MXN | $53,760 MXN | 99.98% |
+
+### Decisión de Seguridad sobre Credenciales de AXA
+* Se ratificó **NO ingresar ni almacenar credenciales de agente (`AGT00647196`)** en servidores web ni bots de scraping:
+  1. Protege la Cédula CNSF de Oscar contra bloqueos por sistemas anti-robots de AXA.
+  2. Mantiene una velocidad de carga ultrarrápida (0.2s vs 30s de un portal corporativo).
+  3. Preserva el rol comercial del cotizador como captador de prospectos de alta precisión que canaliza el cierre formal hacia WhatsApp.
+* Para ajustes futuros, se mantiene el protocolo manual: cotejar PDFs reales y ajustar los rangos paramétricos en el código fuente.
+
+### Commits y Despliegue
+* **Commit:** `36e5e20` — *fix(cotizador): calibrate actuarial rates with official AXA Flex Plus quotes (18, 25, 35, 45, 50 years)*
+* **Build de producción:** `next build` exitoso (0 errores, 28 páginas compiladas).
+* **Despliegue:** 100% activo y probado en `https://www.osanchezseguros.com/cotizador`.
+
+---
+
 *Este archivo debe mantenerse actualizado cada vez que se hagan cambios significativos al proyecto.*
 
 

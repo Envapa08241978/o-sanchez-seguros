@@ -139,3 +139,7 @@ En esta sesión se procesó e implementó una serie completa de solicitudes y aj
   - **50 años (Diamante Elite):** Cotizador anterior $75,600 ➔ **Calibrado a $53,760** (AXA Real: $53,768.00).
 - **Ajuste de Multiplicadores:** Factor de Diamante Elite ajustado a 1.28x para alinearse con la proporción oficial frente a Esmeralda/Confort.
 - **Despliegue:** Verificado en producción en `https://www.osanchezseguros.com/api/cotizador` con 99.98% de precisión frente a los PDFs oficiales de AXA.
+- **Resolución sobre Credenciales del Portal de AXA:**
+  - Se evaluó si era conveniente o necesario conectar un scraper/bot con el usuario y contraseña privado de Oscar (`AGT00647196`).
+  - **Decisión:** **NO utilizar bots ni credenciales en la web**. Razones: (1) Protección de la Cédula CNSF ante bloqueos de AXA por robots externos; (2) Velocidad extrema de respuesta (0.2s del motor paramétrico vs 30s de un portal corporativo con captcha); (3) El cotizador actúa como captador masivo de prospectos de alta precisión; la emisión formal siempre se concluye en WhatsApp con acompañamiento directo de Oscar.
+  - El procedimiento seguro para futuras calibraciones será manual: cotejar 1 o 2 PDFs emitidos por Oscar y ajustar los rangos en el motor en segundos sin exponer claves.
