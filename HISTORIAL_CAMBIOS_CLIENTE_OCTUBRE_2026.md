@@ -125,3 +125,17 @@ En esta sesión se procesó e implementó una serie completa de solicitudes y aj
 4. `80cc992` — *fix(faq): replace Sanchez Seguros with OSanchez Seguros in FAQs*
 5. `3143efe` — *feat(seo): optimize cotizador with WebApplication schema, FAQPage schema, Breadcrumbs, OpenGraph cards and sitemap priority*
 6. `1bbbd20` — *feat(seo): add IndexNow verification key for instant search engine indexing*
+7. `36e5e20` — *fix(cotizador): calibrate actuarial rates with official AXA Flex Plus quotes (18, 25, 35, 45, 50 years)*
+
+---
+
+## 🎯 6. Sesión 16 de Octubre de 2026 — Calibración Actuarial con Cotizaciones Reales de AXA
+- **Solicitud del Cliente:** Oscar Sánchez reportó por WhatsApp que el cotizador arrojaba precios muy por encima de los tabuladores reales de AXA Flex Plus, enviando 5 cotizaciones oficiales en PDF con desglose neta, IVA y derechos.
+- **Auditoría y Corrección de Tarifas:**
+  - **18 años (Diamante Elite):** Cotizador anterior $17,750 ➔ **Calibrado a $17,472** (AXA Real: $17,464.75).
+  - **25 años (Diamante Elite):** Cotizador anterior $20,625 ➔ **Calibrado a $16,461** (AXA Real: $16,466.68).
+  - **35 años (Confort / Esmeralda):** Cotizador anterior $24,200 ➔ **Calibrado a $11,465** (AXA Real: $11,465.79).
+  - **45 años (Confort / Esmeralda):** Cotizador anterior $41,200 ➔ **Calibrado a $16,810** (AXA Real: $16,811.69).
+  - **50 años (Diamante Elite):** Cotizador anterior $75,600 ➔ **Calibrado a $53,760** (AXA Real: $53,768.00).
+- **Ajuste de Multiplicadores:** Factor de Diamante Elite ajustado a 1.28x para alinearse con la proporción oficial frente a Esmeralda/Confort.
+- **Despliegue:** Verificado en producción en `https://www.osanchezseguros.com/api/cotizador` con 99.98% de precisión frente a los PDFs oficiales de AXA.
